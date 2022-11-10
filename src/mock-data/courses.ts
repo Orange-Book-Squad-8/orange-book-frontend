@@ -1,3 +1,5 @@
+import { AppUserCourseDTO, AppUserDTO, Course } from '../interfaces/api';
+
 export const userCourses = [
   {
     title: 'Trilha Fullstack',
@@ -45,3 +47,177 @@ export const orangeBooks = [
     image: 'qa.png'
   }
 ];
+
+export const mockedUser: AppUserDTO = {
+  id: 1,
+  badges: ['java'],
+  email: 'email@email.com',
+  role: {
+    id: 2,
+    name: 'user'
+  },
+  stackCategories: ['FRONT_END', 'UX'],
+  username: 'username'
+};
+
+export const courseList: AppUserCourseDTO = {
+  subscribedCourses: [
+    {
+      id: 3,
+      category: 'FRONT_END',
+      creator: 'Orange Originals',
+      description: 'asd',
+      difficulty: 'BEGINNER',
+      title: 'Do Front ao Fim, tudo sobre React',
+      totalLessons: 9,
+      visible: true
+    }
+  ],
+  archivedCourses: [
+    {
+      id: 4,
+      category: 'UX',
+      creator: 'Orange Originals',
+      description: 'asd',
+      difficulty: 'ADVANCED',
+      title: 'UX, a experiência é vida',
+      totalLessons: 12,
+      visible: true
+    }
+  ],
+  myCourses: [
+    {
+      id: 5,
+      category: 'UI',
+      creator: 'username',
+      description: 'asd',
+      difficulty: 'FULL_FORMATION',
+      title: 'teste',
+      totalLessons: 2,
+      visible: true
+    }
+  ],
+  watchedLesson: [
+    100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 200, 201
+  ]
+};
+
+export const activeCourse: Course = {
+  id: 3,
+  category: 'FRONT_END',
+  creator: 'Orange Originals',
+  description: 'asd',
+  difficulty: 'BEGINNER',
+  title: 'Do Front ao Fim, tudo sobre React',
+  visible: true,
+  sections: [
+    {
+      id: 1000,
+      lessons: [
+        {
+          id: 200,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 1',
+          topic: ''
+        },
+        {
+          id: 201,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 2',
+          topic: ''
+        },
+        {
+          id: 202,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 3',
+          topic: ''
+        }
+      ],
+      name: 'inicio'
+    },
+    {
+      id: 1001,
+      lessons: [
+        {
+          id: 204,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 4',
+          topic: ''
+        },
+        {
+          id: 205,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 5',
+          topic: ''
+        },
+        {
+          id: 206,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 6',
+          topic: ''
+        }
+      ],
+      name: 'meio'
+    },
+    {
+      id: 1000,
+      lessons: [
+        {
+          id: 207,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 6',
+          topic: ''
+        },
+        {
+          id: 208,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 8',
+          topic: ''
+        },
+        {
+          id: 209,
+          author: '',
+          contentType: 'ARTICLE',
+          description: '',
+          durationInMinutes: 5,
+          link: 'www.site.com',
+          title: 'lorem 9',
+          topic: ''
+        }
+      ],
+      name: 'fim'
+    }
+  ]
+};
