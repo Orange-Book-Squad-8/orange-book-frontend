@@ -79,9 +79,9 @@ export function getCourse(
 export function courseMapper(course: Course) {
   const { category, creator, description, difficulty, id, title, visible } =
     course;
-  let totalLessons = 0;
-  course.sections.forEach(
-    (section) => (totalLessons += section.lessons.length)
+  const totalLessons = course.sections.reduce(
+    (total, section): number => totalLessons + section.lessons.length,
+    0
   );
   const courseDTO: CourseDTO = {
     category,
