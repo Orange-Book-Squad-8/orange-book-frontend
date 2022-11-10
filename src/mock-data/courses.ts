@@ -1,4 +1,4 @@
-import { AppUserCourseDTO, AppUserDTO, Course } from '../interfaces/api';
+import { AppUserCourseDTO, AppUserDTO, Course, Role } from '../interfaces/api';
 
 export const userCourses = [
   {
@@ -48,14 +48,21 @@ export const orangeBooks = [
   }
 ];
 
+export const userRole: Role = {
+  id: 10000,
+  name: 'user'
+};
+
+export const adminRole: Role = {
+  id: 10001,
+  name: 'user'
+};
+
 export const mockedUser: AppUserDTO = {
   id: 1,
   badges: ['java'],
   email: 'email@email.com',
-  role: {
-    id: 2,
-    name: 'user'
-  },
+  role: userRole,
   stackCategories: ['FRONT_END', 'UX'],
   username: 'username'
 };
