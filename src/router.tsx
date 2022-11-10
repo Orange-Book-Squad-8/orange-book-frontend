@@ -5,7 +5,7 @@ import { Home } from './routes/home';
 import { Dashboard } from './routes/dashboard';
 import { Register } from './routes/register';
 import { ProtectedRoutes } from './routes/protectedRoutes';
-import { userRole } from './mock-data';
+import { adminRole, userRole } from './mock-data';
 
 const Router = createBrowserRouter([
   {
@@ -22,7 +22,7 @@ const Router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <ProtectedRoutes authRole={userRole}><Dashboard /></ProtectedRoutes>
+        element: <ProtectedRoutes authRole={[userRole,adminRole]}><Dashboard /></ProtectedRoutes>
       },
       {
         path: '/register',
