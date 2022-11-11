@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
+import { useDispatch } from 'react-redux'
 import {
   HeaderContainer,
   SiteTitle,
@@ -13,6 +14,8 @@ import {
   NavigationContainer,
   NavigationItem
 } from './index';
+import { mockedAdmin } from '../../mock-data';
+import { login } from '../../redux/reducers/user';
 
 interface IHeaderProps {
   headerShrinkingHandler: (showHeader: boolean) => void;
@@ -24,6 +27,8 @@ function Header(props: IHeaderProps) {
   const [showHeader, setShowHeader] = useState(true);
   const { pathname } = useLocation();
   const isNoAuthPath = pathname === '/' || pathname === '/register';
+
+  const dispatch = useDispatch();
 
   const menuToggleHandler = () => {
     setShowMenu(!showMenu);
@@ -91,7 +96,7 @@ function Header(props: IHeaderProps) {
             </NavigationItem>
 
             <NavigationItem invert>
-              <Link to="/home">Entrar</Link>
+              <Link to="/adm/dashboard" onClick={() => {dispatch(login(mockedAdmin))}}>Entrar</Link>
             </NavigationItem>
           </NavigationContainer>
         </Navigation>
