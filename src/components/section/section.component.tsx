@@ -11,8 +11,8 @@ function Section(props: ISectionProps) {
   const { children, title, titleTag = 'h2', ...otherProps } = props;
 
   return (
-    <SectionContainer {...otherProps}>
-      <Title as={titleTag}>{title}</Title>
+    <SectionContainer as={title ? 'section' : 'div'} {...otherProps}>
+      {title && <Title as={titleTag}>{title}</Title>}
 
       {children}
     </SectionContainer>
