@@ -3,10 +3,13 @@ import { Swiper } from 'swiper/react';
 
 export const CarrosselContainer = styled(Swiper)`
   width: 100%;
-  padding: 0.5rem 0.5rem 2rem;
+  padding: 0 0 2rem;
 
   & .swiper-slide {
+    display: flex;
+    justify-content: center;
     height: auto;
+    padding: 1rem;
 
     & > * {
       height: 100%;
