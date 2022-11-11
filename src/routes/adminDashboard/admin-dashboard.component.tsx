@@ -19,7 +19,12 @@ interface cardItemProps{
 }
 
 function AdminDashboard() {
-  const lessonList = useSelector(selectSectionList)
+  const dispatch = useDispatch();
+
+  const list: Lesson[] = getLesson(25);
+  const section: Section[] = getSection(5, list)
+
+  dispatch(setSectionList(section))
   return (
     <AdminDashboardContainer>
 
