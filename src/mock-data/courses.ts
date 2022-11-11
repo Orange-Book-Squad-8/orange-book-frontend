@@ -67,6 +67,15 @@ export const mockedUser: AppUserDTO = {
   username: 'username'
 };
 
+export const mockedAdmin: AppUserDTO = {
+  id: 1,
+  badges: ['java'],
+  email: 'admin@email.com',
+  role: adminRole,
+  stackCategories: ['FRONT_END', 'UX'],
+  username: 'admin'
+};
+
 export const courseList: AppUserCourseDTO = {
   subscribedCourses: [
     {
