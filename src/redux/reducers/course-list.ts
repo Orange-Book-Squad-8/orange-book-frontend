@@ -19,4 +19,14 @@ export const { setUserCourseList } = courseListSlice.actions;
 export const selectCourseList = (state: RootState) =>
   state.courseList.courseList;
 
+export const selectOriginalCourses = (state: RootState) =>
+  state.courseList.courseList.subscribedCourses?.filter(
+    (course) => course.creator === 'Orange Originals'
+  );
+
+export const selectPlaylists = (state: RootState) =>
+  state.courseList.courseList.subscribedCourses?.filter(
+    (course) => course.creator !== 'Orange Originals'
+  );
+
 export default courseListSlice.reducer;
