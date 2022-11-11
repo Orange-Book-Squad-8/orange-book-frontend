@@ -1,33 +1,50 @@
-import React from 'react';
+import { StackCategories } from '../../interfaces/api';
 import {
   UserCourseContainer,
   StyledLink,
+  TitleImageContainer,
   Title,
   Image,
   Progress,
   ProgressRatio,
-  ProgressBar
+  ProgressBar,
+  OriginalStamp
 } from './index';
 
 interface IUserCourse {
   title: string;
-  image: string;
+  category: StackCategories;
+  original?: boolean;
   totalLessons: number;
-  finishedLessons: number;
+  finishedLessons?: number;
 }
 
 function UserCourse(props: IUserCourse) {
-  const { title, image, totalLessons, finishedLessons } = props;
+  const {
+    title,
+    category,
+    original = false,
+    totalLessons,
+    finishedLessons = 0
+  } = props;
   const progress = (100 * finishedLessons) / totalLessons;
+  const courseCategory = category?.split('_').join('').toLowerCase();
 
   return (
-    <UserCourseContainer>
-      <StyledLink to="/home">
-        <div>
+    <UserCourseContainer original={original}>
+      {original && (
+        <OriginalStamp
+          src="/images/orange.png"
+          alt="selo indicando que este curso é original da plataforma"
+        />
+      )}
+
+      <StyledLink to="#">
+        <TitleImageContainer>
           <Title>{title}</Title>
 
-          <Image src={`/images/${image}`} />
-        </div>
+          <Image src={`/images/${courseCategory}.png`} />
+        </TitleImageContainer>
 
         <Progress>
           <ProgressRatio>

@@ -1,17 +1,26 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const UserCourseContainer = styled.article`
+interface IUserCourseContainer {
+  original: boolean;
+}
+
+export const UserCourseContainer = styled.article<IUserCourseContainer>`
+  position: relative;
   flex: 1 1 16rem;
   max-width: 22rem;
   background-color: ${({ theme }) => theme.primary};
+  border: ${({ theme, original }) =>
+    original ? `2px solid ${theme.secondaryDarker}` : 'none'};
   border-radius: 0.5rem;
-  box-shadow: 3px 3px 10px 0 black;
+  box-shadow: 0 0 10px 0
+    ${({ theme, original }) => (original ? theme.secondary : '#101010')};
   transition: 300ms transform ease-in-out, 300ms box-shadow ease-in-out;
 
   &:hover {
     transform: scale(1.025);
-    box-shadow: 5px 5px 13px 0 black;
+    box-shadow: 0 0 13px 0
+      ${({ theme, original }) => (original ? theme.secondary : '#101010')};
   }
 `;
 
@@ -21,6 +30,10 @@ export const StyledLink = styled(Link)`
   height: 100%;
   padding: 1.25rem 1.5rem;
   text-decoration: none;
+`;
+
+export const TitleImageContainer = styled.div`
+  width: 100%;
 `;
 
 export const Title = styled.h3`
@@ -83,4 +96,13 @@ export const ProgressBar = styled.div<IProgressBarProps>`
     height: 100%;
     background-color: ${({ theme }) => theme.secondary};
   }
+`;
+
+export const OriginalStamp = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-30%, -30%);
+  width: 2.5rem;
+  border-radius: 50%;
 `;
