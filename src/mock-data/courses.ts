@@ -81,11 +81,34 @@ export const courseList: AppUserCourseDTO = {
     {
       id: 3,
       category: 'FRONT_END',
-      creator: 'Orange Originals',
-      description: 'asd',
+      creator: 'creator1',
+      description:
+        'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
       difficulty: 'BEGINNER',
       title: 'Do Front ao Fim, tudo sobre React',
       totalLessons: 9,
+      visible: true
+    },
+    {
+      id: 1,
+      category: 'FULLSTACK',
+      creator: 'Orange Originals',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et molestie ac feugiat sed lectus. Amet cursus sit amet dictum sit. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Cras sed felis eget velit aliquet sagittis. Sed vulputate mi sit amet mauris commodo. Egestas dui id ornare arcu odio ut sem nulla. Interdum consectetur libero id faucibus.',
+      difficulty: 'BEGINNER',
+      title: 'Trilha Fullstack',
+      totalLessons: 47,
+      visible: true
+    },
+    {
+      id: 7,
+      category: 'BACK_END',
+      creator: 'creator32',
+      description:
+        'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
+      difficulty: 'BEGINNER',
+      title: 'Tudo sobre Java & Springboot',
+      totalLessons: 42,
       visible: true
     }
   ],
@@ -94,7 +117,8 @@ export const courseList: AppUserCourseDTO = {
       id: 4,
       category: 'UX',
       creator: 'Orange Originals',
-      description: 'asd',
+      description:
+        'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
       difficulty: 'ADVANCED',
       title: 'UX, a experiência é vida',
       totalLessons: 12,

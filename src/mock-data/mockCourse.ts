@@ -2,12 +2,45 @@ import {
   AppUserCourseDTO,
   Course,
   CourseDTO,
+  Difficulty,
   Lesson,
   Section,
   StackCategories
 } from '../interfaces/api';
 
-//export class courseMocker {
+const CATEGORIES: StackCategories[] = [
+  'FRONT_END',
+  'BACK_END',
+  'FULLSTACK',
+  'UI',
+  'UX',
+  'SOFT_SKILLS'
+];
+
+const DIFFICULTY: Difficulty[] = [
+  'BEGINNER',
+  'INTERMEDIATE',
+  'ADVANCED',
+  'FULL_FORMATION'
+];
+
+const CREATORS: string[] = [
+  'CREATOR 1',
+  'CREATOR 2',
+  'CREATOR 3',
+  'Orange Originals'
+];
+
+function sumLessons(total: number, section: Section): number {
+  return total + section.lessons.length;
+}
+
+function randomValue(arr: string[] | Difficulty[] | StackCategories[]) {
+  const { length } = arr;
+  const index = Math.floor(Math.random() * length);
+  return arr[index];
+}
+
 export function getLesson(times: number) {
   let lessons: Lesson[] = [];
   for (let i = 0; i < times; i++) {
@@ -68,7 +101,7 @@ export function getCourse(
       creator: creator,
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis non velit non fringilla. Nunc sit amet risus pellentesque, aliquam quam eget, laoreet ex. Vestibulum volutpat mi nec quam aliquet, in tincidunt lectus scelerisque. Nullam viverra malesuada varius. Quisque non metus molestie tortor mollis bibendum et quis tortor. Duis eu bibendum sapien, a gravida turpis. Praesent non dolor est. Cras ultrices, nisl vel feugiat placerat, arcu mauris consectetur nisi, tincidunt vehicula ex augue ac nisl. Proin massa erat, mollis vitae interdum ac, venenatis eget lectus. Nunc volutpat sapien tortor, at fermentum ex congue ac.',
-      difficulty: 'FULL_FORMATION',
+      difficulty: randomValue(DIFFICULTY) as Difficulty,
       visible: true,
       sections: tempSection
     });
@@ -94,6 +127,21 @@ export function courseMapper(course: Course) {
   };
   return courseDTO;
 }
-function sumLessons(total: number, section: Section): number {
-  return total + section.lessons.length;
-}
+
+export const createCourses = (times = 10) => {
+  const lessons = getLesson(1);
+  const sections = getSection(1, lessons);
+  const courses = [];
+  for (let i = 0; i < times; i++) {
+    courses.push(
+      ...getCourse(
+        1,
+        sections,
+        randomValue(CATEGORIES) as StackCategories,
+        randomValue(CREATORS)
+      )
+    );
+  }
+
+  return courses;
+};
