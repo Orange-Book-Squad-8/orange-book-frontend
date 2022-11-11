@@ -7,7 +7,7 @@ import { userCourses } from '../../mock-data';
 
 const CARROSSEL_CONFIGS = {
   modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-  spaceBetween: 24,
+  spaceB../../redux/reducers/course-list
   slidesPerView: 1,
   loop: true,
   pagination: { clickable: true },

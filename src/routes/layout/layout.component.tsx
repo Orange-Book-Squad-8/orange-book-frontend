@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from '../../components/header';
-import { LayoutContainer, RightColumn, Main, Footer } from './index';
+import { LayoutContainer, RightColu../../redux/reducers/course-listx';
 
 function Layout() {
   const [isHeaderShrunk, setIsHeaderShrunk] = useState(false);
