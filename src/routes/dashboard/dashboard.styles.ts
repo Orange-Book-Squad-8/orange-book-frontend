@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 import { Section } from '../../components/section';
 
+export const DashboardContainer = styled(Section)`
+  padding-bottom: 0;
+`;
+
 export const DashboardSection = styled(Section)`
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+
   & > *:first-child {
     margin-bottom: 1rem;
 
