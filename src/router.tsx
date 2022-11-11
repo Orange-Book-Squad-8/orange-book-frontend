@@ -6,6 +6,7 @@ import { Dashboard } from './routes/dashboard';
 import { Register } from './routes/register';
 import { ProtectedRoutes } from './routes/protectedRoutes';
 import { adminRole, userRole } from './mock-data';
+import { AdminDashboard } from './routes/adminDashboard/index';
 
 const Router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const Router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />
+      },
+      {
+        path: '/adm/dashboard',
+        element: <AdminDashboard/>
       }
     ]
   }
