@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCourse, selectSectionList, setCourse, setSectionList } from '../../../redux/reducers/course-manager';
 import { CourseDTO, Difficulty, Lesson, Section, StackCategories } from '../../../interfaces/api';
@@ -12,6 +11,7 @@ import {
   ListboxOptionStyled,
   SectionButton
 } from './course-edit-dashboard.styles';
+import { tagMapper } from '../../../utils';
 
 const difficulties: Difficulty[] = [
   'BEGINNER',
@@ -33,9 +33,6 @@ function CourseEditDashboard() {
   const lessonList = useSelector(selectSectionList);
   const sections: Section[] = lessonList.filter((section, i) => i != 0);
   const dispatch = useDispatch();
-  const [difficulty, setDifficulty] = useState<Difficulty>('BEGINNER');
-  const [stackCategories, setStackCategories] =
-    useState<StackCategories>('FRONT_END');
 
   function name(value: string) {
     dispatch(setCourse({ ...course, title: value }));
@@ -45,8 +42,16 @@ function CourseEditDashboard() {
     dispatch(setCourse({ ...course, description: value }));
   }
 
+  function setCategory(category: StackCategories) {
+    dispatch(setCourse({ ...course, category }));
+  }
+
+  function setDifficulty(difficulty: Difficulty) {
+    dispatch(setCourse({ ...course, difficulty }));
+  }
+
   function send() {
-    dispatch(setCourse({ ...course, difficulty, category: stackCategories }));
+    //dispatch(setCourse({ course }));
   }
 
   function addSection() {
@@ -68,22 +73,22 @@ function CourseEditDashboard() {
         value={course.description}
         onChange={(event) => description(event.target.value)}
       />
-      <Listbox value={difficulty} onChange={setDifficulty}>
-        <ListboxButtonStyled>{difficulty}</ListboxButtonStyled>
+      <Listbox value={course.difficulty} onChange={setDifficulty}>
+        <ListboxButtonStyled>{tagMapper(course.difficulty)}</ListboxButtonStyled>
         <ListboxOptionsStyled>
           {difficulties.map((diff, index) => (
             <Listbox.Option as='div' key={index} value={diff}>
-              <ListboxOptionStyled>{diff}</ListboxOptionStyled>
+              <ListboxOptionStyled>{tagMapper(diff)}</ListboxOptionStyled>
             </Listbox.Option>
           ))}
         </ListboxOptionsStyled>
       </Listbox>
-      <Listbox value={stackCategories} onChange={setStackCategories}>
-        <ListboxButtonStyled>{stackCategories}</ListboxButtonStyled>
+      <Listbox value={course.category} onChange={setCategory}>
+        <ListboxButtonStyled>{tagMapper(course.category)}</ListboxButtonStyled>
         <ListboxOptionsStyled>
           {stacks.map((stack, index) => (
             <Listbox.Option as='div' key={index} value={stack}>
-              <ListboxOptionStyled>{stack}</ListboxOptionStyled>
+              <ListboxOptionStyled>{tagMapper(stack)}</ListboxOptionStyled>
             </Listbox.Option>
           ))}
         </ListboxOptionsStyled>

@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Lesson } from '../../../interfaces/api';
-import {
-  moveLesson,
-  selectSectionList
-} from '../../../redux/reducers/course-manager';
+import { moveLesson, selectAllLessons } from '../../../redux/reducers';
 import { ItemCard } from '../item-card';
 import { useDrop } from 'react-dnd';
-import { DashboardListContainer } from './dashboard-list.styles';
+import { DashboardListContainer, DashboardListHeader } from './dashboard-list.styles';
+import FixedLessonInfoHeader from '../fixed-lesson-info-header/fixed-lesson-info-header.component';
 
 interface cardItemProps {
   type: string;
@@ -15,13 +13,25 @@ interface cardItemProps {
   lessonLocation: number;
 }
 
-function DashboardList() {
+interface dashboardListItemProps {
+  filterString: string;
+}
+
+function DashboardList({ filterString }: dashboardListItemProps) {
   const dispatch = useDispatch();
-  const lessonList = useSelector(selectSectionList);
+  const lessonList = useSelector(selectAllLessons);
+
+  const filteredList = filterLessons(filterString);
+
+
+  function filterLessons(filter: string) {
+    if (filter.length === 0) return lessonList;
+    return lessonList.filter(lesson => lesson.title.includes(filterString));
+  }
 
   const [, dropRef] = useDrop({
     accept: 'CARD',
-    hover(item: cardItemProps, monitor) {
+    hover(item: cardItemProps) {
       if (item.lessonLocation === 0) return;
 
       dispatch(
@@ -29,24 +39,27 @@ function DashboardList() {
           moveFrom: item.lessonLocation,
           moveTo: 0,
           prevIndex: item.listIndex,
-          newIndex: lessonList[0].lessons.length
+          newIndex: lessonList.length
         })
       );
 
-      item.listIndex = lessonList[0].lessons.length;
+      item.listIndex = lessonList.length;
       item.lessonLocation = 0;
     }
   });
 
   return (
     <DashboardListContainer ref={dropRef}>
-      {lessonList[0].lessons.map((lesson: Lesson, index: number) => (
-        <ItemCard
+      <DashboardListHeader>
+        <FixedLessonInfoHeader />
+      </DashboardListHeader>
+      {lessonList.map((lesson: Lesson, index: number) => (
+        filteredList.includes(lesson) ? <ItemCard
           lesson={lesson}
           listIndex={index}
           lessonLocation={0}
           key={index}
-        />
+        /> : <></>
       ))}
     </DashboardListContainer>
   );

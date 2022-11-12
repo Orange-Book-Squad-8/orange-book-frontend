@@ -1,10 +1,7 @@
-import { useDispatch } from 'react-redux';
 import { CourseEditDashboard } from '../../components/create-pannel/course-edit-dashboard';
 import { DashboardList } from '../../components/create-pannel/dashboard-list';
-import { Lesson, Section } from '../../interfaces/api';
-import { getLesson, getSection } from '../../mock-data/mockCourse';
-import { setSectionList } from '../../redux/reducers';
-import { AdminDashboardContainer, DashboardFilterBar, DashbordPannel } from './course-constructor.styles';
+import { AdminDashboardContainer, DashboardFilterBar, DashboardPanel } from './course-constructor.styles';
+import { useState } from 'react';
 
 interface cardItemProps {
   type: string;
@@ -14,24 +11,20 @@ interface cardItemProps {
 }
 
 function CourseConstructor() {
-  const dispatch = useDispatch();
+  const [typedFilter, setTypedFilter] = useState('');
 
-  const list: Lesson[] = getLesson(25);
-  const section: Section[] = getSection(5, list);
-
-  dispatch(setSectionList(section));
   return (
     <AdminDashboardContainer>
-      <DashbordPannel>
+      <DashboardPanel>
         <DashboardFilterBar>
           <div>
-            <input />
+            <input value={typedFilter} onChange={(event) => setTypedFilter(event.target.value)} />
           </div>
           <div>filtros</div>
         </DashboardFilterBar>
 
-        <DashboardList />
-      </DashbordPannel>
+        <DashboardList filterString={typedFilter} />
+      </DashboardPanel>
 
       <CourseEditDashboard />
     </AdminDashboardContainer>

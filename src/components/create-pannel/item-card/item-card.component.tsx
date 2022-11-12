@@ -1,13 +1,11 @@
-import { Lesson, Section } from '../../../interfaces/api';
+import { Lesson } from '../../../interfaces/api';
 import { DashboardIten } from './item-card.styles';
 import { useDrag, useDrop } from 'react-dnd';
-import { useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  moveLesson,
-  selectSectionList,
-  setSectionList
-} from '../../../redux/reducers/course-manager';
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { moveLesson } from '../../../redux/reducers/course-manager';
+import { LessonCardListInfo } from '../lesson-card-list-info';
+import { XCircle } from 'phosphor-react';
 
 interface cardItemProps {
   type: string;
@@ -86,13 +84,29 @@ function ItemCard({ lesson, listIndex, lessonLocation }: itemCardProps) {
     }
   });
 
+  function removeLesson() {
+    dispatch(
+      moveLesson({
+        moveFrom: lessonLocation,
+        moveTo: 0,
+        prevIndex: listIndex,
+        newIndex: 0
+      })
+    );
+  }
+
   dragRef(dropRef(ref));
 
   return (
     <DashboardIten ref={ref} isDragging={isDragging}>
-      <div>{title}</div>
-      <div> - </div>
-      <div>{listIndex}</div>
+
+      <LessonCardListInfo lesson={lesson} />
+
+      {
+        lessonLocation === 0 ? <> </> :
+          <button onClick={removeLesson}><XCircle /></button>
+      }
+
     </DashboardIten>
   );
 }

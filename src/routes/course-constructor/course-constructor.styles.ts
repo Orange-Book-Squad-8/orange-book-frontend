@@ -8,7 +8,8 @@ export const AdminDashboardContainer = styled.div`
   gap: 5px;
 `;
 
-export const DashbordPannel = styled.div`
+
+export const DashboardPanel = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 5px;
