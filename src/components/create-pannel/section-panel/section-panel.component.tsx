@@ -1,11 +1,13 @@
 import { Disclosure } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Section, Lesson } from '../../../interfaces/api';
+import { Lesson, Section } from '../../../interfaces/api';
 import {
   moveLesson,
+  selectDeletedSectionIds,
   selectSectionList,
+  setDeletedSectionIds,
   setSectionList
-} from '../../../redux/reducers/course-manager';
+} from '../../../redux/reducers';
 import { ItemCard } from '../item-card';
 import {
   DisclosureButtonEditStyled,
@@ -13,27 +15,29 @@ import {
   DisclosureStyled,
   FormDisclosureButtonEditStyled,
   MinDIv
-} from './section-pannel.styles';
+} from './section-panel.styles';
 import { useDrop } from 'react-dnd';
-import { PlusCircle, Trash, PaperPlaneTilt } from 'phosphor-react';
-import { Pencil } from 'phosphor-react';
-import { FormEvent, useEffect, useState } from 'react';
+import { PaperPlaneTilt, Pencil, PlusCircle, Trash } from 'phosphor-react';
+import { FormEvent, useState } from 'react';
 import produce from 'immer';
 
 interface SectionPannelProps {
   section: Section;
   sectionLocation: number;
 }
+
 interface cardItemProps {
   type: string;
   id: number;
   listIndex: number;
   lessonLocation: number;
 }
-function SectionPannel({ section, sectionLocation }: SectionPannelProps) {
+
+function SectionPanel({ section, sectionLocation }: SectionPannelProps) {
   const dispatch = useDispatch();
   const sectionList = useSelector(selectSectionList);
-  const [iseditingName, setIsEditingName] = useState(false);
+  const deleteSections = useSelector(selectDeletedSectionIds);
+  const [isEditingName, setIsEditingName] = useState(false);
 
   const [, dropRef] = useDrop({
     accept: 'CARD',
@@ -65,6 +69,7 @@ function SectionPannel({ section, sectionLocation }: SectionPannelProps) {
   }
 
   function deleteSection() {
+    dispatch(setDeletedSectionIds([...deleteSections, section.id]));
     const sections: Section[] = produce(sectionList, (draft) => {
       draft[sectionLocation].lessons.map((lesson) => {
         draft[0].lessons.push(lesson);
@@ -76,14 +81,14 @@ function SectionPannel({ section, sectionLocation }: SectionPannelProps) {
 
   function finishEdit(event: FormEvent) {
     event.preventDefault();
-    setIsEditingName(!iseditingName);
+    setIsEditingName(!isEditingName);
   }
 
   return (
     <Disclosure>
       <DisclosureStyled>
         <FormDisclosureButtonEditStyled onSubmit={(event) => finishEdit(event)}>
-          {iseditingName ? (
+          {isEditingName ? (
             <DisclosureButtonEditStyled
               value={section.name}
               onChange={(event) => editName(event.target.value)}
@@ -91,7 +96,7 @@ function SectionPannel({ section, sectionLocation }: SectionPannelProps) {
           ) : (
             <DisclosureButtonStyled>{section.name}</DisclosureButtonStyled>
           )}
-          <button>{iseditingName ? <PaperPlaneTilt /> : <Pencil />}</button>
+          <button>{isEditingName ? <PaperPlaneTilt /> : <Pencil />}</button>
         </FormDisclosureButtonEditStyled>
         <button onClick={deleteSection}>
           <Trash />
@@ -115,4 +120,4 @@ function SectionPannel({ section, sectionLocation }: SectionPannelProps) {
   );
 }
 
-export default SectionPannel;
+export default SectionPanel;

@@ -1,21 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectCourse,
-  selectSectionList,
-  setCourse,
-  setSectionList
-} from '../../../redux/reducers/course-manager';
-import {
-  CourseDTO,
-  Difficulty,
-  Lesson,
-  Section,
-  StackCategories
-} from '../../../interfaces/api';
+import { selectCourse, selectSectionList, setCourse, setSectionList } from '../../../redux/reducers/course-manager';
+import { CourseDTO, Difficulty, Lesson, Section, StackCategories } from '../../../interfaces/api';
 import { Listbox } from '@headlessui/react';
-import { SectionPannel } from '../section-pannel';
-import { DashboardInfo } from '../../../routes/admin-dashboard';
+import { SectionPannel } from '../section-panel';
+import { DashboardInfo } from '../../../routes/course-constructor';
 import {
   CourseEditDashboardContainer,
   ListboxButtonStyled,
@@ -38,6 +27,7 @@ const stacks: StackCategories[] = [
   'UX',
   'SOFT_SKILLS'
 ];
+
 function CourseEditDashboard() {
   const course: CourseDTO = useSelector(selectCourse);
   const lessonList = useSelector(selectSectionList);
@@ -50,12 +40,15 @@ function CourseEditDashboard() {
   function name(value: string) {
     dispatch(setCourse({ ...course, title: value }));
   }
+
   function description(value: string) {
     dispatch(setCourse({ ...course, description: value }));
   }
+
   function send() {
     dispatch(setCourse({ ...course, difficulty, category: stackCategories }));
   }
+
   function addSection() {
     dispatch(
       setSectionList([
@@ -79,7 +72,7 @@ function CourseEditDashboard() {
         <ListboxButtonStyled>{difficulty}</ListboxButtonStyled>
         <ListboxOptionsStyled>
           {difficulties.map((diff, index) => (
-            <Listbox.Option as="div" key={index} value={diff}>
+            <Listbox.Option as='div' key={index} value={diff}>
               <ListboxOptionStyled>{diff}</ListboxOptionStyled>
             </Listbox.Option>
           ))}
@@ -89,7 +82,7 @@ function CourseEditDashboard() {
         <ListboxButtonStyled>{stackCategories}</ListboxButtonStyled>
         <ListboxOptionsStyled>
           {stacks.map((stack, index) => (
-            <Listbox.Option as="div" key={index} value={stack}>
+            <Listbox.Option as='div' key={index} value={stack}>
               <ListboxOptionStyled>{stack}</ListboxOptionStyled>
             </Listbox.Option>
           ))}
