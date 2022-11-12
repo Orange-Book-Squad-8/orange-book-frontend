@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+
 // Generated using typescript-generator version 2.35.1025 on 2022-11-09 09:28:25.
 
 export interface AddCourseToUserDTO {
@@ -11,7 +12,7 @@ export interface AppUserCourseDTO {
   subscribedCourses: CourseDTO[];
   archivedCourses: CourseDTO[];
   myCourses: CourseDTO[];
-  watchedLesson: number[];
+  watchedLesson: { [index: string]: number[] };
 }
 
 export interface AppUserDTO {
@@ -45,7 +46,8 @@ export interface CourseCreateDTO {
   visible: boolean;
 }
 
-export interface CourseCreateDTOBuilder {}
+export interface CourseCreateDTOBuilder {
+}
 
 export interface CourseCreateSectionDTO {
   courseId: number;
@@ -61,6 +63,19 @@ export interface CourseDTO {
   difficulty: Difficulty;
   visible: boolean;
   totalLessons: number;
+}
+
+export interface CourseEditDTO {
+  id: number;
+  title: string;
+  description: string;
+  creator: string;
+  category: StackCategories;
+  difficulty: Difficulty;
+  visible: boolean;
+  totalLessons: number;
+  sections: Section[];
+  deletedSectionIds: number[];
 }
 
 export interface CourseRemoveSectionDTO {
@@ -107,7 +122,8 @@ export interface SectionCreateDTO {
   name: string;
 }
 
-export interface SectionCreateDTOBuilder {}
+export interface SectionCreateDTOBuilder {
+}
 
 export interface SectionDTO {
   id: number;

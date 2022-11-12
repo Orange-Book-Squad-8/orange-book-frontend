@@ -1,4 +1,4 @@
-import { Difficulty, StackCategories } from '../interfaces/api';
+import { ContentType, Difficulty, StackCategories } from '../interfaces/api';
 
 const TRANSFORMATION = {
   BEGINNER: 'Iniciante',
@@ -10,9 +10,13 @@ const TRANSFORMATION = {
   FULLSTACK: 'Fullstack',
   UI: 'Ui',
   UX: 'Ux',
-  SOFT_SKILLS: 'Soft Skills'
+  SOFT_SKILLS: 'Soft Skills',
+  VIDEO: 'Vídeo',
+  ARTICLE: 'Artigo',
+  COURSE: 'Curso',
+  BOOK: 'Livro'
 };
 
-export function tagMapper(tagValue: Difficulty | StackCategories) {
+export function tagMapper(tagValue: Difficulty | StackCategories | ContentType) {
   return TRANSFORMATION[tagValue];
 }
