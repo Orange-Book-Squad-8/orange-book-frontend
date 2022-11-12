@@ -1,40 +1,35 @@
-import { useContext, useEffect, useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
-import { CourseEditDashboard } from '../../components/create-pannel/course-edit-dashboard';
-import { DashboardList } from '../../components/create-pannel/dashboard-list';
-import { ItemCard } from '../../components/create-pannel/item-card';
-import { SectionPannel } from '../../components/create-pannel/section-pannel';
-import { Lesson, Section } from '../../interfaces/api';
-import { getLesson, getSection } from '../../mock-data/mockCourse';
-import {
-  selectSectionList,
-  setSectionList
-} from '../../redux/reducers/course-manager';
 import {
   AdminDashboardContainer,
   DashboardFilterBar,
-  DashboardInfo,
-  DashbordPannel
-} from './admin-dashboard.styles';
+  DashboardListContainer,
+  DashboardPanel,
+  LessonEditDashboardContainer,
+  LessonEditDashboardForm
+} from '.';
+import { Listbox } from '@headlessui/react';
+import {
+  ListboxButtonStyled,
+  ListboxOptionsStyled,
+  ListboxOptionStyled
+} from '../../components/create-pannel/course-edit-dashboard';
+import { useState } from 'react';
+import { ContentType } from '../../interfaces/api';
+import { tagMapper } from '../../utils';
 
-interface cardItemProps {
-  type: string;
-  lessonId: number;
-  listIndex: number;
-  listLastId: number;
-}
+const contents: ContentType[] = [
+  'VIDEO',
+  'ARTICLE',
+  'COURSE',
+  'BOOK'
+];
 
 function AdminDashboard() {
-  const dispatch = useDispatch();
+  const [contentType, setContentType] =
+    useState<ContentType>('VIDEO');
 
-  const list: Lesson[] = getLesson(25);
-  const section: Section[] = getSection(5, list);
-
-  dispatch(setSectionList(section));
   return (
     <AdminDashboardContainer>
-      <DashbordPannel>
+      <DashboardPanel>
         <DashboardFilterBar>
           <div>
             <input />
@@ -42,10 +37,39 @@ function AdminDashboard() {
           <div>filtros</div>
         </DashboardFilterBar>
 
-        <DashboardList />
-      </DashbordPannel>
+        <DashboardListContainer>
 
-      <CourseEditDashboard />
+        </DashboardListContainer>
+      </DashboardPanel>
+
+      <LessonEditDashboardContainer>
+        <LessonEditDashboardForm>
+          <p>Título</p>
+          <input type='text' />
+          <p>Tipo de conteúdo</p>
+          <Listbox value={contentType} onChange={setContentType}>
+            <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
+            <ListboxOptionsStyled>
+              {contents.map((content, index) => (
+                <Listbox.Option as='div' key={index} value={content}>
+                  <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
+                </Listbox.Option>
+              ))}
+            </ListboxOptionsStyled>
+          </Listbox>
+          <p>Autor</p>
+          <input type='text' />
+          <p>Tópico</p>
+          <input type='text' />
+          <p>Descrição</p>
+          <textarea />
+          <p>Link</p>
+          <input type='url' />
+          <p>Duração</p>
+          <input type='text' />
+          <button>submit</button>
+        </LessonEditDashboardForm>
+      </LessonEditDashboardContainer>
     </AdminDashboardContainer>
   );
 }

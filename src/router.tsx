@@ -4,9 +4,10 @@ import { Index } from './routes/index';
 import { Home } from './routes/home';
 import { Dashboard } from './routes/dashboard';
 import { Register } from './routes/register';
-import { AdminDashboard } from './routes/admin-dashboard';
+import { CourseConstructor } from './routes/course-constructor';
 import { ProtectedRoutes } from './routes/protected-routes';
 import { adminRole, userRole } from './mock-data';
+import { AdminDashboard } from './routes/admin-dashboard';
 
 const Router = createBrowserRouter([
   {
@@ -34,9 +35,14 @@ const Router = createBrowserRouter([
         element: <Register />
       },
       {
-        path: '/adm/dashboard',
+        path: '/edit/course',
+        element: <CourseConstructor />
+      },
+      {
+        path: '/admin/edit/lessons',
         element: <AdminDashboard />
-      }
+      },
+
     ]
   }
 ]);
