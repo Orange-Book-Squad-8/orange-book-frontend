@@ -86,6 +86,17 @@ export const DashboardPanel = styled.div`
   overflow: hidden;
 `;
 
+export const LessonEditDashboardContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: wheat;
+  padding: 4px;
+  border-radius: 5px;
+  overflow: hidden;
+  gap: 1px;
+  width: 30vw;
+`;
 
 export const LessonEditDashboardForm = styled.form`
   padding: 4px;

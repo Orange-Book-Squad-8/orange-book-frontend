@@ -2,74 +2,55 @@ import {
   AdminDashboardContainer,
   DashboardFilterBar,
   DashboardListContainer,
+  DashboardListHeader,
   DashboardPanel,
-  LessonEditDashboardContainer,
-  LessonEditDashboardForm
+  LessonActions
 } from '.';
-import { Listbox } from '@headlessui/react';
-import {
-  ListboxButtonStyled,
-  ListboxOptionsStyled,
-  ListboxOptionStyled
-} from '../../components/create-pannel/course-edit-dashboard';
+import { useSelector } from 'react-redux';
+import { selectAllLessons } from '../../redux/reducers';
+import { LessonInfo } from '../../components/create-pannel/lesson-info';
+import { LessonEditDashboard } from '../../components/create-pannel/lesson-edit-dashboard';
+import FixedLessonInfoHeader
+  from '../../components/create-pannel/fixed-lesson-info-header/fixed-lesson-info-header.component';
 import { useState } from 'react';
-import { ContentType } from '../../interfaces/api';
-import { tagMapper } from '../../utils';
 
-const contents: ContentType[] = [
-  'VIDEO',
-  'ARTICLE',
-  'COURSE',
-  'BOOK'
-];
 
 function AdminDashboard() {
-  const [contentType, setContentType] =
-    useState<ContentType>('VIDEO');
+  const [typedFilter, setTypedFilter] = useState('');
+
+  const lessons = useSelector(selectAllLessons);
+  const filteredList = filterLessons(typedFilter);
+
+  function filterLessons(filter: string) {
+    if (filter.length === 0) return lessons;
+    return lessons.filter(lesson => lesson.title.includes(filter));
+  }
 
   return (
     <AdminDashboardContainer>
       <DashboardPanel>
         <DashboardFilterBar>
           <div>
-            <input />
+            <input value={typedFilter} onChange={(event) => setTypedFilter(event.target.value)} />
           </div>
           <div>filtros</div>
         </DashboardFilterBar>
 
         <DashboardListContainer>
-
+          <DashboardListHeader>
+            <FixedLessonInfoHeader />
+            <LessonActions>
+              Ver
+            </LessonActions>
+          </DashboardListHeader>
+          {
+            filteredList.map((lesson, index) => (<LessonInfo key={index} lesson={lesson} />))
+          }
         </DashboardListContainer>
       </DashboardPanel>
 
-      <LessonEditDashboardContainer>
-        <LessonEditDashboardForm>
-          <p>Título</p>
-          <input type='text' />
-          <p>Tipo de conteúdo</p>
-          <Listbox value={contentType} onChange={setContentType}>
-            <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
-            <ListboxOptionsStyled>
-              {contents.map((content, index) => (
-                <Listbox.Option as='div' key={index} value={content}>
-                  <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
-                </Listbox.Option>
-              ))}
-            </ListboxOptionsStyled>
-          </Listbox>
-          <p>Autor</p>
-          <input type='text' />
-          <p>Tópico</p>
-          <input type='text' />
-          <p>Descrição</p>
-          <textarea />
-          <p>Link</p>
-          <input type='url' />
-          <p>Duração</p>
-          <input type='text' />
-          <button>submit</button>
-        </LessonEditDashboardForm>
-      </LessonEditDashboardContainer>
+      <LessonEditDashboard />
+
     </AdminDashboardContainer>
   );
 }
