@@ -5,7 +5,7 @@ import { Course } from '../../interfaces/api';
 export const activeCourseSlice = createSlice({
   name: 'activeCourse',
   initialState: {
-    activeCourse: {} as Course
+    activeCourse: null as null | Course
   },
   reducers: {
     setActiveCourse: (state, action) => {

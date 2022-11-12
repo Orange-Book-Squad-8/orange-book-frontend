@@ -11,7 +11,7 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     min-height: 100vh;
-    font-family: ${({ theme }) => theme.ubuntu};
+    font: 100%/1.5 ${({ theme }) => theme.ubuntu};
     background-color: ${({ theme }) => theme.primaryDarker};
   }
 

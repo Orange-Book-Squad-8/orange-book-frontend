@@ -145,3 +145,5 @@ export const createCourses = (times = 10) => {
 
   return courses;
 };
+
+export const createUserCourse = () => {};

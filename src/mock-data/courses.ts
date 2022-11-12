@@ -81,7 +81,7 @@ export const courseList: AppUserCourseDTO = {
     {
       id: 3,
       category: 'FRONT_END',
-      creator: 'creator1',
+      creator: 'Orange Originals',
       description:
         'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
       difficulty: 'BEGINNER',
@@ -137,16 +137,17 @@ export const courseList: AppUserCourseDTO = {
       visible: true
     }
   ],
-  watchedLesson: [
-    100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 200, 201
-  ]
+  watchedLesson: {
+    '3': [200, 201]
+  }
 };
 
 export const activeCourse: Course = {
   id: 3,
   category: 'FRONT_END',
   creator: 'Orange Originals',
-  description: 'asd',
+  description:
+    'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
   difficulty: 'BEGINNER',
   title: 'Do Front ao Fim, tudo sobre React',
   visible: true,
@@ -156,33 +157,36 @@ export const activeCourse: Course = {
       lessons: [
         {
           id: 200,
-          author: '',
+          author: 'fulano',
           contentType: 'ARTICLE',
-          description: '',
+          description:
+            'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
           durationInMinutes: 5,
           link: 'www.site.com',
-          title: 'lorem 1',
-          topic: ''
+          title: 'Titulo da lição 1',
+          topic: 'Redux'
         },
         {
           id: 201,
-          author: '',
-          contentType: 'ARTICLE',
-          description: '',
+          author: 'sicrano',
+          contentType: 'VIDEO',
+          description:
+            'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
           durationInMinutes: 5,
           link: 'www.site.com',
-          title: 'lorem 2',
-          topic: ''
+          title: 'Lacinia quis vel eros donec ac odio tempor',
+          topic: 'SASS'
         },
         {
           id: 202,
           author: '',
           contentType: 'ARTICLE',
-          description: '',
+          description:
+            'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
           durationInMinutes: 5,
           link: 'www.site.com',
-          title: 'lorem 3',
-          topic: ''
+          title: 'Sed adipiscing diam donec adipiscing',
+          topic: 'Styled Components'
         }
       ],
       name: 'inicio'

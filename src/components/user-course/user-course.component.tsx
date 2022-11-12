@@ -12,6 +12,7 @@ import {
 } from './index';
 
 interface IUserCourse {
+  id: number;
   title: string;
   category: StackCategories;
   original?: boolean;
@@ -21,6 +22,7 @@ interface IUserCourse {
 
 function UserCourse(props: IUserCourse) {
   const {
+    id,
     title,
     category,
     original = false,
@@ -39,7 +41,7 @@ function UserCourse(props: IUserCourse) {
         />
       )}
 
-      <StyledLink to="#">
+      <StyledLink to={`/user/course/${id}`}>
         <TitleImageContainer>
           <Title>{title}</Title>
 
