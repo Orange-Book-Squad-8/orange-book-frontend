@@ -4,12 +4,7 @@ import { LessonEditPanel } from '../../components/create-pannel/lesson-edit-pane
 import { api } from '../../lib/axios';
 import { useDispatch } from 'react-redux';
 import { setSectionList } from '../../redux/reducers';
-import { Section } from '../../interfaces/api';
 
-interface sectionListProps {
-  sections: Section[],
-  deletedSectionIds: number[]
-}
 
 function AdminDashboard() {
   const dispatch = useDispatch();

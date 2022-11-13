@@ -1,4 +1,4 @@
-import { LessonEditDashboardContainer } from '.';
+import { BaseTextField, DashboardPanel, LessonEditDashboardContainer } from '.';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsEditing, selectIsOpen, setIsEditing, setIsOpen, setLesson } from '../../../redux/reducers';
 import { LessonUpdateForm } from '../lesson-edit-dashboard-update-form';
@@ -30,22 +30,21 @@ function LessonEditDashboard() {
     <LessonEditDashboardContainer>
       {
         isOpen ?
-          <>
+          <DashboardPanel>
             {
               isEditing ? <LessonUpdateForm /> :
                 <LessonDashboardPeak />
             }
-          </> :
-          <div>
+          </DashboardPanel> :
+          <BaseTextField>
             <div>Escolha a lesson a ser editada</div>
             <div>Ou</div>
-            <div>
-              <div>Crie uma lesson</div>
-              <button onClick={newLesson}>
-                <PlusCircle />
-              </button>
-            </div>
-          </div>
+
+            <div>Crie uma lesson</div>
+            <button onClick={newLesson}>
+              <PlusCircle size={24} />
+            </button>
+          </BaseTextField>
 
 
       }

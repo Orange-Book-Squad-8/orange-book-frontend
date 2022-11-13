@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editLesson, selectLesson, setIsEditing, setIsOpen, setLesson, setSectionList } from '../../../redux/reducers';
 import { useState } from 'react';
 import { api } from '../../../lib/axios';
+import { OptionButton, OptionButtons } from '../lesson-edit-dashboard-peak';
+import { InputArea, InputFields, InputFieldsContainter } from '../lesson-edit-dashboard';
 
 const contents: ContentType[] = [
   'VIDEO',
@@ -105,31 +107,37 @@ function LessonEditDashboardUpdateForm() {
 
   return (
     <LessonEditDashboardForm>
-      <p>Título</p>
-      <input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
-      <p>Tipo de conteúdo</p>
-      <Listbox value={contentType} onChange={setContentType}>
-        <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
-        <ListboxOptionsStyled>
-          {contents.map((content, index) => (
-            <Listbox.Option as='div' key={index} value={content}>
-              <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
-            </Listbox.Option>
-          ))}
-        </ListboxOptionsStyled>
-      </Listbox>
-      <p>Autor</p>
-      <input type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />
-      <p>Tópico</p>
-      <input type='text' value={topic} onChange={(event) => setTopic(event.target.value)} />
-      <p>Descrição</p>
-      <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
-      <p>Link</p>
-      <input type='url' value={link} onChange={(event) => setLink(event.target.value)} />
-      <p>Duração</p>
-      <input type='number' value={durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
-      <button onClick={submit} disabled={cantSubmit}>submit</button>
-      <button onClick={cancel}>cancel</button>
+      <InputFieldsContainter>
+        <p>Título</p>
+        <InputFields type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
+        <p>Tipo de conteúdo</p>
+        <Listbox value={contentType} onChange={setContentType}>
+          <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
+          <ListboxOptionsStyled>
+            {contents.map((content, index) => (
+              <Listbox.Option as='div' key={index} value={content}>
+                <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
+              </Listbox.Option>
+            ))}
+          </ListboxOptionsStyled>
+        </Listbox>
+        <p>Autor</p>
+        <InputFields type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />
+        <p>Tópico</p>
+        <InputFields type='text' value={topic} onChange={(event) => setTopic(event.target.value)} />
+        <p>Descrição</p>
+        <InputArea value={description} onChange={(event) => setDescription(event.target.value)} />
+        <p>Link</p>
+        <InputFields type='url' value={link} onChange={(event) => setLink(event.target.value)} />
+        <p>Duração</p>
+        <InputFields type='number' value={durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
+      </InputFieldsContainter>
+
+      <OptionButtons>
+        <OptionButton onClick={submit} disabled={cantSubmit}>submit</OptionButton>
+        <OptionButton onClick={cancel}>cancel</OptionButton>
+      </OptionButtons>
+
     </LessonEditDashboardForm>
   );
 }

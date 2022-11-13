@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLesson, setIsEditing, setIsOpen } from '../../../redux/reducers';
-import { LessonEditDashboardPeakContainer } from '.';
+import { ContentBox, LessonEditDashboardPeakContainer, OptionButton, OptionButtons } from '.';
 
 function LessonDashboardPeak() {
   const lesson = useSelector(selectLesson);
@@ -18,27 +18,31 @@ function LessonDashboardPeak() {
 
   return (
     <LessonEditDashboardPeakContainer>
-      <div>Título</div>
-      <div>{title}</div>
-      <div>Tipo de conteúdo</div>
-      <div>{contentType}</div>
-      <div>Autor</div>
-      <div>{author}</div>
+      <div>
+        <div>Título:</div>
+        <ContentBox>{title}</ContentBox>
+        <div>Tipo de conteúdo:</div>
+        <ContentBox>{contentType}</ContentBox>
+        <div>Autor:</div>
+        <ContentBox>{author}</ContentBox>
 
-      <div>Tópico</div>
-      <div>{topic}</div>
+        <div>Tópico:</div>
+        <ContentBox>{topic}</ContentBox>
 
-      <div>Descrição</div>
-      <div>{description}</div>
+        <div>Descrição:</div>
+        <ContentBox>{description}</ContentBox>
 
-      <div>Link</div>
-      <div>{link}</div>
+        <div>Link:</div>
+        <ContentBox>{link}</ContentBox>
 
-      <div>Duração</div>
-      <div>{durationInMinutes}</div>
+        <div>Duração:</div>
+        <ContentBox>{durationInMinutes}</ContentBox>
+      </div>
 
-      <button onClick={submit}>fechar</button>
-      <button onClick={edit}>edit</button>
+      <OptionButtons>
+        <OptionButton onClick={edit}>edit</OptionButton>
+        <OptionButton onClick={submit}>fechar</OptionButton>
+      </OptionButtons>
     </LessonEditDashboardPeakContainer>
   );
 }

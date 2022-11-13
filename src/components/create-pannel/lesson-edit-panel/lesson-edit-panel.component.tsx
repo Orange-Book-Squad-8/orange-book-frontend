@@ -4,16 +4,21 @@ import { LessonInfo } from '../lesson-info';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSectionList } from '../../../redux/reducers';
+import { Section } from '../../../interfaces/api';
+
+interface sectionListProps {
+  sections: Section[],
+  deletedSectionIds: number[],
+}
 
 function LessonEditPanel() {
   const [typedFilter, setTypedFilter] = useState('');
   const sections = useSelector(selectSectionList);
   const filteredList = filterLessons(typedFilter);
 
-
   function filterLessons(filter: string) {
     if (filter.length === 0) return sections.sections[0].lessons;
-    return sections.sections[0].lessons.filter(lesson => lesson.title.includes(filter));
+    return sections.sections[0].lessons.filter(lesson => lesson.title.toLowerCase().includes(filter.toLowerCase()));
   }
 
   return (

@@ -24,7 +24,7 @@ function DashboardList({ filterString }: dashboardListItemProps) {
 
   function filterLessons(filter: string) {
     if (filter.length === 0) return sections.sections[0].lessons;
-    return sections.sections[0].lessons.filter(lesson => lesson.title.includes(filter));
+    return sections.sections[0].lessons.filter(lesson => lesson.title.toLowerCase().includes(filter.toLowerCase()));
   }
 
   const [, dropRef] = useDrop({

@@ -13,12 +13,10 @@ interface moveLessonProps {
 interface sectionListProps {
   sections: Section[],
   deletedSectionIds: number[],
-  newSections: Section[],
 }
 
 const initialSectionList: sectionListProps = {
   deletedSectionIds: [],
-  newSections: [],
   sections: [{
     name: 'list',
     id: 0,
