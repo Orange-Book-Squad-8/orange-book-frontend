@@ -129,7 +129,7 @@ function LessonEditDashboardUpdateForm() {
       <p>Duração</p>
       <input type='number' value={durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
       <button onClick={submit} disabled={cantSubmit}>submit</button>
-      <button onClick={cancel} disabled={cantSubmit}>cancel</button>
+      <button onClick={cancel}>cancel</button>
     </LessonEditDashboardForm>
   );
 }

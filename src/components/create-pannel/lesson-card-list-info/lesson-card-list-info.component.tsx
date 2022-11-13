@@ -17,7 +17,7 @@ function LessonCardListInfo({ lesson }: LessonCardListInfoProps) {
       <LessonInfoStatsPrimary>{lesson.title}</LessonInfoStatsPrimary>
       <LessonInfoStatsPrimaryAuthor>{lesson.author}</LessonInfoStatsPrimaryAuthor>
       <LessonInfoStatsSecondary>{tagMapper(lesson.contentType)}</LessonInfoStatsSecondary>
-      <LessonInfoStatsSecondary>{lesson.durationInMinutes}</LessonInfoStatsSecondary>
+      <LessonInfoStatsSecondary>{lesson.durationInMinutes} min</LessonInfoStatsSecondary>
     </LessonCardListInfoContainer>
   );
 }
