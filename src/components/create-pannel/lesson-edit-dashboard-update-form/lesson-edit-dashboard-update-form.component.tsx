@@ -1,6 +1,12 @@
 import { LessonEditDashboardForm } from '.';
-import { Listbox } from '@headlessui/react';
-import { ListboxButtonStyled, ListboxOptionsStyled, ListboxOptionStyled } from '../course-edit-dashboard';
+import { Dialog, Listbox } from '@headlessui/react';
+import {
+  DialogPanel,
+  DialogTitle,
+  ListboxButtonStyled,
+  ListboxOptionsStyled,
+  ListboxOptionStyled
+} from '../course-edit-dashboard';
 import { tagMapper } from '../../../utils';
 import { ContentType } from '../../../interfaces/api';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +25,7 @@ const contents: ContentType[] = [
 
 function LessonEditDashboardUpdateForm() {
   const [cantSubmit, setCantSubmit] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const lesson = useSelector(selectLesson);
   const { id, title, description, contentType, link, durationInMinutes, topic, author } = lesson;
   const dispatch = useDispatch();
@@ -87,17 +94,20 @@ function LessonEditDashboardUpdateForm() {
           id
         });
       }
-
-      const response = await api.get('/lessons/all');
-      dispatch(setSectionList([{ lessons: response.data, name: 'adm lessons', id: 0 }]));
-
-      dispatch(setIsEditing(false));
-      dispatch(setIsOpen(false));
-      dispatch(editLesson(lesson));
-
+      setIsDialogOpen(true);
     } catch (e) {
       console.error(e);
     }
+  }
+
+  async function closeAndUpdate() {
+    const response = await api.get('/lessons/all');
+
+    dispatch(setSectionList([{ lessons: response.data, name: 'adm lessons', id: 0 }]));
+    dispatch(setIsEditing(false));
+    dispatch(setIsOpen(false));
+    dispatch(editLesson(lesson));
+    setIsDialogOpen(false);
   }
 
   function cancel() {
@@ -137,6 +147,15 @@ function LessonEditDashboardUpdateForm() {
         <OptionButton onClick={submit} disabled={cantSubmit}>submit</OptionButton>
         <OptionButton onClick={cancel}>cancel</OptionButton>
       </OptionButtons>
+
+      <Dialog open={isDialogOpen} onClose={closeAndUpdate}>
+        <DialogPanel>
+          <DialogTitle>
+            <Dialog.Title>Success</Dialog.Title>
+            <button onClick={closeAndUpdate}>close</button>
+          </DialogTitle>
+        </DialogPanel>
+      </Dialog>
 
     </LessonEditDashboardForm>
   );

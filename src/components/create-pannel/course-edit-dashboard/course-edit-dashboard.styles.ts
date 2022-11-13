@@ -1,4 +1,4 @@
-import { Listbox } from '@headlessui/react';
+import { Dialog, Listbox } from '@headlessui/react';
 import styled from 'styled-components';
 
 export const CourseEditDashboardContainer = styled.div`
@@ -28,3 +28,24 @@ export const ListboxOptionStyled = styled.div`
   }
 `;
 export const SectionButton = styled.button``;
+
+export const DialogPanel = styled(Dialog.Panel)`
+  position: fixed;
+  inset: 0 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(34 12 64 / 60%);;
+`;
+export const DialogTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: goldenrod;
+  width: 20%;
+  height: 20%;
+  border-radius: 5px;
+  opacity: 1;
+`;
