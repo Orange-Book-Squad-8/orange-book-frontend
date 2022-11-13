@@ -1,14 +1,12 @@
-import { useSelector } from 'react-redux';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
+import { useDispatch, useSelector } from 'react-redux';
+import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper';
 import { SwiperSlide } from 'swiper/react';
-import { selectOriginalCourses, selectPlaylists } from '../../redux/reducers';
+import { selectOriginalCourses, selectPlaylists, selectUser, setUserCourseList } from '../../redux/reducers';
 import { UserCourse } from '../../components/user-course';
 import { Carrossel } from '../../components/carrossel';
-import {
-  DashboardContainer,
-  DashboardSection,
-  CoursesContainer
-} from './index';
+import { CoursesContainer, DashboardContainer, DashboardSection } from './index';
+import { useEffect } from 'react';
+import { api } from '../../lib/axios';
 
 const CARROSSEL_CONFIGS = {
   modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
@@ -45,10 +43,25 @@ const CARROSSEL_CONFIGS = {
 function Dashboard() {
   const courses = useSelector(selectOriginalCourses);
   const playlists = useSelector(selectPlaylists);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchUserCourses();
+  }, []);
+
+  async function fetchUserCourses() {
+    try {
+      const userCourses = await api.get(`/users/${user.id}/courses`);
+      dispatch(setUserCourseList(userCourses.data));
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
-    <DashboardContainer title="">
-      <DashboardSection title="Meus Cursos">
+    <DashboardContainer title=''>
+      <DashboardSection title='Meus Cursos'>
         <CoursesContainer>
           {courses?.map((course) => (
             <UserCourse original {...course} key={course.title} />
@@ -56,7 +69,7 @@ function Dashboard() {
         </CoursesContainer>
       </DashboardSection>
 
-      <DashboardSection title="Minhas trilhas">
+      <DashboardSection title='Minhas trilhas'>
         <Carrossel configs={CARROSSEL_CONFIGS}>
           {playlists?.map((course) => (
             <SwiperSlide>

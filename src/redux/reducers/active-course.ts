@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../config/store';
 import { Course } from '../../interfaces/api';
 
@@ -8,7 +8,7 @@ export const activeCourseSlice = createSlice({
     activeCourse: null as null | Course
   },
   reducers: {
-    setActiveCourse: (state, action) => {
+    setActiveCourse: (state, action: PayloadAction<Course>) => {
       state.activeCourse = action.payload;
     }
   }

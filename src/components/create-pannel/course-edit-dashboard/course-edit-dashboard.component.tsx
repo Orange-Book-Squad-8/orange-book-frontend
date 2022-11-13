@@ -40,7 +40,7 @@ function CourseEditDashboard() {
   const lessonList = useSelector(selectSectionList);
   const sections: Section[] = lessonList.sections.filter((section, i) => i != 0);
   const dispatch = useDispatch();
-  const { deletedSectionIds, newSections } = lessonList;
+  const { deletedSectionIds } = lessonList;
   const { id, title, category, description, difficulty, visible, totalLessons, creator } = course;
 
   function setName(value: string) {

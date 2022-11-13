@@ -1,6 +1,5 @@
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { useSelector, useDispatch } from 'react-redux';
-import { createCourses } from '../../mock-data/mockCourse';
+import { A11y, Navigation, Pagination, Scrollbar } from 'swiper';
+import { useDispatch, useSelector } from 'react-redux';
 import { SwiperSlide } from 'swiper/react';
 import { CourseCard } from '../../components/course-card';
 import { Carrossel } from '../../components/carrossel';
@@ -11,8 +10,9 @@ import {
   selectFilteredByCategory,
   selectOriginals,
   setAvailableCourses
-} from '../../redux/reducers/available-courses';
-import { Course } from '../../interfaces/api';
+} from '../../redux/reducers';
+import { Course, CourseDTO } from '../../interfaces/api';
+import { api } from '../../lib/axios';
 
 const CARROSSEL_CONFIGS = {
   modules: [Navigation, Pagination, Scrollbar, A11y],
@@ -48,13 +48,24 @@ function Home() {
   const byCategory = useSelector(selectFilteredByCategory);
 
   useEffect(() => {
-    dispatch(setAvailableCourses(createCourses(30)));
+    fetchAvailableCourses();
   }, []);
 
+  async function fetchAvailableCourses() {
+    try {
+      const response = await api.get<CourseDTO[]>('/courses/all');
+
+      dispatch(setAvailableCourses(response.data));
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
-    <HomeContainer title="">
+    <HomeContainer title=''>
       {originals.length && (
-        <HomeSection title="Originals da Orange">
+        <HomeSection title='Originals da Orange'>
           <OriginalsContainer>
             {originals?.map((course) => (
               <CourseCard original {...course} key={course.title} />
@@ -64,7 +75,7 @@ function Home() {
       )}
 
       {prefferred.length && (
-        <HomeSection title="De acordo com suas preferências">
+        <HomeSection title='De acordo com suas preferências'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {prefferred?.map((course: Course) => (
               <SwiperSlide>
@@ -79,7 +90,7 @@ function Home() {
       )}
 
       {byCategory?.frontEnd.length && (
-        <HomeSection title="Front End">
+        <HomeSection title='Front End'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.frontEnd?.map((course: Course) => (
               <SwiperSlide>
@@ -94,7 +105,7 @@ function Home() {
       )}
 
       {byCategory?.backEnd.length && (
-        <HomeSection title="Back End">
+        <HomeSection title='Back End'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.backEnd?.map((course: Course) => (
               <SwiperSlide>
@@ -109,7 +120,7 @@ function Home() {
       )}
 
       {byCategory?.fullstack.length && (
-        <HomeSection title="Fullstack">
+        <HomeSection title='Fullstack'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.fullstack?.map((course: Course) => (
               <SwiperSlide>
@@ -124,7 +135,7 @@ function Home() {
       )}
 
       {byCategory?.ux.length && (
-        <HomeSection title="UX">
+        <HomeSection title='UX'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ux?.map((course: Course) => (
               <SwiperSlide>
@@ -139,7 +150,7 @@ function Home() {
       )}
 
       {byCategory?.ui.length && (
-        <HomeSection title="UI">
+        <HomeSection title='UI'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ui?.map((course: Course) => (
               <SwiperSlide>
