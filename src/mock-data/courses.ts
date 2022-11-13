@@ -49,13 +49,13 @@ export const orangeBooks = [
 ];
 
 export const userRole: Role = {
-  id: 10000,
-  name: 'user'
+  id: 12,
+  name: 'user1'
 };
 
 export const adminRole: Role = {
-  id: 10001,
-  name: 'user'
+  id: 13,
+  name: 'admin'
 };
 
 export const mockedUser: AppUserDTO = {

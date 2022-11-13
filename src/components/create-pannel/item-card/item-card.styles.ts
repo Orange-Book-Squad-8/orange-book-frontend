@@ -1,14 +1,16 @@
 import styled, { css } from 'styled-components';
 
-interface DashboardItenProps {
+interface DashboardItemProps {
   isDragging: boolean;
+  lessonLocationBoolean: boolean;
 }
 
-export const DashboardIten = styled.div<DashboardItenProps>`
+export const DashboardItem = styled.div<DashboardItemProps>`
   display: flex;
   flex-direction: row;
   border-color: black;
   border-style: solid;
+  align-items: center;
   border-bottom-width: 1px;
   padding: 1rem 0.3rem;
   margin: 2px 0;
@@ -19,4 +21,21 @@ export const DashboardIten = styled.div<DashboardItenProps>`
             border-radius: 5px;
             border: 1px solid black;
           `}
+  ${(props) =>
+          props.lessonLocationBoolean &&
+          css`
+            max-height: 4Rem;
+            overflow: hidden;
+            font-size: 0.8rem;
+            margin: 1px 0;
+            padding: 2px 0;
+          `}
+
+`;
+
+export const RemoveButton = styled.button`
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

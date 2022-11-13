@@ -10,13 +10,35 @@ interface moveLessonProps {
   newIndex: number;
 }
 
+interface sectionListProps {
+  sections: Section[],
+  deletedSectionIds: number[],
+  newSections: Section[],
+}
+
+const initialSectionList: sectionListProps = {
+  deletedSectionIds: [],
+  newSections: [],
+  sections: [{
+    name: 'list',
+    id: 0,
+    lessons: [{
+      title: '',
+      author: '',
+      durationInMinutes: 0,
+      id: 1,
+      link: '',
+      topic: '',
+      contentType: 'BOOK',
+      description: ''
+    }]
+  }]
+};
+
 export const courseManagerSlice = createSlice({
   name: 'courseManager',
   initialState: {
-    sectionList: {
-      sections: [] as Section[],
-      deletedSectionIds: [] as number[]
-    },
+    sectionList: initialSectionList as sectionListProps,
     course: {} as CourseDTO,
     lesson: {
       lesson: {} as Lesson,
@@ -25,22 +47,25 @@ export const courseManagerSlice = createSlice({
     }
   },
   reducers: {
-    setSectionList: (state, action) => {
+    setSectionList: (state, action: PayloadAction<Section[]>) => {
       state.sectionList.sections = action.payload;
     },
-    setDeletedSectionIds: (state, action) => {
+    newSection: (state, action: PayloadAction<Section[]>) => {
+      state.sectionList.newSections = action.payload;
+    },
+    setDeletedSectionIds: (state, action: PayloadAction<number[]>) => {
       state.sectionList.deletedSectionIds = action.payload;
     },
-    setCourse: (state, action) => {
+    setCourse: (state, action: PayloadAction<CourseDTO>) => {
       state.course = action.payload;
     },
-    setLesson: (state, action) => {
+    setLesson: (state, action: PayloadAction<Lesson>) => {
       state.lesson.lesson = action.payload;
     },
-    setIsOpen: (state, action) => {
+    setIsOpen: (state, action: PayloadAction<boolean>) => {
       state.lesson.isOpen = action.payload;
     },
-    setIsEditing: (state, action) => {
+    setIsEditing: (state, action: PayloadAction<boolean>) => {
       state.lesson.isEditing = action.payload;
     },
     moveLesson: (state, action: PayloadAction<moveLessonProps>) => {
@@ -72,14 +97,13 @@ export const {
   setDeletedSectionIds,
   setIsOpen,
   setIsEditing,
-  editLesson
+  editLesson,
+  newSection
 } =
   courseManagerSlice.actions;
 
 export const selectSectionList = (state: RootState) =>
-  state.courseManager.sectionList.sections;
-export const selectAllLessons = (state: RootState) =>
-  state.courseManager.sectionList.sections[0].lessons;
+  state.courseManager.sectionList;
 export const selectCourse = (state: RootState) => state.courseManager.course;
 export const selectLesson = (state: RootState) => state.courseManager.lesson.lesson;
 export const selectIsOpen = (state: RootState) => state.courseManager.lesson.isOpen;

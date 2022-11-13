@@ -13,9 +13,18 @@ export const LessonInfoContainer = styled.div`
 export const LessonActions = styled.div`
   display: flex;
   flex-direction: row;
-  width: 50px;
   justify-content: center;
+  align-items: center;
+  width: 50px;
   flex-grow: 0;
   gap: 1px;
   padding: 0 10px;
+  height: 100%;
+`;
+
+export const ButtonPeak = styled.button`
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -10,6 +10,8 @@ export const CourseEditDashboardContainer = styled.div`
   border-radius: 5px;
   overflow: hidden;
   gap: 1px;
+  width: 30%;
+  min-width: 20rem;
 `;
 export const ListboxButtonStyled = styled(Listbox.Button)`
   width: 200px;

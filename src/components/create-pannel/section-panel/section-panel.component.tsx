@@ -35,10 +35,10 @@ interface cardItemProps {
 
 function SectionPanel({ section, sectionLocation }: SectionPannelProps) {
   const dispatch = useDispatch();
-  const sectionList = useSelector(selectSectionList);
+  const sectionFullList = useSelector(selectSectionList);
   const deleteSections = useSelector(selectDeletedSectionIds);
   const [isEditingName, setIsEditingName] = useState(false);
-
+  const sectionList = sectionFullList.sections;
   const [, dropRef] = useDrop({
     accept: 'CARD',
     hover(item: cardItemProps, monitor) {
@@ -69,7 +69,9 @@ function SectionPanel({ section, sectionLocation }: SectionPannelProps) {
   }
 
   function deleteSection() {
-    dispatch(setDeletedSectionIds([...deleteSections, section.id]));
+    if (!isNaN(section.id))
+      dispatch(setDeletedSectionIds([...deleteSections, section.id]));
+
     const sections: Section[] = produce(sectionList, (draft) => {
       draft[sectionLocation].lessons.map((lesson) => {
         draft[0].lessons.push(lesson);

@@ -24,7 +24,6 @@ export const DashboardInfo = styled.div`
   border-radius: 5px;
   background-color: lightyellow;
   flex-grow: 1;
-  min-width: 360px;
   overflow-y: scroll;
 `;
 

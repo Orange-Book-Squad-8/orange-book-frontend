@@ -5,8 +5,10 @@ import { LessonEditDashboardPeakContainer } from '.';
 function LessonDashboardPeak() {
   const lesson = useSelector(selectLesson);
   const dispatch = useDispatch();
+  const { id, title, description, contentType, link, durationInMinutes, topic, author } = lesson;
 
-  function submit() {
+  async function submit() {
+
     dispatch(setIsOpen(false));
   }
 
@@ -17,25 +19,25 @@ function LessonDashboardPeak() {
   return (
     <LessonEditDashboardPeakContainer>
       <div>Título</div>
-      <div>{lesson.title}</div>
+      <div>{title}</div>
       <div>Tipo de conteúdo</div>
-      <div>{lesson.contentType}</div>
+      <div>{contentType}</div>
       <div>Autor</div>
-      <div>{lesson.author}</div>
+      <div>{author}</div>
 
       <div>Tópico</div>
-      <div>{lesson.topic}</div>
+      <div>{topic}</div>
 
       <div>Descrição</div>
-      <div>{lesson.description}</div>
+      <div>{description}</div>
 
       <div>Link</div>
-      <div>{lesson.link}</div>
+      <div>{link}</div>
 
       <div>Duração</div>
-      <div>{lesson.durationInMinutes}</div>
+      <div>{durationInMinutes}</div>
 
-      <button onClick={submit}>submit</button>
+      <button onClick={submit}>fechar</button>
       <button onClick={edit}>edit</button>
     </LessonEditDashboardPeakContainer>
   );

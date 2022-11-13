@@ -1,56 +1,34 @@
-import {
-  AdminDashboardContainer,
-  DashboardFilterBar,
-  DashboardListContainer,
-  DashboardListHeader,
-  DashboardPanel,
-  LessonActions
-} from '.';
-import { useSelector } from 'react-redux';
-import { selectAllLessons } from '../../redux/reducers';
-import { LessonInfo } from '../../components/create-pannel/lesson-info';
+import { AdminDashboardContainer } from '.';
 import { LessonEditDashboard } from '../../components/create-pannel/lesson-edit-dashboard';
-import FixedLessonInfoHeader
-  from '../../components/create-pannel/fixed-lesson-info-header/fixed-lesson-info-header.component';
-import { useState } from 'react';
+import { LessonEditPanel } from '../../components/create-pannel/lesson-edit-panel';
+import { api } from '../../lib/axios';
+import { useDispatch } from 'react-redux';
+import { setSectionList } from '../../redux/reducers';
+import { Section } from '../../interfaces/api';
 
+interface sectionListProps {
+  sections: Section[],
+  deletedSectionIds: number[]
+}
 
 function AdminDashboard() {
-  const [typedFilter, setTypedFilter] = useState('');
+  const dispatch = useDispatch();
 
-  const lessons = useSelector(selectAllLessons);
-  const filteredList = filterLessons(typedFilter);
-
-  function filterLessons(filter: string) {
-    if (filter.length === 0) return lessons;
-    return lessons.filter(lesson => lesson.title.includes(filter));
+  async function fetchLessons() {
+    try {
+      const response = await api.get('/lessons/all');
+      dispatch(setSectionList([{ lessons: response.data, name: 'adm lessons', id: 0 }]));
+    } catch (err) {
+      console.error(err);
+    }
   }
+
+  fetchLessons();
 
   return (
     <AdminDashboardContainer>
-      <DashboardPanel>
-        <DashboardFilterBar>
-          <div>
-            <input value={typedFilter} onChange={(event) => setTypedFilter(event.target.value)} />
-          </div>
-          <div>filtros</div>
-        </DashboardFilterBar>
-
-        <DashboardListContainer>
-          <DashboardListHeader>
-            <FixedLessonInfoHeader />
-            <LessonActions>
-              Ver
-            </LessonActions>
-          </DashboardListHeader>
-          {
-            filteredList.map((lesson, index) => (<LessonInfo key={index} lesson={lesson} />))
-          }
-        </DashboardListContainer>
-      </DashboardPanel>
-
+      <LessonEditPanel />
       <LessonEditDashboard />
-
     </AdminDashboardContainer>
   );
 }

@@ -1,5 +1,10 @@
 import { Lesson } from '../../../interfaces/api';
-import { LessonCardListInfoContainer, LessonInfoStatsPrimary, LessonInfoStatsSecondary } from './';
+import {
+  LessonCardListInfoContainer,
+  LessonInfoStatsPrimary,
+  LessonInfoStatsPrimaryAuthor,
+  LessonInfoStatsSecondary
+} from './';
 import { tagMapper } from '../../../utils';
 
 interface LessonCardListInfoProps {
@@ -10,7 +15,7 @@ function LessonCardListInfo({ lesson }: LessonCardListInfoProps) {
   return (
     <LessonCardListInfoContainer>
       <LessonInfoStatsPrimary>{lesson.title}</LessonInfoStatsPrimary>
-      <LessonInfoStatsPrimary>{lesson.author}</LessonInfoStatsPrimary>
+      <LessonInfoStatsPrimaryAuthor>{lesson.author}</LessonInfoStatsPrimaryAuthor>
       <LessonInfoStatsSecondary>{tagMapper(lesson.contentType)}</LessonInfoStatsSecondary>
       <LessonInfoStatsSecondary>{lesson.durationInMinutes}</LessonInfoStatsSecondary>
     </LessonCardListInfoContainer>

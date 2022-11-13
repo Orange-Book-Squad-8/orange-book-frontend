@@ -1,5 +1,5 @@
 import { Lesson } from '../../../interfaces/api';
-import { DashboardIten } from './item-card.styles';
+import { DashboardItem, RemoveButton } from './item-card.styles';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -98,16 +98,16 @@ function ItemCard({ lesson, listIndex, lessonLocation }: itemCardProps) {
   dragRef(dropRef(ref));
 
   return (
-    <DashboardIten ref={ref} isDragging={isDragging}>
+    <DashboardItem ref={ref} isDragging={isDragging} lessonLocationBoolean={lessonLocation != 0}>
 
       <LessonCardListInfo lesson={lesson} />
 
       {
         lessonLocation === 0 ? <> </> :
-          <button onClick={removeLesson}><XCircle /></button>
+          <RemoveButton onClick={removeLesson}><XCircle /></RemoveButton>
       }
 
-    </DashboardIten>
+    </DashboardItem>
   );
 }
 

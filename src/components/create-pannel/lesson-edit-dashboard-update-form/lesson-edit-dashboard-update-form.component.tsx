@@ -4,8 +4,9 @@ import { ListboxButtonStyled, ListboxOptionsStyled, ListboxOptionStyled } from '
 import { tagMapper } from '../../../utils';
 import { ContentType } from '../../../interfaces/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { editLesson, selectLesson, setIsEditing, setIsOpen, setLesson } from '../../../redux/reducers';
+import { editLesson, selectLesson, setIsEditing, setIsOpen, setLesson, setSectionList } from '../../../redux/reducers';
 import { useState } from 'react';
+import { api } from '../../../lib/axios';
 
 const contents: ContentType[] = [
   'VIDEO',
@@ -17,6 +18,7 @@ const contents: ContentType[] = [
 function LessonEditDashboardUpdateForm() {
   const [cantSubmit, setCantSubmit] = useState(false);
   const lesson = useSelector(selectLesson);
+  const { id, title, description, contentType, link, durationInMinutes, topic, author } = lesson;
   const dispatch = useDispatch();
 
   function setContentType(contentType: ContentType) {
@@ -59,19 +61,55 @@ function LessonEditDashboardUpdateForm() {
     else setCantSubmit(true);
   }
 
-  function submit() {
+  async function submit() {
+    try {
+      if (isNaN(lesson.id)) {
+        await api.post('/lessons/create', {
+          title,
+          description,
+          link,
+          durationInMinutes,
+          topic,
+          contentType,
+          author
+        });
+      } else {
+        await api.put('/lessons/update', {
+          title,
+          description,
+          link,
+          durationInMinutes,
+          topic,
+          author,
+          contentType,
+          id
+        });
+      }
+
+      const response = await api.get('/lessons/all');
+      dispatch(setSectionList([{ lessons: response.data, name: 'adm lessons', id: 0 }]));
+
+      dispatch(setIsEditing(false));
+      dispatch(setIsOpen(false));
+      dispatch(editLesson(lesson));
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function cancel() {
     dispatch(setIsEditing(false));
     dispatch(setIsOpen(false));
-    dispatch(editLesson(lesson));
   }
 
   return (
     <LessonEditDashboardForm>
       <p>Título</p>
-      <input type='text' value={lesson.title} onChange={(event) => setTitle(event.target.value)} />
+      <input type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
       <p>Tipo de conteúdo</p>
-      <Listbox value={lesson.contentType} onChange={setContentType}>
-        <ListboxButtonStyled>{tagMapper(lesson.contentType)}</ListboxButtonStyled>
+      <Listbox value={contentType} onChange={setContentType}>
+        <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
         <ListboxOptionsStyled>
           {contents.map((content, index) => (
             <Listbox.Option as='div' key={index} value={content}>
@@ -81,16 +119,17 @@ function LessonEditDashboardUpdateForm() {
         </ListboxOptionsStyled>
       </Listbox>
       <p>Autor</p>
-      <input type='text' value={lesson.author} onChange={(event) => setAuthor(event.target.value)} />
+      <input type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />
       <p>Tópico</p>
-      <input type='text' value={lesson.topic} onChange={(event) => setTopic(event.target.value)} />
+      <input type='text' value={topic} onChange={(event) => setTopic(event.target.value)} />
       <p>Descrição</p>
-      <textarea value={lesson.description} onChange={(event) => setDescription(event.target.value)} />
+      <textarea value={description} onChange={(event) => setDescription(event.target.value)} />
       <p>Link</p>
-      <input type='url' value={lesson.link} onChange={(event) => setLink(event.target.value)} />
+      <input type='url' value={link} onChange={(event) => setLink(event.target.value)} />
       <p>Duração</p>
-      <input type='number' value={lesson.durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
+      <input type='number' value={durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
       <button onClick={submit} disabled={cantSubmit}>submit</button>
+      <button onClick={cancel} disabled={cantSubmit}>cancel</button>
     </LessonEditDashboardForm>
   );
 }

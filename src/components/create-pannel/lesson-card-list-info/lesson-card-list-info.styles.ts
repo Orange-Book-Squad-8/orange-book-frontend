@@ -6,6 +6,14 @@ export const LessonInfoStatsPrimary = styled.div`
   width: 35%;
   overflow: hidden;
   padding-left: 1rem;
+  align-items: flex-start;
+  display: flex;
+`;
+export const LessonInfoStatsPrimaryAuthor = styled.div`
+  border-right: 1px solid lightgray;
+  width: 35%;
+  overflow: hidden;
+  padding-left: 1rem;
   align-items: center;
   display: flex;
 `;

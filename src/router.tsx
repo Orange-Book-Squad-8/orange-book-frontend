@@ -6,7 +6,6 @@ import { Dashboard } from './routes/dashboard';
 import { Register } from './routes/register';
 import { CourseConstructor } from './routes/course-constructor';
 import { ProtectedRoutes } from './routes/protected-routes';
-import { adminRole, userRole } from './mock-data';
 import { AdminDashboard } from './routes/admin-dashboard';
 import { UserCoursePage } from './routes/user-course-page';
 
@@ -30,7 +29,7 @@ const Router = createBrowserRouter([
       {
         path: '/dashboard',
         element: (
-          <ProtectedRoutes authRole={[userRole, adminRole]}>
+          <ProtectedRoutes authRole={['user1', 'admin']}>
             <Dashboard />
           </ProtectedRoutes>
         )
@@ -40,12 +39,18 @@ const Router = createBrowserRouter([
         element: <UserCoursePage />
       },
       {
-        path: '/edit/course',
-        element: <CourseConstructor />
+        path: '/edit/course/:courseId',
+        element:
+          <ProtectedRoutes authRole={['admin', 'user1']}>
+            <CourseConstructor />
+          </ProtectedRoutes>
       },
       {
         path: '/admin/edit/lessons',
-        element: <AdminDashboard />
+        element:
+          <ProtectedRoutes authRole={['admin']}>
+            <AdminDashboard />
+          </ProtectedRoutes>
       }
     ]
   }

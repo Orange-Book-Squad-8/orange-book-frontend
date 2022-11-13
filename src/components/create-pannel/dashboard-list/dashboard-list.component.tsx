@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Lesson } from '../../../interfaces/api';
-import { moveLesson, selectAllLessons } from '../../../redux/reducers';
+import { moveLesson, selectSectionList } from '../../../redux/reducers';
 import { ItemCard } from '../item-card';
 import { useDrop } from 'react-dnd';
 import { DashboardListContainer, DashboardListHeader } from './dashboard-list.styles';
@@ -19,14 +19,12 @@ interface dashboardListItemProps {
 
 function DashboardList({ filterString }: dashboardListItemProps) {
   const dispatch = useDispatch();
-  const lessonList = useSelector(selectAllLessons);
-
+  const sections = useSelector(selectSectionList);
   const filteredList = filterLessons(filterString);
 
-
   function filterLessons(filter: string) {
-    if (filter.length === 0) return lessonList;
-    return lessonList.filter(lesson => lesson.title.includes(filterString));
+    if (filter.length === 0) return sections.sections[0].lessons;
+    return sections.sections[0].lessons.filter(lesson => lesson.title.includes(filter));
   }
 
   const [, dropRef] = useDrop({
@@ -39,11 +37,11 @@ function DashboardList({ filterString }: dashboardListItemProps) {
           moveFrom: item.lessonLocation,
           moveTo: 0,
           prevIndex: item.listIndex,
-          newIndex: lessonList.length
+          newIndex: sections.sections[0].lessons.length
         })
       );
 
-      item.listIndex = lessonList.length;
+      item.listIndex = sections.sections[0].lessons.length;
       item.lessonLocation = 0;
     }
   });
@@ -53,7 +51,7 @@ function DashboardList({ filterString }: dashboardListItemProps) {
       <DashboardListHeader>
         <FixedLessonInfoHeader />
       </DashboardListHeader>
-      {lessonList.map((lesson: Lesson, index: number) => (
+      {sections.sections[0].lessons.map((lesson: Lesson, index: number) => (
         filteredList.includes(lesson) ? <ItemCard
           lesson={lesson}
           listIndex={index}

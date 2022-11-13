@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  HeaderButton,
   HeaderContainer,
-  SiteTitle,
-  SiteTitleAlt,
   Logo,
   MenuButton,
-  HeaderButton,
   Navigation,
   NavigationAlt,
   NavigationContainer,
-  NavigationItem
+  NavigationItem,
+  SiteTitle,
+  SiteTitleAlt
 } from './index';
+import { login, selectRole } from '../../redux/reducers';
+import { Role } from '../../interfaces/api';
 import { mockedAdmin } from '../../mock-data';
-import { login } from '../../redux/reducers/user';
 
 interface IHeaderProps {
   headerShrinkingHandler: (showHeader: boolean) => void;
@@ -27,6 +28,7 @@ function Header(props: IHeaderProps) {
   const [showHeader, setShowHeader] = useState(true);
   const { pathname } = useLocation();
   const isNoAuthPath = pathname === '/' || pathname === '/register';
+  const role: Role = useSelector(selectRole);
 
   const dispatch = useDispatch();
 
@@ -58,7 +60,7 @@ function Header(props: IHeaderProps) {
         <SiteTitleAlt>
           <span>Orange Book</span>
 
-          <Link to="/">
+          <Link to='/'>
             <Logo />
           </Link>
         </SiteTitleAlt>
@@ -66,7 +68,7 @@ function Header(props: IHeaderProps) {
         <SiteTitle>
           <span>Orange Book</span>
 
-          <Link to="/">
+          <Link to='/'>
             <Logo />
           </Link>
         </SiteTitle>
@@ -76,27 +78,27 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to="/">Home</Link>
+              <Link to='/'>Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="#about" onClick={linkClickHandler}>
+              <Link to='#about' onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="#courses" onClick={linkClickHandler}>
+              <Link to='#courses' onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
 
             <NavigationItem invert>
-              <Link to="/register">Cadastro</Link>
+              <Link to='/register'>Cadastro</Link>
             </NavigationItem>
 
             <NavigationItem invert>
-              <Link to="/adm/dashboard" onClick={() => {dispatch(login(mockedAdmin))}}>Entrar</Link>
+              <Link to='/home' onClick={() => dispatch(login(mockedAdmin))}>Entrar</Link>
             </NavigationItem>
           </NavigationContainer>
         </Navigation>
@@ -104,12 +106,18 @@ function Header(props: IHeaderProps) {
         <NavigationAlt show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to="/home">Home</Link>
+              <Link to='/home'>Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to='/dashboard'>Dashboard</Link>
             </NavigationItem>
+            {
+              role?.name === 'admin' ?
+                <NavigationItem>
+                  <Link to='/admin/edit/lessons'>Edit Lessons</Link>
+                </NavigationItem> : <></>
+            }
 
             <NavigationItem invert>Sair</NavigationItem>
           </NavigationContainer>

@@ -1,4 +1,4 @@
-import { LessonActions, LessonInfoContainer } from './lesson-info.styles';
+import { ButtonPeak, LessonActions, LessonInfoContainer } from './lesson-info.styles';
 import { Lesson } from '../../../interfaces/api';
 import { Eye } from 'phosphor-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ function LessonInfo({ lesson }: LessonInfoProps) {
     <LessonInfoContainer>
       <LessonCardListInfo lesson={lesson} />
       <LessonActions>
-        <button onClick={peekLesson} disabled={isEditing}><Eye /></button>
+        <ButtonPeak onClick={peekLesson} disabled={isEditing}><Eye /></ButtonPeak>
       </LessonActions>
     </LessonInfoContainer>
   );

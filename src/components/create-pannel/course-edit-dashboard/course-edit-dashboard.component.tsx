@@ -1,5 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCourse, selectSectionList, setCourse, setSectionList } from '../../../redux/reducers/course-manager';
+import {
+  selectCourse,
+  selectSectionList,
+  setCourse,
+  setDeletedSectionIds,
+  setSectionList
+} from '../../../redux/reducers';
 import { CourseDTO, Difficulty, Lesson, Section, StackCategories } from '../../../interfaces/api';
 import { Listbox } from '@headlessui/react';
 import { SectionPannel } from '../section-panel';
@@ -12,6 +18,7 @@ import {
   SectionButton
 } from './course-edit-dashboard.styles';
 import { tagMapper } from '../../../utils';
+import { api } from '../../../lib/axios';
 
 const difficulties: Difficulty[] = [
   'BEGINNER',
@@ -31,14 +38,16 @@ const stacks: StackCategories[] = [
 function CourseEditDashboard() {
   const course: CourseDTO = useSelector(selectCourse);
   const lessonList = useSelector(selectSectionList);
-  const sections: Section[] = lessonList.filter((section, i) => i != 0);
+  const sections: Section[] = lessonList.sections.filter((section, i) => i != 0);
   const dispatch = useDispatch();
+  const { deletedSectionIds, newSections } = lessonList;
+  const { id, title, category, description, difficulty, visible, totalLessons, creator } = course;
 
-  function name(value: string) {
+  function setName(value: string) {
     dispatch(setCourse({ ...course, title: value }));
   }
 
-  function description(value: string) {
+  function setDescription(value: string) {
     dispatch(setCourse({ ...course, description: value }));
   }
 
@@ -50,15 +59,44 @@ function CourseEditDashboard() {
     dispatch(setCourse({ ...course, difficulty }));
   }
 
-  function send() {
+  async function send() {
+    try {
+      if (isNaN(course.id)) {
+        await api.post('/courses/create', {
+          title,
+          creator,
+          description,
+          category,
+          difficulty,
+          visible,
+          sections
+        });
+      } else {
+        await api.put('/courses/update', {
+          id,
+          title,
+          creator,
+          description,
+          category,
+          difficulty,
+          visible,
+          sections,
+          deletedSectionIds
+        });
+        console.log('success');
+      }
+      dispatch(setDeletedSectionIds([]));
+    } catch (error) {
+      console.error(error);
+    }
     //dispatch(setCourse({ course }));
   }
 
   function addSection() {
     dispatch(
       setSectionList([
-        ...lessonList,
-        { lessons: [] as Lesson[], name: 'new Section' } as Section
+        ...lessonList.sections,
+        { lessons: [] as Lesson[], name: 'new Section', id: NaN } as Section
       ])
     );
   }
@@ -67,11 +105,11 @@ function CourseEditDashboard() {
     <CourseEditDashboardContainer>
       <input
         value={course.title}
-        onChange={(event) => name(event.target.value)}
+        onChange={(event) => setName(event.target.value)}
       />
       <textarea
         value={course.description}
-        onChange={(event) => description(event.target.value)}
+        onChange={(event) => setDescription(event.target.value)}
       />
       <Listbox value={course.difficulty} onChange={setDifficulty}>
         <ListboxButtonStyled>{tagMapper(course.difficulty)}</ListboxButtonStyled>
