@@ -17,6 +17,10 @@ const TRANSFORMATION = {
   BOOK: 'Livro'
 };
 
-export function tagMapper(tagValue: Difficulty | StackCategories | ContentType) {
-  return TRANSFORMATION[tagValue];
+type tagValueType = Difficulty | StackCategories | ContentType;
+
+export function tagMapper(tagValue: tagValueType | string) {
+  return TRANSFORMATION[tagValue as tagValueType]
+    ? TRANSFORMATION[tagValue as tagValueType]
+    : tagValue;
 }
