@@ -35,8 +35,7 @@ function Header(props: IHeaderProps) {
     setShowMenu(!showMenu);
   };
 
-  useEffect(() => {
-  }, [role]);
+  useEffect(() => {}, [role]);
 
   const headerToggleHandler = () => {
     headerShrinkingHandler(showHeader);
@@ -62,7 +61,7 @@ function Header(props: IHeaderProps) {
         <SiteTitleAlt>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitleAlt>
@@ -70,7 +69,7 @@ function Header(props: IHeaderProps) {
         <SiteTitle>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitle>
@@ -80,56 +79,63 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='#about' onClick={linkClickHandler}>
+              <Link to="#about" onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='#courses' onClick={linkClickHandler}>
+              <Link to="#courses" onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
 
-            {
-              role == undefined ? <>
+            {role == undefined ? (
+              <>
                 <NavigationItem invert>
-                  <Link to='/register'>Cadastro</Link>
+                  <Link to="/register">Cadastro</Link>
                 </NavigationItem>
 
                 <NavigationItem invert>
-                  <Link to='/register'>Entrar</Link>
+                  <Link to="/register">Entrar</Link>
                 </NavigationItem>
-              </> : <NavigationItem invert>
-                <Link to='/' onClick={() => dispatch(logout())}>Sair</Link>
+              </>
+            ) : (
+              <NavigationItem invert>
+                <Link to="/" onClick={() => dispatch(logout())}>
+                  Sair
+                </Link>
               </NavigationItem>
-            }
-
+            )}
           </NavigationContainer>
         </Navigation>
       ) : (
         <NavigationAlt show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/dashboard'>Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </NavigationItem>
-            {
-              role?.name === 'admin' ?
-                <NavigationItem>
-                  <Link to='/admin/edit/lessons'>Edit Lessons</Link>
-                </NavigationItem> : <></>
-            }
+
+            {role?.name === 'admin' ? (
+              <NavigationItem>
+                <Link to="/admin/edit/lessons">Edit Lessons</Link>
+              </NavigationItem>
+            ) : (
+              <></>
+            )}
 
             <NavigationItem invert>
-              <Link to='/' onClick={() => dispatch(logout())}>Sair</Link>
+              <Link to="/" onClick={() => dispatch(logout())}>
+                Sair
+              </Link>
             </NavigationItem>
           </NavigationContainer>
         </NavigationAlt>
