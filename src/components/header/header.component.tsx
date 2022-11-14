@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
 import { useDispatch, useSelector } from 'react-redux';
+import { logout, selectRole } from '../../redux/reducers';
+import { Role } from '../../interfaces/api';
+import { wait } from '../../utils';
 import {
   HeaderButton,
   HeaderContainer,
@@ -14,8 +17,6 @@ import {
   SiteTitle,
   SiteTitleAlt
 } from './index';
-import { logout, selectRole } from '../../redux/reducers';
-import { Role } from '../../interfaces/api';
 
 interface IHeaderProps {
   headerShrinkingHandler: (showHeader: boolean) => void;
@@ -26,6 +27,7 @@ function Header(props: IHeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const isNoAuthPath = pathname === '/' || pathname === '/register';
   const role: Role = useSelector(selectRole);
 
@@ -35,14 +37,17 @@ function Header(props: IHeaderProps) {
     setShowMenu(!showMenu);
   };
 
-  useEffect(() => {}, [role]);
-
   const headerToggleHandler = () => {
     headerShrinkingHandler(showHeader);
     setShowHeader(!showHeader);
   };
 
-  const linkClickHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const linkClickHandler = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== '/') {
+      navigate('/');
+      await wait(400);
+    }
+
     const target = e.target as HTMLAnchorElement;
 
     if (target?.hash) {
@@ -83,13 +88,13 @@ function Header(props: IHeaderProps) {
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="#about" onClick={linkClickHandler}>
+              <Link to="/#about" onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="#courses" onClick={linkClickHandler}>
+              <Link to="/#courses" onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
