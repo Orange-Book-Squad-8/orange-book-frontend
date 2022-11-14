@@ -96,7 +96,7 @@ export function getCourse(
 
     courses.push({
       id: 1000 + i * 1,
-      title: 'title ' + i,
+      title: 'Título do Curso',
       category: category,
       creator: creator,
       description:

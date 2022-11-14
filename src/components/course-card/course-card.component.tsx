@@ -10,15 +10,16 @@ import {
   OriginalStamp
 } from './index';
 
-interface IUserCourse {
+interface ICourse {
+  id: number;
   title: string;
   category: StackCategories;
   difficulty: Difficulty;
   original?: boolean;
 }
 
-function UserCourse(props: IUserCourse) {
-  const { title, category, difficulty, original = false } = props;
+function UserCourse(props: ICourse) {
+  const { id, title, category, difficulty, original = false } = props;
   const courseCategory = category?.split('_').join('').toLowerCase();
 
   return (
@@ -30,7 +31,7 @@ function UserCourse(props: IUserCourse) {
         />
       )}
 
-      <StyledLink to="#">
+      <StyledLink to={`/course/${id}`}>
         <TitleImageContainer>
           <Title>{title}</Title>
 

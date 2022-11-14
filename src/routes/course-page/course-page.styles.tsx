@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { CheckCircle } from 'phosphor-react';
 import { Section } from '../../components/section';
 
-export const UserCoursePageContainer = styled(Section)`
+export const CoursePageContainer = styled(Section)`
   display: flex;
   flex-direction: column;
   align-items: center;

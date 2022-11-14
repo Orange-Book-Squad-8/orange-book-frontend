@@ -1,8 +1,10 @@
 import React from 'react';
 import { BaseButton } from './index';
 
-interface IButtonProps {
+export interface IButtonProps {
   children: React.ReactNode;
+  standard?: boolean;
+  otherProps?: any;
 }
 
 function Button(props: IButtonProps) {

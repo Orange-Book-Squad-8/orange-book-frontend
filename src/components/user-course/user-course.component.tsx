@@ -41,7 +41,7 @@ function UserCourse(props: IUserCourse) {
         />
       )}
 
-      <StyledLink to={`/user/course/${id}`}>
+      <StyledLink to={`/course/${id}`}>
         <TitleImageContainer>
           <Title>{title}</Title>
 

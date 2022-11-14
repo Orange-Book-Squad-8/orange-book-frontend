@@ -80,23 +80,23 @@ export const courseList: AppUserCourseDTO = {
   subscribedCourses: [
     {
       id: 3,
-      category: 'FRONT_END',
+      category: 'FULLSTACK',
       creator: 'Orange Originals',
       description:
-        'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
+        'Essa trilha foi montada pensando em quem está começando na área, ou passando por uma migração de carreira e ainda não sabe exatamente o que é esse mundo. Então, aperta o cinto e vem com a gente nessa jornada!',
       difficulty: 'BEGINNER',
-      title: 'Do Front ao Fim, tudo sobre React',
-      totalLessons: 9,
+      title: 'Desenvolvimento Full Stack',
+      totalLessons: 27,
       visible: true
     },
     {
       id: 1,
-      category: 'FULLSTACK',
+      category: 'UX',
       creator: 'Orange Originals',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et molestie ac feugiat sed lectus. Amet cursus sit amet dictum sit. Nibh ipsum consequat nisl vel pretium lectus quam id leo. Cras sed felis eget velit aliquet sagittis. Sed vulputate mi sit amet mauris commodo. Egestas dui id ornare arcu odio ut sem nulla. Interdum consectetur libero id faucibus.',
       difficulty: 'BEGINNER',
-      title: 'Trilha Fullstack',
+      title: 'Trilha UX',
       totalLessons: 47,
       visible: true
     },
@@ -144,12 +144,12 @@ export const courseList: AppUserCourseDTO = {
 
 export const activeCourse: Course = {
   id: 3,
-  category: 'FRONT_END',
+  category: 'FULLSTACK',
   creator: 'Orange Originals',
   description:
-    'Blandit libero volutpat sed cras ornare arcu dui vivamus. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et. At tellus at urna condimentum. Enim nulla aliquet porttitor lacus luctus. Ut diam quam nulla porttitor massa.',
+    'Essa trilha foi montada pensando em quem está começando na área, ou passando por uma migração de carreira e ainda não sabe exatamente o que é esse mundo. Então, aperta o cinto e vem com a gente nessa jornada!',
   difficulty: 'BEGINNER',
-  title: 'Do Front ao Fim, tudo sobre React',
+  title: 'Desenvolvimento Full Stack',
   visible: true,
   sections: [
     {
@@ -157,39 +157,39 @@ export const activeCourse: Course = {
       lessons: [
         {
           id: 200,
-          author: 'fulano',
+          author: 'Orange Juice',
           contentType: 'ARTICLE',
           description:
             'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
           durationInMinutes: 5,
           link: 'www.site.com',
-          title: 'Titulo da lição 1',
-          topic: 'Redux'
+          title: 'Migração de Carreira',
+          topic: 'Carreira'
         },
         {
           id: 201,
-          author: 'sicrano',
+          author: 'Orange Juice',
           contentType: 'VIDEO',
           description:
             'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
-          durationInMinutes: 5,
+          durationInMinutes: 57,
           link: 'www.site.com',
-          title: 'Lacinia quis vel eros donec ac odio tempor',
-          topic: 'SASS'
+          title: 'Metodologia Ágil',
+          topic: 'Kanban'
         },
         {
           id: 202,
           author: '',
-          contentType: 'ARTICLE',
+          contentType: 'COURSE',
           description:
             'Risus viverra adipiscing at in tellus integer. Aliquet nec ullamcorper sit amet. Sed adipiscing diam donec adipiscing tristique risus nec. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Lacinia quis vel eros donec ac odio tempor. Mus mauris vitae ultricies leo integer malesuada nunc. Risus nullam eget felis eget.',
-          durationInMinutes: 5,
-          link: 'www.site.com',
-          title: 'Sed adipiscing diam donec adipiscing',
-          topic: 'Styled Components'
+          durationInMinutes: 40,
+          link: 'https://www.google.com',
+          title: 'Curso de Lógica de Programação',
+          topic: 'Lógica'
         }
       ],
-      name: 'inicio'
+      name: 'O início'
     },
     {
       id: 1001,
@@ -225,7 +225,7 @@ export const activeCourse: Course = {
           topic: ''
         }
       ],
-      name: 'meio'
+      name: 'Conceitos Básicos'
     },
     {
       id: 1000,
@@ -261,7 +261,7 @@ export const activeCourse: Course = {
           topic: ''
         }
       ],
-      name: 'fim'
+      name: 'Opcional'
     }
   ]
 };
