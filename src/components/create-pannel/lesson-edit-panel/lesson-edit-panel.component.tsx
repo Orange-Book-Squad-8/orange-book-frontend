@@ -4,12 +4,7 @@ import { LessonInfo } from '../lesson-info';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSectionList } from '../../../redux/reducers';
-import { Section } from '../../../interfaces/api';
 
-interface sectionListProps {
-  sections: Section[],
-  deletedSectionIds: number[],
-}
 
 function LessonEditPanel() {
   const [typedFilter, setTypedFilter] = useState('');

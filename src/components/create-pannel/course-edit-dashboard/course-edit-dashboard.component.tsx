@@ -40,6 +40,7 @@ const stacks: StackCategories[] = [
 ];
 
 function CourseEditDashboard() {
+  const [isSending, setIsSending] = useState(false);
   const course: CourseDTO = useSelector(selectCourse);
   const lessonList = useSelector(selectSectionList);
   const user = useSelector(selectUser);
@@ -67,12 +68,13 @@ function CourseEditDashboard() {
   }
 
   async function send() {
+    setIsSending(true);
     try {
       if (isNaN(course.id)) {
 
         const courseCreator = user.role.name === 'admin' ? 'Orange Juice' : user.username;
 
-        await api.post('/courses/create', {
+        const response = await api.post('/courses/create', {
           title,
           creator: courseCreator,
           description,
@@ -80,6 +82,13 @@ function CourseEditDashboard() {
           difficulty,
           visible,
           sections
+        });
+
+        console.log(response.data);
+
+        await api.post('/users/addMyCourses', {
+          courseId: response.data.id,
+          userId: user.id
         });
       } else {
         await api.put('/courses/update', {
@@ -97,11 +106,10 @@ function CourseEditDashboard() {
       }
       dispatch(setDeletedSectionIds([]));
       setIsOpen(true);
-
+      setIsSending(false);
     } catch (error) {
       console.error(error);
     }
-    //dispatch(setCourse({ course }));
   }
 
   function addSection() {
@@ -153,7 +161,7 @@ function CourseEditDashboard() {
         ))}
         <SectionButton onClick={addSection}>Nova Section</SectionButton>
       </DashboardInfo>
-      <button onClick={send}>enviar</button>
+      <button onClick={send} disabled={isSending}>enviar</button>
 
       <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
         <DialogPanel>
