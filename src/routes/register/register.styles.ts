@@ -1,18 +1,48 @@
 import styled from 'styled-components';
-
-export const LoginForm = styled.form`
-  width: 400px;
-  height: 400px;
-  border-radius: 5px;
-  background-color: antiquewhite;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-`;
+import { Button } from '../../components/button';
 
 export const RegisterContainer = styled.div`
-  background-color: black;
-  width: 100vw;
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+
+  @media screen and (min-width: 576px) {
+    padding: 3rem 3.5rem;
+  }
+`;
+
+export const FormContainer = styled.div`
+  width: 100%;
+  max-width: 720px;
+  margin-top: 2.5rem;
+  color: ${({ theme }) => theme.neutral};
+  margin-bottom: 100px;
+`;
+
+export const FormTitle = styled.h4`
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+
+  @media screen and (min-width: 576px) {
+    font-size: 1.75rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    font-size: 2rem;
+  }
+`;
+
+interface ISaveButton {
+  standard: boolean;
+  disabled: boolean;
+  type: string;
+}
+
+export const SaveButton = styled(Button)<ISaveButton>`
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 1.5rem auto;
 `;

@@ -3,8 +3,12 @@ import styled, { css } from 'styled-components';
 const shrinkStyle = css`
   top: -1.5rem;
   left: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.9rem !important;
   transform: translateY(0);
+
+  @media screen and (min-width: 576px) {
+    font-size: 1rem !important;
+  }
 `;
 
 interface IInputFieldContainer {
@@ -55,8 +59,6 @@ export const InputLabel = styled.label<IInputLabel>`
   transition: 300ms top ease-in-out, 300ms left ease-in-out,
     300ms font-size ease-in-out, 300ms transform ease-in-out;
 
-  ${({ shrink }) => shrink && shrinkStyle}
-
   ${({ textarea }) =>
     textarea &&
     css`
@@ -70,6 +72,8 @@ export const InputLabel = styled.label<IInputLabel>`
   @media screen and (min-width: 992px) {
     font-size: 1.35rem;
   }
+
+  ${({ shrink }) => shrink && shrinkStyle}
 `;
 
 interface IInput {

@@ -29,11 +29,7 @@ const Router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: (
-          <ProtectedRoutes authRole={['user1', 'admin']}>
-            <Dashboard />
-          </ProtectedRoutes>
-        )
+        element: <Dashboard />
       },
       {
         path: '/course/:courseId',
@@ -45,17 +41,19 @@ const Router = createBrowserRouter([
       },
       {
         path: '/edit/course/:courseId',
-        element:
+        element: (
           <ProtectedRoutes authRole={['admin', 'user1']}>
             <CourseConstructor />
           </ProtectedRoutes>
+        )
       },
       {
         path: '/admin/edit/lessons',
-        element:
+        element: (
           <ProtectedRoutes authRole={['admin']}>
             <AdminDashboard />
           </ProtectedRoutes>
+        )
       }
     ]
   }

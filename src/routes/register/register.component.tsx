@@ -1,18 +1,32 @@
-import { LoginForm, RegisterContainer } from './register.styles';
-import { FormEvent, useState } from 'react';
-import { api } from '../../lib/axios';
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/reducers';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Formik, Field, Form } from 'formik';
+import { api } from '../../lib/axios';
+import { login } from '../../redux/reducers';
+import { InputField } from '../../components/input-field';
+import {
+  RegisterContainer,
+  FormContainer,
+  FormTitle,
+  SaveButton,
+  usernameSchema,
+  emailSchema,
+  passwordSchema
+} from './index';
+
+interface IFormValues {
+  username: string;
+  email: string;
+  password: string;
+  confPassword: string;
+}
 
 function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
-  async function loginEvent(event: FormEvent) {
-    event.preventDefault();
+  const registerHandler = async (values: IFormValues) => {
+    const { username, password } = values;
 
     try {
       const loginResponse = await api.post('/users/login', {
@@ -24,23 +38,124 @@ function Register() {
 
       dispatch(login(user.data));
 
-
       navigator(-1);
-
     } catch (e) {
       console.error(e);
     }
-  }
+
+    return false;
+  };
+
+  const validateForm = async (values: IFormValues) => {
+    const { username, email, password, confPassword } = values;
+    const errors = {} as IFormValues;
+
+    if (!usernameSchema.isValidSync(username)) {
+      errors.username =
+        'Nome de usuário deve ter entre 6 e 20 caracteres alpha-numéricos e iniciar com uma letra';
+
+      if (!emailSchema.isValidSync(email)) {
+        errors.email = 'Esse e-mail não é válido';
+      }
+
+      if (!passwordSchema.isValidSync(password)) {
+        errors.password =
+          'Senha deve conter entre 6 e 20 caracteres que não sejam espaço em branco';
+      }
+
+      if (!passwordSchema.isValidSync(confPassword)) {
+        errors.confPassword =
+          'Senha deve conter entre 6 e 20 caracteres que não sejam espaço em branco';
+      }
+
+      if (password !== confPassword) {
+        errors.confPassword = 'As senhas devem ser iguais';
+      }
+
+      return errors;
+    }
+  };
 
   return (
     <RegisterContainer>
-      <LoginForm onSubmit={loginEvent}>
-        <div>Usuario</div>
-        <input value={username} onChange={(event) => setUsername(event.target.value)} />
-        <div>Senha</div>
-        <input value={password} type='password' onChange={(event) => setPassword(event.target.value)} />
-        <button>Entrar</button>
-      </LoginForm>
+      <FormContainer>
+        <FormTitle>Cadastro</FormTitle>
+
+        <Formik
+          initialValues={{
+            username: '',
+            email: '',
+            password: '',
+            confPassword: ''
+          }}
+          validate={validateForm}
+          onSubmit={registerHandler}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <Field name="username">
+                {({ field, meta }: any) => {
+                  return (
+                    <InputField
+                      field={field}
+                      meta={meta}
+                      name="username"
+                      title="usuário"
+                      type="text"
+                    />
+                  );
+                }}
+              </Field>
+
+              <Field name="email">
+                {({ field, meta }: any) => {
+                  return (
+                    <InputField
+                      field={field}
+                      meta={meta}
+                      name="email"
+                      title="e-mail"
+                      type="email"
+                    />
+                  );
+                }}
+              </Field>
+
+              <Field name="password">
+                {({ field, meta }: any) => {
+                  return (
+                    <InputField
+                      field={field}
+                      meta={meta}
+                      name="password"
+                      title="senha"
+                      type="password"
+                    />
+                  );
+                }}
+              </Field>
+
+              <Field name="confPassword">
+                {({ field, meta }: any) => {
+                  return (
+                    <InputField
+                      field={field}
+                      meta={meta}
+                      name="confPassword"
+                      title="repita a senha"
+                      type="password"
+                    />
+                  );
+                }}
+              </Field>
+
+              <SaveButton standard disabled={isSubmitting} type="submit">
+                Cadastrar
+              </SaveButton>
+            </Form>
+          )}
+        </Formik>
+      </FormContainer>
     </RegisterContainer>
   );
 }
