@@ -53,7 +53,7 @@ function Home() {
 
   return (
     <HomeContainer title="">
-      {originals.length && (
+      {originals.length ? (
         <HomeSection title="Originals da Orange">
           <OriginalsContainer>
             {originals?.map((course) => (
@@ -61,9 +61,11 @@ function Home() {
             ))}
           </OriginalsContainer>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {prefferred.length && (
+      {prefferred.length ? (
         <HomeSection title="De acordo com suas preferências">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {prefferred?.map((course: Course) => (
@@ -76,9 +78,11 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {byCategory?.frontEnd.length && (
+      {byCategory?.frontEnd.length ? (
         <HomeSection title="Front End">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.frontEnd?.map((course: Course) => (
@@ -91,9 +95,11 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {byCategory?.backEnd.length && (
+      {byCategory?.backEnd.length ? (
         <HomeSection title="Back End">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.backEnd?.map((course: Course) => (
@@ -106,9 +112,11 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {byCategory?.fullstack.length && (
+      {byCategory?.fullstack.length ? (
         <HomeSection title="Fullstack">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.fullstack?.map((course: Course) => (
@@ -121,9 +129,11 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {byCategory?.ux.length && (
+      {byCategory?.ux.length ? (
         <HomeSection title="UX">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ux?.map((course: Course) => (
@@ -136,9 +146,11 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
 
-      {byCategory?.ui.length && (
+      {byCategory?.ui.length ? (
         <HomeSection title="UI">
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ui?.map((course: Course) => (
@@ -151,6 +163,8 @@ function Home() {
             ))}
           </Carrossel>
         </HomeSection>
+      ) : (
+        ''
       )}
     </HomeContainer>
   );

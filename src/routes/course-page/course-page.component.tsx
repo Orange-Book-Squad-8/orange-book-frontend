@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   selectActiveCourse,
@@ -8,10 +8,11 @@ import {
 } from '../../redux/reducers';
 import { CourseTag } from '../../components/course-tag';
 import { CustomDisclosure } from '../../components/custom-disclosure';
+import { Button } from '../../components/button';
 import { activeCourse } from '../../mock-data';
 import { Timer, Book, CheckSquare } from 'phosphor-react';
 import {
-  UserCoursePageContainer,
+  CoursePageContainer,
   InfoSection,
   TagsContainer,
   CreatedBy,
@@ -26,11 +27,14 @@ import {
   InfoItem
 } from './index';
 
-function UserCoursePage() {
+function CoursePage() {
   const course = useSelector(selectActiveCourse);
-  const { watchedLesson } = useSelector(selectCourseList);
+  const { watchedLesson, subscribedCourses } = useSelector(selectCourseList);
   const dispatch = useDispatch();
-  const { courseId } = useParams() as { courseId: string };
+  const { courseId } = useParams();
+  const isSubscribed = subscribedCourses?.some(
+    (course) => course.id === Number(courseId)
+  );
 
   useEffect(() => {
     dispatch(setActiveCourse(activeCourse));
@@ -38,7 +42,7 @@ function UserCoursePage() {
 
   return (
     course && (
-      <UserCoursePageContainer title={course?.title || ' '}>
+      <CoursePageContainer title={course?.title || ' '}>
         <InfoSection>
           <TagsContainer>
             <CourseTag title="categoria">{course.category}</CourseTag>
@@ -46,6 +50,8 @@ function UserCoursePage() {
             <CreatedBy>
               Criado por <Creator>{course.creator}</Creator>
             </CreatedBy>
+
+            {!isSubscribed && <Button standard>Matricular</Button>}
           </TagsContainer>
           <CourseDescription>{course.description}</CourseDescription>
         </InfoSection>
@@ -57,9 +63,13 @@ function UserCoursePage() {
                 {section.lessons.map((lesson) => (
                   <LessonItem>
                     <LessonTitle>
-                      <StyledLink to={`/user/lesson/${lesson.id}`}>
-                        {lesson.title}
-                      </StyledLink>
+                      {isSubscribed ? (
+                        <StyledLink to={`lesson/${lesson.id}`}>
+                          {lesson.title}
+                        </StyledLink>
+                      ) : (
+                        lesson.title
+                      )}
                     </LessonTitle>
 
                     <LessonInfo>
@@ -79,12 +89,15 @@ function UserCoursePage() {
                         {lesson.durationInMinutes} minutos
                       </InfoItem>
 
-                      {watchedLesson[courseId].includes(lesson.id) && (
-                        <InfoItem>
-                          <CheckSquare weight="bold" />
-                          Concluída
-                        </InfoItem>
-                      )}
+                      {isSubscribed &&
+                        watchedLesson[Number(courseId)]?.includes(
+                          lesson.id
+                        ) && (
+                          <InfoItem>
+                            <CheckSquare weight="bold" />
+                            Concluída
+                          </InfoItem>
+                        )}
                     </LessonInfo>
                   </LessonItem>
                 ))}
@@ -92,9 +105,9 @@ function UserCoursePage() {
             </CustomDisclosure>
           ))}
         </CourseSectionsContainer>
-      </UserCoursePageContainer>
+      </CoursePageContainer>
     )
   );
 }
 
-export default UserCoursePage;
+export default CoursePage;

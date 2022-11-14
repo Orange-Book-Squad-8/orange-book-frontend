@@ -8,7 +8,8 @@ import { CourseConstructor } from './routes/course-constructor';
 import { ProtectedRoutes } from './routes/protected-routes';
 import { adminRole, userRole } from './mock-data';
 import { AdminDashboard } from './routes/admin-dashboard';
-import { UserCoursePage } from './routes/user-course-page';
+import { CoursePage } from './routes/course-page';
+import { LessonPage } from './routes/lesson-page';
 
 const Router = createBrowserRouter([
   {
@@ -36,8 +37,12 @@ const Router = createBrowserRouter([
         )
       },
       {
-        path: '/user/course/:courseId',
-        element: <UserCoursePage />
+        path: '/course/:courseId',
+        element: <CoursePage />
+      },
+      {
+        path: '/course/:courseId/lesson/:lessonId',
+        element: <LessonPage />
       },
       {
         path: '/edit/course',
