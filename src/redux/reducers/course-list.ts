@@ -1,6 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../config/store';
 import { AppUserCourseDTO } from '../../interfaces/api';
+
+interface watchedLesson {
+  [index: string]: number[];
+}
 
 export const courseListSlice = createSlice({
   name: 'courseList',
@@ -8,13 +12,16 @@ export const courseListSlice = createSlice({
     courseList: {} as AppUserCourseDTO
   },
   reducers: {
-    setUserCourseList: (state, action) => {
+    setUserCourseList: (state, action: PayloadAction<AppUserCourseDTO>) => {
       state.courseList = action.payload;
+    },
+    setWatchedLesson: (state, action: PayloadAction<watchedLesson>) => {
+      state.courseList.watchedLesson = action.payload;
     }
   }
 });
 
-export const { setUserCourseList } = courseListSlice.actions;
+export const { setUserCourseList, setWatchedLesson } = courseListSlice.actions;
 
 export const selectCourseList = (state: RootState) =>
   state.courseList.courseList;

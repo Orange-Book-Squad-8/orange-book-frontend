@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,9 +14,8 @@ import {
   SiteTitle,
   SiteTitleAlt
 } from './index';
-import { login, selectRole } from '../../redux/reducers';
+import { logout, selectRole } from '../../redux/reducers';
 import { Role } from '../../interfaces/api';
-import { mockedAdmin } from '../../mock-data';
 
 interface IHeaderProps {
   headerShrinkingHandler: (showHeader: boolean) => void;
@@ -35,6 +34,9 @@ function Header(props: IHeaderProps) {
   const menuToggleHandler = () => {
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+  }, [role]);
 
   const headerToggleHandler = () => {
     headerShrinkingHandler(showHeader);
@@ -78,7 +80,7 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/'>Home</Link>
+              <Link to='/home'>Home</Link>
             </NavigationItem>
 
             <NavigationItem>
@@ -93,13 +95,20 @@ function Header(props: IHeaderProps) {
               </Link>
             </NavigationItem>
 
-            <NavigationItem invert>
-              <Link to='/register'>Cadastro</Link>
-            </NavigationItem>
+            {
+              role == undefined ? <>
+                <NavigationItem invert>
+                  <Link to='/register'>Cadastro</Link>
+                </NavigationItem>
 
-            <NavigationItem invert>
-              <Link to='/home' onClick={() => dispatch(login(mockedAdmin))}>Entrar</Link>
-            </NavigationItem>
+                <NavigationItem invert>
+                  <Link to='/register'>Entrar</Link>
+                </NavigationItem>
+              </> : <NavigationItem invert>
+                <Link to='/' onClick={() => dispatch(logout())}>Sair</Link>
+              </NavigationItem>
+            }
+
           </NavigationContainer>
         </Navigation>
       ) : (
@@ -119,7 +128,9 @@ function Header(props: IHeaderProps) {
                 </NavigationItem> : <></>
             }
 
-            <NavigationItem invert>Sair</NavigationItem>
+            <NavigationItem invert>
+              <Link to='/' onClick={() => dispatch(logout())}>Sair</Link>
+            </NavigationItem>
           </NavigationContainer>
         </NavigationAlt>
       )}

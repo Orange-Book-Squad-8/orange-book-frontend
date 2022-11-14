@@ -71,6 +71,7 @@ function LessonEditDashboardUpdateForm() {
   }
 
   async function submit() {
+    setCantSubmit(false);
     try {
       if (isNaN(lesson.id)) {
         await api.post('/lessons/create', {
@@ -95,6 +96,7 @@ function LessonEditDashboardUpdateForm() {
         });
       }
       setIsDialogOpen(true);
+      setCantSubmit(true);
     } catch (e) {
       console.error(e);
     }
