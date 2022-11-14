@@ -48,9 +48,6 @@ export const courseManagerSlice = createSlice({
     setSectionList: (state, action: PayloadAction<Section[]>) => {
       state.sectionList.sections = action.payload;
     },
-    newSection: (state, action: PayloadAction<Section[]>) => {
-      state.sectionList.newSections = action.payload;
-    },
     setDeletedSectionIds: (state, action: PayloadAction<number[]>) => {
       state.sectionList.deletedSectionIds = action.payload;
     },
@@ -95,8 +92,7 @@ export const {
   setDeletedSectionIds,
   setIsOpen,
   setIsEditing,
-  editLesson,
-  newSection
+  editLesson
 } =
   courseManagerSlice.actions;
 

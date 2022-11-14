@@ -7,26 +7,28 @@ import { Book, CheckSquare, Timer } from 'phosphor-react';
 import {
   selectActiveCourse,
   selectCourseList,
-  setActiveCourse
+  selectUser,
+  setActiveCourse,
+  setUserCourseList
 } from '../../redux/reducers';
 import { Button } from '../../components/button';
 import {
+  CourseDescription,
   CoursePageContainer,
-  InfoSection,
-  TagsContainer,
+  CourseSectionsContainer,
   CreatedBy,
   Creator,
-  CourseDescription,
-  CourseSectionsContainer,
   InfoItem,
+  InfoSection,
   LessonInfo,
   LessonItem,
   LessonsContainer,
   LessonTitle,
-  StyledLink
+  StyledLink,
+  TagsContainer
 } from './index';
 import { api } from '../../lib/axios';
-import { CourseDTO, Lesson } from '../../interfaces/api';
+import { AppUserCourseDTO, CourseDTO, Lesson } from '../../interfaces/api';
 
 interface ServerCourseResponse {
   courseDTO: CourseDTO;
@@ -41,6 +43,7 @@ interface CompleteSectionDTO {
 
 function CoursePage() {
   const course = useSelector(selectActiveCourse);
+  const user = useSelector(selectUser);
   const { watchedLesson, subscribedCourses } = useSelector(selectCourseList);
   const dispatch = useDispatch();
   const { courseId } = useParams();
@@ -50,7 +53,7 @@ function CoursePage() {
 
   useEffect(() => {
     fetchActiveCourse();
-  }, []);
+  }, [subscribedCourses]);
 
   async function fetchActiveCourse() {
     try {
@@ -68,16 +71,6 @@ function CoursePage() {
         creator
       } = response.data.courseDTO;
 
-      console.log({
-        id,
-        title,
-        category,
-        difficulty,
-        visible,
-        description,
-        creator,
-        sections: response.data.completeSectionDTO
-      });
       dispatch(
         setActiveCourse({
           id,
@@ -95,25 +88,35 @@ function CoursePage() {
     }
   }
 
+  async function registerCourse() {
+    try {
+      await api.post('/users/addMyCourses', { courseId, userId: user.id });
+      const response = await api.get<AppUserCourseDTO>(`/users/${user.id}/courses`);
+      dispatch(setUserCourseList(response.data));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     course && (
       <CoursePageContainer title={course?.title || ' '}>
         <InfoSection>
           <TagsContainer>
-            <CourseTag title="categoria">{course.category}</CourseTag>
-            <CourseTag title="categoria">{course.difficulty}</CourseTag>
+            <CourseTag title='categoria'>{course.category}</CourseTag>
+            <CourseTag title='categoria'>{course.difficulty}</CourseTag>
             <CreatedBy>
               Criado por <Creator>{course.creator}</Creator>
             </CreatedBy>
 
-            {!isSubscribed && <Button standard>Matricular</Button>}
+            {!isSubscribed && <Button standard onClick={registerCourse}>Matricular</Button>}
           </TagsContainer>
           <CourseDescription>{course.description}</CourseDescription>
         </InfoSection>
 
         <CourseSectionsContainer>
           {course.sections.map((section) => (
-            <CustomDisclosure title={section.name} tag="div">
+            <CustomDisclosure title={section.name} tag='div'>
               <LessonsContainer>
                 {section.lessons.map((lesson) => (
                   <LessonItem>
@@ -129,18 +132,18 @@ function CoursePage() {
 
                     <LessonInfo>
                       <InfoItem>
-                        <CourseTag title="Lesson content type">
+                        <CourseTag title='Lesson content type'>
                           {lesson.contentType}
                         </CourseTag>
                       </InfoItem>
 
                       <InfoItem>
-                        <Book weight="bold" />
+                        <Book weight='bold' />
                         {lesson.topic}
                       </InfoItem>
 
                       <InfoItem>
-                        <Timer weight="bold" />
+                        <Timer weight='bold' />
                         {lesson.durationInMinutes} minutos
                       </InfoItem>
 
@@ -149,7 +152,7 @@ function CoursePage() {
                           lesson.id
                         ) && (
                           <InfoItem>
-                            <CheckSquare weight="bold" />
+                            <CheckSquare weight='bold' />
                             Concluída
                           </InfoItem>
                         )}
