@@ -142,12 +142,12 @@ function Header(props: IHeaderProps) {
         </NavigationAlt>
       )}
 
-      <MenuButton rotate={showMenu} onClick={menuToggleHandler}>
+      <MenuButton $rotate={showMenu} onClick={menuToggleHandler}>
         <MenuIcon />
       </MenuButton>
 
       {!isNoAuthPath && (
-        <HeaderButton rotate={showHeader} onClick={headerToggleHandler}>
+        <HeaderButton $rotate={showHeader} onClick={headerToggleHandler}>
           <MenuIcon />
         </HeaderButton>
       )}
