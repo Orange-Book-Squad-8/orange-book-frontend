@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { wait } from '../../utils';
+import { logout, selectRole } from '../../redux/reducers';
+import { Role } from '../../interfaces/api';
+import { LoginPopup } from '../login-popup';
 import {
   HeaderButton,
   HeaderContainer,
@@ -15,8 +18,6 @@ import {
   SiteTitle,
   SiteTitleAlt
 } from './index';
-import { logout, selectRole } from '../../redux/reducers';
-import { Role } from '../../interfaces/api';
 
 interface IHeaderProps {
   headerShrinkingHandler: (showHeader: boolean) => void;
@@ -26,19 +27,16 @@ function Header(props: IHeaderProps) {
   const { headerShrinkingHandler, ...otherProps } = props;
   const [showMenu, setShowMenu] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const isNoAuthPath = pathname === '/' || pathname === '/register';
   const role: Role = useSelector(selectRole);
-
   const dispatch = useDispatch();
+  const isNoAuthPath = pathname === '/' || pathname === '/register';
 
   const menuToggleHandler = () => {
     setShowMenu(!showMenu);
   };
-
-  useEffect(() => {
-  }, [role]);
 
   const headerToggleHandler = () => {
     headerShrinkingHandler(showHeader);
@@ -59,6 +57,10 @@ function Header(props: IHeaderProps) {
     }
   };
 
+  const loginPopupToggleHandler = () => {
+    setShowLogin(!showLogin);
+  };
+
   return (
     <HeaderContainer
       horizontal={isNoAuthPath}
@@ -69,7 +71,7 @@ function Header(props: IHeaderProps) {
         <SiteTitleAlt>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitleAlt>
@@ -77,7 +79,7 @@ function Header(props: IHeaderProps) {
         <SiteTitle>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitle>
@@ -87,61 +89,53 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='#about' onClick={linkClickHandler}>
+              <Link to="/#about" onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='#courses' onClick={linkClickHandler}>
+              <Link to="/#courses" onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
 
-            {role == undefined ? (
-              <>
-                <NavigationItem invert>
-                  <Link to='/register'>Cadastro</Link>
-                </NavigationItem>
+            <NavigationItem invert>
+              <Link to="/register">Cadastro</Link>
+            </NavigationItem>
 
-                <NavigationItem invert>
-                  <Link to='/login'>Entrar</Link>
-                </NavigationItem>
-              </>
-            ) : (
-              <NavigationItem invert>
-                <Link to='/' onClick={() => dispatch(logout())}>
-                  Sair
-                </Link>
-              </NavigationItem>
-            )}
+            <NavigationItem onClick={loginPopupToggleHandler} invert>
+              Entrar
+            </NavigationItem>
           </NavigationContainer>
         </Navigation>
       ) : (
         <NavigationAlt show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/dashboard'>Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </NavigationItem>
 
             {role?.name === 'admin' ? (
               <NavigationItem>
-                <Link to='/admin/edit/lessons'>Edit Lessons</Link>
+                <Link to="/admin/edit/lessons">Editar lições</Link>
               </NavigationItem>
             ) : (
-              <></>
+              <NavigationItem>
+                <Link to="#">Criar Trilha</Link>
+              </NavigationItem>
             )}
 
             <NavigationItem invert>
-              <Link to='/' onClick={() => dispatch(logout())}>
+              <Link to="/" onClick={() => dispatch(logout())}>
                 Sair
               </Link>
             </NavigationItem>
@@ -158,6 +152,8 @@ function Header(props: IHeaderProps) {
           <MenuIcon />
         </HeaderButton>
       )}
+
+      {showLogin && <LoginPopup />}
     </HeaderContainer>
   );
 }

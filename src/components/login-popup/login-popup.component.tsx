@@ -3,19 +3,19 @@ import { useDispatch } from 'react-redux';
 import { Field, Form, Formik } from 'formik';
 import { api } from '../../lib/axios';
 import { login } from '../../redux/reducers';
-import { InputField } from '../../components/input-field';
-import { FormContainer, FormTitle, RegisterContainer, SaveButton } from './index';
+import { InputField } from '../input-field';
+import { FormContainer, FormTitle, LoginContainer, SaveButton } from './index';
 
 interface IFormValues {
   username: string;
   password: string;
 }
 
-function Login() {
+function LoginPopup() {
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
-  const registerHandler = async (values: IFormValues) => {
+  const loginHandler = async (values: IFormValues) => {
     const { username, password } = values;
 
     try {
@@ -36,9 +36,8 @@ function Login() {
     return false;
   };
 
-
   return (
-    <RegisterContainer>
+    <LoginContainer>
       <FormContainer>
         <FormTitle>Entrar</FormTitle>
 
@@ -47,46 +46,46 @@ function Login() {
             username: '',
             password: ''
           }}
-          onSubmit={registerHandler}
+          onSubmit={loginHandler}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field name='username'>
+              <Field name="username">
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name='username'
-                      title='usuário'
-                      type='text'
+                      name="username"
+                      title="usuário"
+                      type="text"
                     />
                   );
                 }}
               </Field>
 
-              <Field name='password'>
+              <Field name="password">
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name='password'
-                      title='senha'
-                      type='password'
+                      name="password"
+                      title="senha"
+                      type="password"
                     />
                   );
                 }}
               </Field>
-              <SaveButton standard disabled={isSubmitting} type='submit'>
+              <SaveButton standard disabled={isSubmitting} type="submit">
                 Entrar
               </SaveButton>
             </Form>
           )}
         </Formik>
       </FormContainer>
-    </RegisterContainer>
+    </LoginContainer>
   );
 }
 
-export default Login;
+export default LoginPopup;

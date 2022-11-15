@@ -1,20 +1,33 @@
 import styled from 'styled-components';
-import { Button } from '../../components/button';
+import { Button } from '../button';
 
-export const RegisterContainer = styled.div`
+export const LoginContainer = styled.div`
+  position: absolute;
+  top: calc(100% + 2rem);
+  right: 50%;
+  transform: translateX(50%);
   display: flex;
   justify-content: center;
-  padding: 2rem 1.25rem;
+  width: 90%;
+  max-width: 360px;
+  padding: 1rem;
+  box-shadow: 0 0 10px 5px #101010;
+  border-radius: 0.5rem;
+  background-color: ${({ theme }) => theme.primaryDarker};
 
   @media screen and (min-width: 576px) {
-    padding: 3rem 3.5rem;
+    top: calc(100% + 1rem);
+  }
+
+  @media screen and (min-width: 768px) {
+    right: 2.5rem;
+    transform: none;
+    max-width: 420px;
   }
 `;
 
 export const FormContainer = styled.div`
   width: 100%;
-  max-width: 720px;
-  margin-top: 2.5rem;
   color: ${({ theme }) => theme.neutral};
 `;
 
@@ -42,6 +55,5 @@ interface ISaveButton {
 export const SaveButton = styled(Button)<ISaveButton>`
   display: block;
   width: 100%;
-  max-width: 360px;
   margin: 1.5rem auto;
 `;

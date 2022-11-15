@@ -164,13 +164,14 @@ type NavigationProps = {
 
 export const Navigation = styled.nav<NavigationProps>`
   width: 100%;
-  height: ${({ show }) => (show ? '258px' : '0')};
+  height: ${({ show }) => (show ? '297px' : '0')};
   overflow: hidden;
   transition: 300ms height ease-in-out;
 
   @media screen and (min-width: 576px) {
     height: auto;
     width: auto;
+    overflow: visible;
   }
 `;
 
@@ -199,10 +200,15 @@ export const NavigationContainer = styled.ul`
 
 export const NavigationAlt = styled(Navigation)`
   width: 100%;
-  height: ${({ show }) => (show ? 'auto' : 'auto')};
+  height: ${({ show }) => (show ? '237px' : '0')};
+  overflow: hidden;
 
   & ${NavigationContainer} {
     flex-direction: column;
+  }
+
+  @media screen and (min-width: 576px) {
+    height: auto;
   }
 `;
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '../../components/button';
 
-export const RegisterContainer = styled.div`
+export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   padding: 2rem 1.25rem;
@@ -16,7 +16,6 @@ export const FormContainer = styled.div`
   max-width: 720px;
   margin-top: 2.5rem;
   color: ${({ theme }) => theme.neutral};
-  margin-bottom: 100px;
 `;
 
 export const FormTitle = styled.h4`

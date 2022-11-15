@@ -1,3 +1,3 @@
-export { default as Login } from './register.component';
-export * from './register.styles';
+export { default as Login } from './login.component';
+export * from './login.styles';
 export * from './schema';
