@@ -68,6 +68,10 @@ const Router = createBrowserRouter([
             <AdminDashboard />
           </ProtectedRoutes>
         )
+      },
+      {
+        path: '/edit/course/new',
+        element: <CourseConstructor />
       }
     ]
   }

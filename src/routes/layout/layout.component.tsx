@@ -4,15 +4,14 @@ import { Header } from '../../components/header';
 import { Footer, LayoutContainer, Main, RightColumn } from './index';
 
 function Layout() {
-
   const [isHeaderShrunk, setIsHeaderShrunk] = useState(false);
   const { pathname } = useLocation();
-  const isNoAuthPath = pathname === '/' || pathname === '/register';
+  const isNoAuthPath =
+    pathname === '/' || pathname === '/register' || pathname === '/login';
 
   const headerShrinkingHandler = (shrink = false) => {
     setIsHeaderShrunk(shrink);
   };
-
 
   return (
     <LayoutContainer dualColumns={!isNoAuthPath}>

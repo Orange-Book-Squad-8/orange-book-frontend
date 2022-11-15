@@ -6,8 +6,8 @@ export const AdminDashboardContainer = styled.div`
   padding: 2%;
   height: 100vh;
   gap: 5px;
+  border: 2px solid red;
 `;
-
 
 export const DashboardInfo = styled.div`
   display: flex;
