@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button } from '../../components/button';
 import { Section } from '../../components/section';
 import { Link } from 'react-router-dom';
@@ -93,7 +93,11 @@ export const CourseDescription = styled.p`
   }
 `;
 
-export const LessonLink = styled.a`
+interface ILessonLink {
+  $disabled?: boolean;
+}
+
+export const LessonLink = styled.a<ILessonLink>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -121,6 +125,13 @@ export const LessonLink = styled.a`
   @media screen and (min-width: 992px) {
     font-size: 1.35rem;
   }
+
+  ${({ $disabled }) =>
+    $disabled &&
+    css`
+      opacity: 0.5;
+      pointer-events: none;
+    `}
 `;
 
 export const CourseLink = styled(Link)`
@@ -158,7 +169,6 @@ export const NotesFormContainer = styled.div`
   max-width: 720px;
   margin-top: 2.5rem;
   color: ${({ theme }) => theme.neutral};
-  margin-bottom: 100px;
 `;
 
 export const FormTitle = styled.h4`
@@ -187,4 +197,10 @@ export const SaveButton = styled(Button)<ISaveButton>`
   width: 100%;
   max-width: 360px;
   margin: 1.5rem auto;
+`;
+
+export const LessonChanger = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 `;

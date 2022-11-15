@@ -30,4 +30,31 @@ export const selectCourseLesson = createSelector(
   }
 );
 
+export const selectPrevAndNextLessons = createSelector(
+  [selectActiveCourse, (state: RootState, lessonId: number) => lessonId],
+  (activeCourse, lessonId) => {
+    const result =
+      activeCourse?.sections
+        ?.flatMap((section) => section.lessons)
+        ?.map((lesson, index, lessons) => {
+          if (lesson.id !== lessonId) return null;
+
+          const prevAndNext = { prev: NaN, next: NaN };
+
+          if (index - 1 >= 0) {
+            prevAndNext.prev = lessons[index - 1]?.id;
+          }
+
+          if (index + 1 < lessons.length) {
+            prevAndNext.next = lessons[index + 1]?.id;
+          }
+
+          return prevAndNext;
+        })
+        ?.filter(Boolean) || [];
+
+    return result[0] || { prev: NaN, next: NaN };
+  }
+);
+
 export default activeCourseSlice.reducer;

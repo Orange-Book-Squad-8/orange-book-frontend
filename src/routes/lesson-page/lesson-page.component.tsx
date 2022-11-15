@@ -1,6 +1,10 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectCourseLesson, selectCourseList } from '../../redux/reducers';
+import {
+  selectCourseLesson,
+  selectCourseList,
+  selectPrevAndNextLessons
+} from '../../redux/reducers';
 import { CourseTag } from '../../components/course-tag';
 import { CheckBox } from '../../components/checkbox';
 import { ArrowFatLeft, ArrowFatRight } from 'phosphor-react';
@@ -18,7 +22,8 @@ import {
   LessonLink,
   NotesFormContainer,
   SaveButton,
-  TagsContainer
+  TagsContainer,
+  LessonChanger
 } from './index';
 
 interface IFormValues {
@@ -26,8 +31,7 @@ interface IFormValues {
   note: string;
 }
 
-interface IFFormErrors extends IFormValues {
-}
+interface IFFormErrors extends IFormValues {}
 
 function LessonPage() {
   const { courseId, lessonId } = useParams() as {
@@ -37,9 +41,11 @@ function LessonPage() {
   const lesson = useSelector((state: RootState) =>
     selectCourseLesson(state, Number(lessonId))
   );
+  const { prev, next }: { prev: number; next: number } = useSelector(
+    (state: RootState) => selectPrevAndNextLessons(state, Number(lessonId))
+  );
   const { watchedLesson } = useSelector(selectCourseList);
   const isLessonWatched = watchedLesson?.[courseId]?.includes(Number(lessonId));
-
 
   const validateForm = (values: IFormValues) => {
     const errors = {} as IFFormErrors;
@@ -55,21 +61,22 @@ function LessonPage() {
     return errors;
   };
 
-
   return (
     <CoursePageContainer title={lesson?.title || ' '}>
       <InfoSection>
         <TagsContainer>
-          <CourseTag title='tipo de conteúdo'>{lesson?.contentType}</CourseTag>
-          <CourseTag title='topico'>{lesson?.topic}</CourseTag>
+          <CourseTag title="tipo de conteúdo">{lesson?.contentType}</CourseTag>
+          <CourseTag title="topico">{lesson?.topic}</CourseTag>
           <CreatedBy>
             Criado por <Creator>{lesson?.author}</Creator>
           </CreatedBy>
           <CheckBox
-            name='watched'
-            defaultChecked={isLessonWatched == undefined ? false : isLessonWatched}
-            label='Concluída'
-            altLabel='Concluir'
+            name="watched"
+            defaultChecked={
+              isLessonWatched == undefined ? false : isLessonWatched
+            }
+            label="Concluída"
+            altLabel="Concluir"
             lessonId={parseInt(lessonId)}
           />
         </TagsContainer>
@@ -77,12 +84,12 @@ function LessonPage() {
         <CourseDescription>{lesson?.description}</CourseDescription>
       </InfoSection>
 
-      <LessonLink href={lesson?.link || '#'} target='_blank'>
-        Seguir para Lição <ArrowFatRight size={32} weight='bold' />
+      <LessonLink href={lesson?.link || '#'} target="_blank">
+        Seguir para Lição <ArrowFatRight size={32} weight="bold" />
       </LessonLink>
 
       <CourseLink to={`/course/${courseId}`}>
-        Voltar para o Curso <ArrowFatLeft size={32} weight='bold' />
+        Voltar para o Curso <ArrowFatLeft size={32} weight="bold" />
       </CourseLink>
 
       <NotesFormContainer>
@@ -91,47 +98,64 @@ function LessonPage() {
         <Formik
           initialValues={{ noteTitle: '', note: '' }}
           validate={validateForm}
-          onSubmit={() => {
-          }}
+          onSubmit={() => {}}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field name='noteTitle'>
+              <Field name="noteTitle">
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name='noteTitle'
-                      title='Título'
-                      type='text'
+                      name="noteTitle"
+                      title="Título"
+                      type="text"
                     />
                   );
                 }}
               </Field>
 
-              <Field name='note'>
+              <Field name="note">
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name='note'
-                      title='Anotações'
-                      type='text'
-                      tag='textarea'
+                      name="note"
+                      title="Anotações"
+                      type="text"
+                      tag="textarea"
                     />
                   );
                 }}
               </Field>
 
-              <SaveButton standard disabled={isSubmitting} type='submit'>
+              <SaveButton standard disabled={isSubmitting} type="submit">
                 Salvar
               </SaveButton>
             </Form>
           )}
         </Formik>
       </NotesFormContainer>
+
+      <LessonChanger>
+        <LessonLink
+          as={Link}
+          to={prev ? `/course/${courseId}/lesson/${prev}` : '#'}
+          $disabled={!Boolean(prev)}
+        >
+          Anterior <ArrowFatLeft size={32} weight="bold" />
+        </LessonLink>
+
+        <LessonLink
+          as={Link}
+          to={next ? `/course/${courseId}/lesson/${next}` : '#'}
+          $disabled={!Boolean(next)}
+        >
+          Próxima <ArrowFatRight size={32} weight="bold" />
+        </LessonLink>
+      </LessonChanger>
     </CoursePageContainer>
   );
 }
