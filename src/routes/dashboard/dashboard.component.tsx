@@ -5,9 +5,11 @@ import { SwiperSlide } from 'swiper/react';
 import { PlusCircle } from 'phosphor-react';
 import { useScreenSizeObserver } from '../../hooks';
 import {
+  selectMyCourses,
   selectOriginalCourses,
   selectPlaylists,
   selectUser,
+  selectWatchedLessons,
   setUserCourseList
 } from '../../redux/reducers';
 import { api } from '../../lib/axios';
@@ -21,6 +23,7 @@ import {
   StyledLink,
   StyledLinkBlock
 } from './index';
+import { AppUserCourseDTO } from '../../interfaces/api';
 
 const CARROSSEL_CONFIGS = {
   modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
@@ -56,18 +59,19 @@ const CARROSSEL_CONFIGS = {
 
 function Dashboard() {
   const courses = useSelector(selectOriginalCourses);
+  const watchedLesson = useSelector(selectWatchedLessons);
   const playlists = useSelector(selectPlaylists);
+  const myCourses = useSelector(selectMyCourses);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const { isSmall, isLarge, isMedium } = useScreenSizeObserver();
-
   useEffect(() => {
     fetchUserCourses();
   }, []);
 
   async function fetchUserCourses() {
     try {
-      const userCourses = await api.get(`/users/${user.id}/courses`);
+      const userCourses = await api.get<AppUserCourseDTO>(`/users/${user.id}/courses`);
       dispatch(setUserCourseList(userCourses.data));
     } catch (e) {
       console.error(e);
@@ -75,38 +79,39 @@ function Dashboard() {
   }
 
   return (
-    <DashboardContainer title="">
-      <DashboardSection title="Meus Cursos">
+    <DashboardContainer title=''>
+      <DashboardSection title='Cursos Orange Originals'>
         <CoursesContainer>
           {courses?.map((course) => (
-            <UserCourse original {...course} key={course.title} />
+            <UserCourse original {...course} key={course.id}
+                        finishedLessons={watchedLesson[Number(course.id)].length} />
           ))}
         </CoursesContainer>
       </DashboardSection>
 
-      {!(courses && playlists) ? (
+      {courses?.length == 0 && playlists?.length == 0 ? (
         <NoCourseMessage>
           <div>Você ainda não está matriculado em nenhuma trilha.</div>
           <div>
-            Conheça nossos <StyledLink to="/home">cursos</StyledLink> ou crie
+            Conheça nossos <StyledLink to='/home'>cursos</StyledLink> ou crie
             sua própria trilha:
           </div>
-          <StyledLinkBlock to="#">
-            {isSmall ? <PlusCircle size={64} weight="bold" /> : <></>}
-            {isMedium ? <PlusCircle size={80} weight="bold" /> : <></>}
-            {isLarge ? <PlusCircle size={96} weight="bold" /> : <></>}
+          <StyledLinkBlock to='/edit/course/new'>
+            {isSmall ? <PlusCircle size={64} weight='bold' /> : <></>}
+            {isMedium ? <PlusCircle size={80} weight='bold' /> : <></>}
+            {isLarge ? <PlusCircle size={96} weight='bold' /> : <></>}
           </StyledLinkBlock>
         </NoCourseMessage>
       ) : (
         <></>
       )}
 
-      {playlists ? (
-        <DashboardSection title="Minhas trilhas">
+      {playlists?.length ? (
+        <DashboardSection title='Trilhas inscritas'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {playlists?.map((course) => (
               <SwiperSlide>
-                <UserCourse {...course} />
+                <UserCourse {...course} finishedLessons={watchedLesson[Number(course.id)].length} />
               </SwiperSlide>
             ))}
           </Carrossel>
@@ -114,6 +119,35 @@ function Dashboard() {
       ) : (
         <></>
       )}
+
+      {myCourses?.length ? (
+        <DashboardSection title='Trilhas Criadas'>
+          <Carrossel configs={CARROSSEL_CONFIGS}>
+            {myCourses?.map((course) => (
+              <SwiperSlide>
+                <UserCourse {...course} finishedLessons={watchedLesson[Number(course.id)].length} />
+              </SwiperSlide>
+            ))}
+          </Carrossel>
+        </DashboardSection>
+      ) : (
+        <></>
+      )}
+      {courses?.length != 0 || playlists?.length != 0 ? (
+        <NoCourseMessage>
+          <div>
+            Crie sua própria trilha:
+          </div>
+          <StyledLinkBlock to='/edit/course/new'>
+            {isSmall ? <PlusCircle size={64} weight='bold' /> : <></>}
+            {isMedium ? <PlusCircle size={80} weight='bold' /> : <></>}
+            {isLarge ? <PlusCircle size={96} weight='bold' /> : <></>}
+          </StyledLinkBlock>
+        </NoCourseMessage>
+      ) : (
+        <></>
+      )}
+
     </DashboardContainer>
   );
 }

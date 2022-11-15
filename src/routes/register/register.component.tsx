@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Formik, Field, Form } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { api } from '../../lib/axios';
 import { login } from '../../redux/reducers';
 import { InputField } from '../../components/input-field';
 import {
-  RegisterContainer,
+  emailSchema,
   FormContainer,
   FormTitle,
+  passwordSchema,
+  RegisterContainer,
   SaveButton,
-  usernameSchema,
-  emailSchema,
-  passwordSchema
+  usernameSchema
 } from './index';
 
 interface IFormValues {
@@ -26,12 +26,15 @@ function Register() {
   const navigator = useNavigate();
 
   const registerHandler = async (values: IFormValues) => {
-    const { username, password } = values;
+    const { username, password, email } = values;
 
     try {
-      const loginResponse = await api.post('/users/login', {
+      const loginResponse = await api.post('/users/create', {
         username,
-        password
+        email,
+        password,
+        role: 'user',
+        stackCategories: ['BACK_END', 'FRONT_END']
       });
 
       const user = await api.get(`/users/${loginResponse.data.id}/find`);
@@ -93,63 +96,63 @@ function Register() {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field name="username">
+              <Field name='username'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="username"
-                      title="usuário"
-                      type="text"
+                      name='username'
+                      title='usuário'
+                      type='text'
                     />
                   );
                 }}
               </Field>
 
-              <Field name="email">
+              <Field name='email'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="email"
-                      title="e-mail"
-                      type="email"
+                      name='email'
+                      title='e-mail'
+                      type='email'
                     />
                   );
                 }}
               </Field>
 
-              <Field name="password">
+              <Field name='password'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="password"
-                      title="senha"
-                      type="password"
+                      name='password'
+                      title='senha'
+                      type='password'
                     />
                   );
                 }}
               </Field>
 
-              <Field name="confPassword">
+              <Field name='confPassword'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="confPassword"
-                      title="repita a senha"
-                      type="password"
+                      name='confPassword'
+                      title='repita a senha'
+                      type='password'
                     />
                   );
                 }}
               </Field>
 
-              <SaveButton standard disabled={isSubmitting} type="submit">
+              <SaveButton standard disabled={isSubmitting} type='submit'>
                 Cadastrar
               </SaveButton>
             </Form>

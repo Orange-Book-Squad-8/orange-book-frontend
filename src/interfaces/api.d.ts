@@ -46,7 +46,8 @@ export interface CourseCreateDTO {
   visible: boolean;
 }
 
-export interface CourseCreateDTOBuilder {}
+export interface CourseCreateDTOBuilder {
+}
 
 export interface CourseCreateSectionDTO {
   courseId: number;
@@ -121,7 +122,8 @@ export interface SectionCreateDTO {
   name: string;
 }
 
-export interface SectionCreateDTOBuilder {}
+export interface SectionCreateDTOBuilder {
+}
 
 export interface SectionDTO {
   id: number;

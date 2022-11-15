@@ -14,6 +14,6 @@ export function ProtectedRoutes({ authRole, children }: ProtectedRoutesProps) {
   return authRole.includes(userRole?.name) ? (
     children
   ) : (
-    <Navigate to='/register' state={{ prevPath: location.pathname }} />
+    <Navigate to='/login' state={{ prevPath: location.pathname }} />
   );
 }

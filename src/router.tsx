@@ -9,6 +9,7 @@ import { ProtectedRoutes } from './routes/protected-routes';
 import { AdminDashboard } from './routes/admin-dashboard';
 import { CoursePage } from './routes/course-page';
 import { LessonPage } from './routes/lesson-page';
+import { Login } from './routes/login';
 
 const Router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const Router = createBrowserRouter([
       {
         path: '/register',
         element: <Register />
+      },
+      {
+        path: '/login',
+        element: <Login />
       },
       {
         path: '/home',
@@ -42,7 +47,7 @@ const Router = createBrowserRouter([
       {
         path: '/edit/course/:courseId',
         element: (
-          <ProtectedRoutes authRole={['admin', 'user1']}>
+          <ProtectedRoutes authRole={['admin', 'user']}>
             <CourseConstructor />
           </ProtectedRoutes>
         )
