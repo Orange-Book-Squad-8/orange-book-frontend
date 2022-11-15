@@ -7,6 +7,7 @@ interface LayoutContainerProps {
 export const LayoutContainer = styled.div<LayoutContainerProps>`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   min-height: 100vh;
 
   @media screen and (min-width: 576px) {
@@ -24,6 +25,9 @@ interface RightColumnProps {
 }
 
 export const RightColumn = styled.div<RightColumnProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.primaryDarker};

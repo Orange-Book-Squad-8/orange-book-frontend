@@ -11,6 +11,7 @@ export const FooterContainer = styled.footer`
   padding: 2rem 1.5rem;
   color: ${({ theme }) => theme.neutral};
   background-color: ${({ theme }) => theme.primary};
+  box-shadow: 0 0 10px 0 #000;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
