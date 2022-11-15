@@ -1,4 +1,4 @@
-import { LessonEditDashboardForm } from '.';
+import { FieldTitle, LessonEditDashboardForm, OptionButton, OptionButtons } from '.';
 import { Dialog, Listbox } from '@headlessui/react';
 import {
   DialogPanel,
@@ -8,13 +8,12 @@ import {
   ListOptionsStyled
 } from '../course-edit-dashboard';
 import { tagMapper } from '../../../utils';
-import { ContentType } from '../../../interfaces/api';
+import { ContentType, Lesson } from '../../../interfaces/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { editLesson, selectLesson, setIsEditing, setIsOpen, setLesson, setSectionList } from '../../../redux/reducers';
+import { selectIsEditing, setIsEditing, setLesson, setSectionList } from '../../../redux/reducers';
 import { useState } from 'react';
 import { api } from '../../../lib/axios';
-import { OptionButton, OptionButtons } from '../lesson-edit-dashboard-peak';
-import { InputArea, InputFields, InputFieldsContainter } from '../lesson-edit-dashboard';
+import { InputArea, InputFields, InputFieldsContainter, PeakFields, PeakLinkFields } from '../lesson-edit-dashboard';
 
 const contents: ContentType[] = [
   'VIDEO',
@@ -23,11 +22,15 @@ const contents: ContentType[] = [
   'BOOK'
 ];
 
-function LessonEditDashboardUpdateForm() {
+interface LessonEditDashboardUpdateFormProps {
+  lesson: Lesson;
+}
+
+function LessonEditDashboardUpdateForm({ lesson }: LessonEditDashboardUpdateFormProps) {
   const [cantSubmit, setCantSubmit] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const lesson = useSelector(selectLesson);
   const { id, title, description, contentType, link, durationInMinutes, topic, author } = lesson;
+  const isEditing = useSelector(selectIsEditing);
   const dispatch = useDispatch();
 
   function setContentType(contentType: ContentType) {
@@ -71,6 +74,11 @@ function LessonEditDashboardUpdateForm() {
   }
 
   async function submit() {
+    if (!isEditing) {
+      dispatch(setIsEditing(true));
+      return;
+    }
+
     setCantSubmit(false);
     try {
       if (isNaN(lesson.id)) {
@@ -106,49 +114,71 @@ function LessonEditDashboardUpdateForm() {
     const response = await api.get('/lessons/all');
 
     dispatch(setSectionList([{ lessons: response.data, name: 'adm lessons', id: 0 }]));
+    dispatch(setLesson({} as Lesson));
     dispatch(setIsEditing(false));
-    dispatch(setIsOpen(false));
-    dispatch(editLesson(lesson));
     setIsDialogOpen(false);
+    setIsEditing(false);
   }
 
   function cancel() {
+    dispatch(setLesson({} as Lesson));
     dispatch(setIsEditing(false));
-    dispatch(setIsOpen(false));
   }
 
   return (
     <LessonEditDashboardForm>
-      <InputFieldsContainter>
-        <p>Título</p>
-        <InputFields type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
-        <p>Tipo de conteúdo</p>
-        <Listbox value={contentType} onChange={setContentType}>
-          <ListButtonStyled>{tagMapper(contentType)}</ListButtonStyled>
-          <ListOptionsStyled>
-            {contents.map((content, index) => (
-              <Listbox.Option as='div' key={index} value={content}>
-                <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
-              </Listbox.Option>
-            ))}
-          </ListOptionsStyled>
-        </Listbox>
-        <p>Autor</p>
-        <InputFields type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />
-        <p>Tópico</p>
-        <InputFields type='text' value={topic} onChange={(event) => setTopic(event.target.value)} />
-        <p>Descrição</p>
-        <InputArea value={description} onChange={(event) => setDescription(event.target.value)} />
-        <p>Link</p>
-        <InputFields type='url' value={link} onChange={(event) => setLink(event.target.value)} />
-        <p>Duração</p>
-        <InputFields type='number' value={durationInMinutes} onChange={(event) => setDuration(event.target.value)} />
-      </InputFieldsContainter>
+      {
+        isEditing ?
+          <InputFieldsContainter>
+            <FieldTitle>Título</FieldTitle>
+            <InputFields type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
+            <FieldTitle>Tipo de conteúdo</FieldTitle>
+            <Listbox value={contentType} onChange={setContentType}>
+              <ListButtonStyled>{tagMapper(contentType)}</ListButtonStyled>
+              <ListOptionsStyled>
+                {contents.map((content, index) => (
+                  <Listbox.Option as='div' key={index} value={content}>
+                    <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
+                  </Listbox.Option>
+                ))}
+              </ListOptionsStyled>
+            </Listbox>
+            <FieldTitle>Autor</FieldTitle>
+            <InputFields type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />
+            <FieldTitle>Tópico</FieldTitle>
+            <InputFields type='text' value={topic} onChange={(event) => setTopic(event.target.value)} />
+            <FieldTitle>Descrição</FieldTitle>
+            <InputArea value={description} onChange={(event) => setDescription(event.target.value)} />
+            <FieldTitle>Link</FieldTitle>
+            <InputFields type='url' value={link} onChange={(event) => setLink(event.target.value)} />
+            <FieldTitle>Duração</FieldTitle>
+            <InputFields type='number' value={durationInMinutes}
+                         onChange={(event) => setDuration(event.target.value)} />
+          </InputFieldsContainter>
+          :
+          <InputFieldsContainter>
+            <FieldTitle>Título</FieldTitle>
+            <PeakFields>{title}</PeakFields>
+            <FieldTitle>Tipo de conteúdo</FieldTitle>
+            <PeakFields>{contentType}</PeakFields>
+            <FieldTitle>Autor</FieldTitle>
+            <PeakFields>{author}</PeakFields>
+            <FieldTitle>Tópico</FieldTitle>
+            <PeakFields>{topic}</PeakFields>
+            <FieldTitle>Descrição</FieldTitle>
+            <PeakFields>{description}</PeakFields>
+            <FieldTitle>Link</FieldTitle>
+            <PeakLinkFields>{link}</PeakLinkFields>
+            <FieldTitle>Duração</FieldTitle>
+            <PeakFields>{durationInMinutes}</PeakFields>
+          </InputFieldsContainter>
 
+      }
       <OptionButtons>
-        <OptionButton onClick={submit} disabled={cantSubmit}>submit</OptionButton>
-        <OptionButton onClick={cancel}>cancel</OptionButton>
+        <OptionButton onClick={submit} disabled={cantSubmit}>{isEditing ? 'salvar' : 'editar'}</OptionButton>
+        <OptionButton onClick={cancel}>{isEditing ? 'cancelar' : 'fechar'}</OptionButton>
       </OptionButtons>
+
 
       <Dialog open={isDialogOpen} onClose={closeAndUpdate}>
         <DialogPanel>

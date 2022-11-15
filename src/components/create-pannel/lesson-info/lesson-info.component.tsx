@@ -2,7 +2,7 @@ import { ButtonPeak, LessonActions, LessonInfoContainer } from './lesson-info.st
 import { Lesson } from '../../../interfaces/api';
 import { Eye } from 'phosphor-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsEditing, setIsOpen, setLesson } from '../../../redux/reducers';
+import { selectIsEditing, setLesson } from '../../../redux/reducers';
 import { LessonCardListInfo } from '../lesson-card-list-info';
 
 interface LessonInfoProps {
@@ -15,14 +15,15 @@ function LessonInfo({ lesson }: LessonInfoProps) {
 
   function peekLesson() {
     dispatch(setLesson(lesson));
-    dispatch(setIsOpen(true));
   }
 
   return (
     <LessonInfoContainer>
       <LessonCardListInfo lesson={lesson} />
       <LessonActions>
-        <ButtonPeak onClick={peekLesson} disabled={isEditing}><Eye /></ButtonPeak>
+        <ButtonPeak isEditing={isEditing} onClick={peekLesson} disabled={isEditing}>
+          <Eye size={24} weight={'bold'} />
+        </ButtonPeak>
       </LessonActions>
     </LessonInfoContainer>
   );

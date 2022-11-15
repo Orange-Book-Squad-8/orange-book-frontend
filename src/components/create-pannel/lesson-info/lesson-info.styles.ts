@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const LessonInfoContainer = styled.div`
   display: flex;
@@ -22,9 +22,34 @@ export const LessonActions = styled.div`
   height: 100%;
 `;
 
-export const ButtonPeak = styled.button`
+interface ButtonDisabled {
+  isEditing: boolean;
+}
+
+
+export const ButtonPeak = styled.button<ButtonDisabled>`
   height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 3px;
+  padding: 2px;
+  border: none;
+  background-color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.secondaryDarker};
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+
+  ${({ isEditing }) =>
+          isEditing &&
+          css`
+            color: ${({ theme }) => theme.neutral};
+            cursor: not-allowed;
+          `
+  }
+  &:focus {
+    outline: none;
+  }
 `;

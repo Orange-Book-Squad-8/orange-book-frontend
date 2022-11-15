@@ -1,4 +1,11 @@
-import { DashboardFilterBar, DashboardListContainer, DashboardListHeader, DashboardPanel, LessonActions } from '.';
+import {
+  DashboardFilterBar,
+  DashboardListContainer,
+  DashboardListHeader,
+  DashboardPanel,
+  InputNameFilter,
+  LessonActions
+} from '.';
 import FixedLessonInfoHeader from '../fixed-lesson-info-header/fixed-lesson-info-header.component';
 import { LessonInfo } from '../lesson-info';
 import { useState } from 'react';
@@ -20,7 +27,8 @@ function LessonEditPanel() {
     <DashboardPanel>
       <DashboardFilterBar>
         <div>
-          <input value={typedFilter} onChange={(event) => setTypedFilter(event.target.value)} />
+          <InputNameFilter placeholder={'Título'} value={typedFilter}
+                           onChange={(event) => setTypedFilter(event.target.value)} />
         </div>
         <div>filtros</div>
       </DashboardFilterBar>

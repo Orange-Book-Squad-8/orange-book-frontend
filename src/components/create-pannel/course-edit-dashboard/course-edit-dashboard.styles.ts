@@ -91,6 +91,10 @@ export const SectionButton = styled.button`
   cursor: pointer;
   border-radius: 3px;
 
+  &:hover {
+    background-color: ${({ theme }) => theme.primaryDarker};
+  }
+
   &:focus {
     outline: none;
   }

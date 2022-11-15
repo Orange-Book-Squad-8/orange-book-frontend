@@ -1,19 +1,15 @@
-import { BaseTextField, DashboardPanel, LessonEditDashboardContainer } from '.';
+import { BaseTextField, DashboardPanel, LessonEditDashboardContainer, SectionButton } from '.';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsEditing, selectIsOpen, setIsEditing, setIsOpen, setLesson } from '../../../redux/reducers';
+import { selectLesson, setIsEditing, setLesson } from '../../../redux/reducers';
 import { LessonUpdateForm } from '../lesson-edit-dashboard-update-form';
-import { LessonDashboardPeak } from '../lesson-edit-dashboard-peak';
 import { PlusCircle } from 'phosphor-react';
 
 
 function LessonEditDashboard() {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectIsOpen);
-  const isEditing = useSelector(selectIsEditing);
+  const lesson = useSelector(selectLesson);
 
   function newLesson() {
-    dispatch(setIsOpen(true));
-    dispatch(setIsEditing(true));
     dispatch(setLesson({
       id: NaN,
       description: 'Insira a descrição aqui',
@@ -24,26 +20,24 @@ function LessonEditDashboard() {
       durationInMinutes: 1,
       link: ''
     }));
+    dispatch(setIsEditing(true));
   }
 
   return (
     <LessonEditDashboardContainer>
       {
-        isOpen ?
+        lesson?.title ?
           <DashboardPanel>
-            {
-              isEditing ? <LessonUpdateForm /> :
-                <LessonDashboardPeak />
-            }
+            <LessonUpdateForm lesson={lesson} />
           </DashboardPanel> :
           <BaseTextField>
             <div>Escolha a lesson a ser editada</div>
             <div>Ou</div>
 
             <div>Crie uma lesson</div>
-            <button onClick={newLesson}>
-              <PlusCircle size={24} />
-            </button>
+            <SectionButton onClick={newLesson}>
+              <PlusCircle size={64} />
+            </SectionButton>
           </BaseTextField>
 
 

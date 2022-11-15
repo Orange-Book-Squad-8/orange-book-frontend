@@ -40,8 +40,7 @@ export const courseManagerSlice = createSlice({
     course: {} as CourseDTO,
     lesson: {
       lesson: {} as Lesson,
-      isEditing: false,
-      isOpen: false
+      isEditing: false
     }
   },
   reducers: {
@@ -56,9 +55,6 @@ export const courseManagerSlice = createSlice({
     },
     setLesson: (state, action: PayloadAction<Lesson>) => {
       state.lesson.lesson = action.payload;
-    },
-    setIsOpen: (state, action: PayloadAction<boolean>) => {
-      state.lesson.isOpen = action.payload;
     },
     setIsEditing: (state, action: PayloadAction<boolean>) => {
       state.lesson.isEditing = action.payload;
@@ -90,7 +86,6 @@ export const {
   setLesson,
   moveLesson,
   setDeletedSectionIds,
-  setIsOpen,
   setIsEditing,
   editLesson
 } =
@@ -100,7 +95,6 @@ export const selectSectionList = (state: RootState) =>
   state.courseManager.sectionList;
 export const selectCourse = (state: RootState) => state.courseManager.course;
 export const selectLesson = (state: RootState) => state.courseManager.lesson.lesson;
-export const selectIsOpen = (state: RootState) => state.courseManager.lesson.isOpen;
 export const selectIsEditing = (state: RootState) => state.courseManager.lesson.isEditing;
 export const selectDeletedSectionIds = (state: RootState) => state.courseManager.sectionList.deletedSectionIds;
 
