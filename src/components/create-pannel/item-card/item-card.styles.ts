@@ -38,4 +38,16 @@ export const RemoveButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+  background-color: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.secondaryDarker};
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &:focus {
+    outline: none;
+  }
 `;
+

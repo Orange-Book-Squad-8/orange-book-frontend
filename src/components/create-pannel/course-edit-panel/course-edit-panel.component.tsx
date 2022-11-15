@@ -1,4 +1,4 @@
-import { DashboardFilterBar, DashboardPanel } from '.';
+import { DashboardFilterBar, DashboardPanel, InputNameFilter } from '.';
 import { DashboardList } from '../dashboard-list';
 import { useState } from 'react';
 
@@ -11,7 +11,8 @@ function CourseEditPanel() {
     <DashboardPanel>
       <DashboardFilterBar>
         <div>
-          <input value={typedFilter} onChange={(event) => setTypedFilter(event.target.value)} />
+          <InputNameFilter placeholder={'Título'} value={typedFilter}
+                           onChange={(event) => setTypedFilter(event.target.value)} />
         </div>
         <div>filtros</div>
       </DashboardFilterBar>

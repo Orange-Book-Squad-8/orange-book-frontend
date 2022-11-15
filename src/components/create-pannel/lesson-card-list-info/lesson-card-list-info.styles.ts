@@ -32,4 +32,11 @@ export const LessonCardListInfoContainer = styled.div`
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  color: ${({ theme }) => theme.secondary};
+  background-color: ${({ theme }) => theme.primary};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.primaryDarker};
+
+  }
 `;

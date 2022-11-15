@@ -12,9 +12,11 @@ import { ItemCard } from '../item-card';
 import {
   DisclosureButtonEditStyled,
   DisclosureButtonStyled,
+  DisclosurePanel,
   DisclosureStyled,
   FormDisclosureButtonEditStyled,
-  MinDIv
+  MinDIv,
+  OptionButtons
 } from './section-panel.styles';
 import { useDrop } from 'react-dnd';
 import { PaperPlaneTilt, Pencil, PlusCircle, Trash } from 'phosphor-react';
@@ -98,25 +100,27 @@ function SectionPanel({ section, sectionLocation }: SectionPannelProps) {
           ) : (
             <DisclosureButtonStyled>{section.name}</DisclosureButtonStyled>
           )}
-          <button>{isEditingName ? <PaperPlaneTilt /> : <Pencil />}</button>
+          <OptionButtons>{isEditingName ? <PaperPlaneTilt /> : <Pencil />}</OptionButtons>
         </FormDisclosureButtonEditStyled>
-        <button onClick={deleteSection}>
+        <OptionButtons onClick={deleteSection}>
           <Trash />
-        </button>
+        </OptionButtons>
       </DisclosureStyled>
       <Disclosure.Panel>
-        {section.lessons.map((lesson: Lesson, index: number) => (
-          <ItemCard
-            lesson={lesson}
-            listIndex={index}
-            lessonLocation={sectionLocation}
-            key={index}
-          />
-        ))}
-        <MinDIv ref={dropRef}>
-          <p>Arraste aqui</p>
-          <PlusCircle size={26} />
-        </MinDIv>
+        <DisclosurePanel>
+          {section.lessons.map((lesson: Lesson, index: number) => (
+            <ItemCard
+              lesson={lesson}
+              listIndex={index}
+              lessonLocation={sectionLocation}
+              key={index}
+            />
+          ))}
+          <MinDIv ref={dropRef}>
+            <p>Arraste aqui</p>
+            <PlusCircle size={26} />
+          </MinDIv>
+        </DisclosurePanel>
       </Disclosure.Panel>
     </Disclosure>
   );

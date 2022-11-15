@@ -3,9 +3,9 @@ import { Dialog, Listbox } from '@headlessui/react';
 import {
   DialogPanel,
   DialogTitle,
-  ListboxButtonStyled,
-  ListboxOptionsStyled,
-  ListboxOptionStyled
+  ListboxOptionStyled,
+  ListButtonStyled,
+  ListOptionsStyled
 } from '../course-edit-dashboard';
 import { tagMapper } from '../../../utils';
 import { ContentType } from '../../../interfaces/api';
@@ -124,14 +124,14 @@ function LessonEditDashboardUpdateForm() {
         <InputFields type='text' value={title} onChange={(event) => setTitle(event.target.value)} />
         <p>Tipo de conteúdo</p>
         <Listbox value={contentType} onChange={setContentType}>
-          <ListboxButtonStyled>{tagMapper(contentType)}</ListboxButtonStyled>
-          <ListboxOptionsStyled>
+          <ListButtonStyled>{tagMapper(contentType)}</ListButtonStyled>
+          <ListOptionsStyled>
             {contents.map((content, index) => (
               <Listbox.Option as='div' key={index} value={content}>
                 <ListboxOptionStyled>{tagMapper(content)}</ListboxOptionStyled>
               </Listbox.Option>
             ))}
-          </ListboxOptionsStyled>
+          </ListOptionsStyled>
         </Listbox>
         <p>Autor</p>
         <InputFields type='text' value={author} onChange={(event) => setAuthor(event.target.value)} />

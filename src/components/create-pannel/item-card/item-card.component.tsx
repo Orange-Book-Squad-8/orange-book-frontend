@@ -104,7 +104,9 @@ function ItemCard({ lesson, listIndex, lessonLocation }: itemCardProps) {
 
       {
         lessonLocation === 0 ? <> </> :
-          <RemoveButton onClick={removeLesson}><XCircle /></RemoveButton>
+          <RemoveButton onClick={removeLesson}>
+            <XCircle size={24} weight={'bold'} />
+          </RemoveButton>
       }
 
     </DashboardItem>

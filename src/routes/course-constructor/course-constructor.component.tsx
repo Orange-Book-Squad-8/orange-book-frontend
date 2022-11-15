@@ -29,8 +29,6 @@ function CourseConstructor() {
       if (courseId == 'new') {
         const responseAllLessons = await api.get<Lesson[]>('/lessons/all');
 
-
-        console.log('aqui');
         dispatch(setSectionList([{
           lessons: responseAllLessons.data,
           name: 'adm lessons',
@@ -39,13 +37,13 @@ function CourseConstructor() {
 
         dispatch(setCourse({
           id: NaN,
-          title: 'Course Title',
+          title: '',
           creator: user.username,
           visible: true,
           totalLessons: 0,
           difficulty: 'BEGINNER',
           category: 'UX',
-          description: 'Course description'
+          description: ''
         }));
       } else {
         const responseAllLessons = await api.get<Lesson[]>('/lessons/all');

@@ -34,15 +34,24 @@ const Router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />
+        element:
+          <ProtectedRoutes authRole={['admin', 'user']}>
+            <Dashboard />
+          </ProtectedRoutes>
       },
       {
         path: '/course/:courseId',
-        element: <CoursePage />
+        element:
+          <ProtectedRoutes authRole={['admin', 'user']}>
+            <CoursePage />
+          </ProtectedRoutes>
       },
       {
         path: '/course/:courseId/lesson/:lessonId',
-        element: <LessonPage />
+        element:
+          <ProtectedRoutes authRole={['admin', 'user']}>
+            <LessonPage />
+          </ProtectedRoutes>
       },
       {
         path: '/edit/course/:courseId',

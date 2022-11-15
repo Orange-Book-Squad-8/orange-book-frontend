@@ -2,8 +2,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseTag } from '../../components/course-tag';
-import { CustomDisclosure } from '../../components/custom-disclosure';
-import { Book, CheckSquare, Timer } from 'phosphor-react';
 import {
   selectActiveCourse,
   selectCourseList,
@@ -18,17 +16,12 @@ import {
   CourseSectionsContainer,
   CreatedBy,
   Creator,
-  InfoItem,
   InfoSection,
-  LessonInfo,
-  LessonItem,
-  LessonsContainer,
-  LessonTitle,
-  StyledLink,
   TagsContainer
 } from './index';
 import { api } from '../../lib/axios';
 import { AppUserCourseDTO, CourseDTO, Lesson } from '../../interfaces/api';
+import { CourseCustomDisclosure } from '../../components/course-page-custom-disclosure';
 
 interface ServerCourseResponse {
   courseDTO: CourseDTO;
@@ -115,51 +108,8 @@ function CoursePage() {
 
         <CourseSectionsContainer>
           {course.sections.map((section) => (
-            <CustomDisclosure title={section.name} tag='div'>
-              <LessonsContainer>
-                {section.lessons.map((lesson) => (
-                  <LessonItem>
-                    <LessonTitle>
-                      {isSubscribed ? (
-                        <StyledLink to={`lesson/${lesson.id}`}>
-                          {lesson.title}
-                        </StyledLink>
-                      ) : (
-                        lesson.title
-                      )}
-                    </LessonTitle>
-
-                    <LessonInfo>
-                      <InfoItem>
-                        <CourseTag title='Lesson content type'>
-                          {lesson.contentType}
-                        </CourseTag>
-                      </InfoItem>
-
-                      <InfoItem>
-                        <Book weight='bold' />
-                        {lesson.topic}
-                      </InfoItem>
-
-                      <InfoItem>
-                        <Timer weight='bold' />
-                        {lesson.durationInMinutes} minutos
-                      </InfoItem>
-
-                      {isSubscribed &&
-                        watchedLesson[Number(courseId)]?.includes(
-                          lesson.id
-                        ) && (
-                          <InfoItem>
-                            <CheckSquare weight='bold' />
-                            Concluída
-                          </InfoItem>
-                        )}
-                    </LessonInfo>
-                  </LessonItem>
-                ))}
-              </LessonsContainer>
-            </CustomDisclosure>
+            <CourseCustomDisclosure section={section} isSubscribed={isSubscribed} watchedLesson={watchedLesson}
+                                    courseId={courseId} key={section.id} />
           ))}
         </CourseSectionsContainer>
       </CoursePageContainer>

@@ -9,35 +9,27 @@ export const AdminDashboardContainer = styled.div`
 `;
 
 
-export const DashboardPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  background-color: lightyellow;
-  flex-grow: 2;
-  overflow: hidden;
-`;
-
 export const DashboardInfo = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 5px;
-  background-color: lightyellow;
+  background-color: ${({ theme }) => theme.primary};
+  border: 1px solid ${({ theme }) => theme.primaryDarker};
   flex-grow: 1;
-  overflow-y: scroll;
-`;
+  overflow-y: auto;
 
-export const DashboardFilterBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  background-color: white;
-  border-color: black;
-  border-style: solid;
-  border-bottom-width: 1px;
-  justify-content: space-between;
-  width: 100%;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  &::-webkit-scrollbar {
+    background-color: ${({ theme }) => theme.primary};
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.secondary};
+    width: 5px;
+    height: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+  }
 `;

@@ -15,9 +15,13 @@ import {
   CourseEditDashboardContainer,
   DialogPanel,
   DialogTitle,
-  ListboxButtonStyled,
-  ListboxOptionsStyled,
+  FieldTitle,
+  InputDescription,
+  InputTitle,
+  ListBoxDiv,
   ListboxOptionStyled,
+  ListButtonStyled,
+  ListOptionsStyled,
   SectionButton
 } from './course-edit-dashboard.styles';
 import { tagMapper } from '../../../utils';
@@ -84,8 +88,6 @@ function CourseEditDashboard() {
           sections
         });
 
-        console.log(response.data);
-
         await api.post('/users/addMyCourses', {
           courseId: response.data.id,
           userId: user.id
@@ -123,34 +125,48 @@ function CourseEditDashboard() {
 
   return (
     <CourseEditDashboardContainer>
-      <input
-        value={course.title}
+      <FieldTitle>Título:</FieldTitle>
+      <InputTitle
+        value={course?.title || ''}
+        placeholder={'Título'}
         onChange={(event) => setName(event.target.value)}
       />
-      <textarea
-        value={course.description}
-        onChange={(event) => setDescription(event.target.value)}
+
+      <FieldTitle>Descrição:</FieldTitle>
+      <InputDescription placeholder={'Descrição'}
+                        value={course?.description || ''}
+                        onChange={(event) => setDescription(event.target.value)}
       />
-      <Listbox value={course.difficulty} onChange={setDifficulty}>
-        <ListboxButtonStyled>{tagMapper(course.difficulty)}</ListboxButtonStyled>
-        <ListboxOptionsStyled>
-          {difficulties.map((diff, index) => (
-            <Listbox.Option as='div' key={index} value={diff}>
-              <ListboxOptionStyled>{tagMapper(diff)}</ListboxOptionStyled>
-            </Listbox.Option>
-          ))}
-        </ListboxOptionsStyled>
+
+      <FieldTitle>Dificuldade:</FieldTitle>
+      <Listbox value={course?.difficulty || 'BEGINNER'} onChange={setDifficulty}>
+        <ListBoxDiv>
+          <ListButtonStyled>{tagMapper(course.difficulty)}</ListButtonStyled>
+          <ListOptionsStyled>
+            {difficulties.map((diff, index) => (
+              <Listbox.Option as='div' key={index} value={diff}>
+                <ListboxOptionStyled>{tagMapper(diff)}</ListboxOptionStyled>
+              </Listbox.Option>
+            ))}
+          </ListOptionsStyled>
+        </ListBoxDiv>
       </Listbox>
-      <Listbox value={course.category} onChange={setCategory}>
-        <ListboxButtonStyled>{tagMapper(course.category)}</ListboxButtonStyled>
-        <ListboxOptionsStyled>
-          {stacks.map((stack, index) => (
-            <Listbox.Option as='div' key={index} value={stack}>
-              <ListboxOptionStyled>{tagMapper(stack)}</ListboxOptionStyled>
-            </Listbox.Option>
-          ))}
-        </ListboxOptionsStyled>
+
+      <FieldTitle>Categoria:</FieldTitle>
+      <Listbox value={course?.category || 'UX'} onChange={setCategory}>
+        <ListBoxDiv>
+          <ListButtonStyled>{tagMapper(course.category)}</ListButtonStyled>
+          <ListOptionsStyled>
+            {stacks.map((stack, index) => (
+              <Listbox.Option as='div' key={index} value={stack}>
+                <ListboxOptionStyled>{tagMapper(stack)}</ListboxOptionStyled>
+              </Listbox.Option>
+            ))}
+          </ListOptionsStyled>
+        </ListBoxDiv>
       </Listbox>
+
+      <FieldTitle>Seções:</FieldTitle>
       <DashboardInfo>
         {sections.map((section: Section, index) => (
           <SectionPannel
@@ -159,9 +175,9 @@ function CourseEditDashboard() {
             key={index}
           />
         ))}
-        <SectionButton onClick={addSection}>Nova Section</SectionButton>
+        <SectionButton onClick={addSection}>Nova Seção</SectionButton>
       </DashboardInfo>
-      <button onClick={send} disabled={isSending}>enviar</button>
+      <SectionButton onClick={send} disabled={isSending}>enviar</SectionButton>
 
       <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
         <DialogPanel>
