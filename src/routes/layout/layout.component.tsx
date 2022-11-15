@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { Footer } from '../../components/footer';
 import { Header } from '../../components/header';
-import { Footer, LayoutContainer, Main, RightColumn } from './index';
+import { LayoutContainer, Main, RightColumn } from './index';
 
 function Layout() {
   const [isHeaderShrunk, setIsHeaderShrunk] = useState(false);
@@ -22,7 +23,7 @@ function Layout() {
           <Outlet />
         </Main>
 
-        <Footer></Footer>
+        <Footer />
       </RightColumn>
     </LayoutContainer>
   );

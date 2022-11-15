@@ -47,5 +47,3 @@ export const RightColumn = styled.div<RightColumnProps>`
 `;
 
 export const Main = styled.main``;
-
-export const Footer = styled.footer``;
