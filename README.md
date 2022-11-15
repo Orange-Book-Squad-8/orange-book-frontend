@@ -64,6 +64,40 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [yup]()
 - [immer]()
 
+## :rocket: Como Rodar o Projeto
+
+Primeiro você deve garantir que o [NodeJS](https://nodejs.org/en/download/) esteja instalado. Após isso faça o download dessa aplicação e abra o prompt de comando.
+
+```bash
+	#navegue até a pasta do arquivo, através do comando cd
+	$ cd caminho até a pasta do arquivo
+	
+	#digite o comando para instalar as dependências através do gerenciador de sua preferência
+	$ npm install
+
+	
+	#rode a aplicação com o comando
+	$ npm run dev
+	
+	# o projeto estará rodando na url http://localhost:5173
+	
+	# para encerrar a aplicação, aperte:
+	$ CTRL + c
+```
+
+## :construction_worker: Admin
+O usuário tem a liberdade de acessar as trilhas e montar as suas próprias. Mas para editar o conteúdo das lições, precisa estar logado como administrador, abaixo estará login e senha:
+
+Login       | Senha
+------------| -------------
+ thiago_adm | minhasenha123
+
+## 📝 Licença
+Feito por:	
+- [Caio](https://github.com/caioandre182)
+- [Marcelo](https://github.com/MarceloRibeiro1)
+- [Pedro Yure](https://github.com/nogueirayure001")
+
 
 ## 📝 Licença
 Feito por:	
