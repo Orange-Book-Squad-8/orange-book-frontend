@@ -67,6 +67,11 @@ export const OptionButtons = styled.button`
   text-transform: uppercase;
   font-weight: bold;
 
+  &:hover {
+    background-color: ${({ theme }) => theme.primaryDarker};
+    cursor: pointer;
+  }
+
   &:focus {
     outline: none;
   }
