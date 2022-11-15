@@ -20,30 +20,30 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
   transition: 300ms width ease-in-out;
 
   ${({ horizontal }) =>
-          horizontal
-                  ? css`
-                    @media screen and (min-width: 576px) {
-                      padding: 1rem;
-                    }
+    horizontal
+      ? css`
+          @media screen and (min-width: 576px) {
+            padding: 1rem;
+          }
 
-                    @media screen and (min-width: 768px) {
-                      flex-direction: row;
-                      justify-content: space-between;
-                      padding: 1.25rem 2rem;
-                    }
-                  `
-                  : css`
-                    @media screen and (min-width: 576px) {
-                      position: fixed;
-                      top: 0;
-                      left: 0;
-                      justify-content: flex-start;
-                      gap: 3rem;
-                      width: ${({ show }: any) => (show ? '20rem' : '0%')};
-                      height: 100vh;
-                      z-index: 999;
-                    }
-                  `}
+          @media screen and (min-width: 768px) {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 1.25rem 2rem;
+          }
+        `
+      : css`
+          @media screen and (min-width: 576px) {
+            position: fixed;
+            top: 0;
+            left: 0;
+            justify-content: flex-start;
+            gap: 3rem;
+            width: ${({ show }: any) => (show ? '20rem' : '0%')};
+            height: 100vh;
+            z-index: 999;
+          }
+        `}
 `;
 
 export const SiteTitle = styled.h1`
@@ -110,14 +110,14 @@ export const MenuButton = styled(Button)<IMenuButtonProps>`
   }
 
   ${({ $rotate }) =>
-          $rotate &&
-          css`
-            transform: translate(-50%, 50%) rotate(180deg);
+    $rotate &&
+    css`
+      transform: translate(-50%, 50%) rotate(180deg);
 
-            @media screen and (min-width: 576px) {
-              transform: translate(50%, -50%) rotate(90deg);
-            }
-          `}
+      @media screen and (min-width: 576px) {
+        transform: translate(50%, -50%) rotate(90deg);
+      }
+    `}
 `;
 
 interface IHeaderButtonProps {
@@ -149,14 +149,14 @@ export const HeaderButton = styled(Button)<IHeaderButtonProps>`
   }
 
   ${({ $rotate }) =>
-          $rotate &&
-          css`
-            transform: translate(-50%, 50%) rotate(180deg);
+    $rotate &&
+    css`
+      transform: translate(-50%, 50%) rotate(180deg);
 
-            @media screen and (min-width: 576px) {
-              transform: translate(50%, -50%) rotate(90deg);
-            }
-          `}
+      @media screen and (min-width: 576px) {
+        transform: translate(50%, -50%) rotate(90deg);
+      }
+    `}
 `;
 
 type NavigationProps = {
@@ -214,7 +214,7 @@ export const NavigationAlt = styled(Navigation)`
 `;
 
 type NavigationItemProps = {
-  invert?: boolean;
+  $invert?: boolean;
 };
 
 export const NavigationItem = styled.li<NavigationItemProps>`
@@ -222,65 +222,88 @@ export const NavigationItem = styled.li<NavigationItemProps>`
   color: ${({ theme }) => theme.secondary};
   cursor: pointer;
 
-  ${({ invert }) =>
-          invert
-                  ? css`
-                    padding: 0.4rem 0.75rem;
-                    color: ${({ theme }) => theme.primary};
-                    border-radius: 0.25rem;
-                    background-color: ${({ theme }) => theme.secondaryDarker};
-                    transition: 300ms background-color ease-in-out;
+  ${({ $invert }) =>
+    $invert
+      ? css`
+          padding: 0.4rem 0.75rem;
+          color: ${({ theme }) => theme.primary};
+          border-radius: 0.25rem;
+          background-color: ${({ theme }) => theme.secondaryDarker};
+          transition: 300ms background-color ease-in-out;
 
-                    &:hover {
-                      background-color: ${({ theme }) => theme.secondary};
-                    }
-                  `
-                  : css`
-                    &::after {
-                      content: '';
-                      position: absolute;
-                      left: 50%;
-                      bottom: -0.75rem;
-                      transform: translateX(-50%);
-                      transform-origin: 50%;
-                      display: block;
-                      width: 0;
-                      border-bottom: 0.25rem solid ${({ theme }) => theme.secondary};
-                      border-bottom-left-radius: 50%;
-                      border-bottom-right-radius: 50%;
-                      transition: 300ms width ease-in-out;
-                    }
+          &:hover {
+            background-color: ${({ theme }) => theme.secondary};
+          }
+        `
+      : css`
+          &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -0.75rem;
+            transform: translateX(-50%);
+            transform-origin: 50%;
+            display: block;
+            width: 0;
+            border-bottom: 0.25rem solid ${({ theme }) => theme.secondary};
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            transition: 300ms width ease-in-out;
+          }
 
-                    &:hover::after {
-                      width: 100%;
-                    }
-                  `}
+          &:hover::after {
+            width: 100%;
+          }
+        `}
   & > a {
     text-decoration: none;
     color: inherit;
   }
 `;
-export const PopoverButton = styled(Popover.Button)`
+
+export const PopoverButton = styled(Popover.Button)<any>`
   position: relative;
-  color: ${({ theme }) => theme.secondary};
-  cursor: pointer;
-  border: none;
-  font-size: 1.25rem;
-  font-weight: bold;
-  text-align: center;
+  font: inherit;
   text-transform: uppercase;
+  color: ${({ theme }) => theme.secondary};
+  border: none;
+  cursor: pointer;
 
-  padding: 0.8rem 0.5rem;
-  color: ${({ theme }) => theme.primary};
-  border-radius: 0.25rem;
-  background-color: ${({ theme }) => theme.secondaryDarker};
-  transition: 300ms background-color ease-in-out;
+  ${({ $invert }) =>
+    $invert
+      ? css`
+          padding: 0.4rem 0.75rem;
+          color: ${({ theme }) => theme.primary};
+          border-radius: 0.25rem;
+          background-color: ${({ theme }) => theme.secondaryDarker};
+          transition: 300ms background-color ease-in-out;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.secondary};
-  }
+          &:hover {
+            background-color: ${({ theme }) => theme.secondary};
+          }
+        `
+      : css`
+          &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -0.75rem;
+            transform: translateX(-50%);
+            transform-origin: 50%;
+            display: block;
+            width: 0;
+            border-bottom: 0.25rem solid ${({ theme }) => theme.secondary};
+            border-bottom-left-radius: 50%;
+            border-bottom-right-radius: 50%;
+            transition: 300ms width ease-in-out;
+          }
 
-  &:hover::after {
-    width: 100%;
+          &:hover::after {
+            width: 100%;
+          }
+        `}
+  & > a {
+    text-decoration: none;
+    color: inherit;
   }
 `;

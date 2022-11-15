@@ -102,12 +102,12 @@ function Header(props: IHeaderProps) {
               </Link>
             </NavigationItem>
 
-            <NavigationItem invert>
+            <NavigationItem $invert>
               <Link to="/register">Cadastro</Link>
             </NavigationItem>
 
             <Popover>
-              <PopoverButton>Entrar</PopoverButton>
+              <PopoverButton $invert>Entrar</PopoverButton>
               <LoginPopup />
             </Popover>
           </NavigationContainer>
@@ -133,7 +133,7 @@ function Header(props: IHeaderProps) {
               </NavigationItem>
             )}
 
-            <NavigationItem invert>
+            <NavigationItem $invert>
               <Link to="/" onClick={() => dispatch(logout())}>
                 Sair
               </Link>
