@@ -47,10 +47,8 @@ function Index() {
           <Title>Orange Book</Title>
 
           <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Felis
-            eget velit aliquet sagittis id. Platea dictumst vestibulum rhoncus
-            est pellentesque elit ullamcorper.
+            Venha conhecer nossos cursos de estudos, caso não ache o que precise se conecte com alguém da comunidade e
+            aprenda para você também criar sua trilha.
           </Text>
 
           <Emphasis>Escreva a sua história!</Emphasis>
