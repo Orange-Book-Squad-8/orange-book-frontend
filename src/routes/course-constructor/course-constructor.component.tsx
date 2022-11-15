@@ -2,12 +2,7 @@ import { CourseEditDashboard } from '../../components/create-pannel/course-edit-
 import { AdminDashboardContainer } from './course-constructor.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { api } from '../../lib/axios';
-import {
-  selectCourseList,
-  selectUser,
-  setCourse,
-  setSectionList
-} from '../../redux/reducers';
+import { selectCourseList, selectUser, setCourse, setSectionList } from '../../redux/reducers';
 import { CourseEditPanel } from '../../components/create-pannel/course-edit-panel';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CourseDTO, Lesson } from '../../interfaces/api';
@@ -35,6 +30,7 @@ function CourseConstructor() {
   );
 
   useEffect(() => {
+    if (courseId == 'new' || user.role.name === 'admin') return;
     if (myCourses && !amICreator) {
       navigate('/home');
     }

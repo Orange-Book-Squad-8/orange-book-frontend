@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseTag } from '../../components/course-tag';
 import { api } from '../../lib/axios';
@@ -20,8 +20,8 @@ import {
   CreatedBy,
   Creator,
   InfoSection,
-  TagsContainer,
-  StyledLink
+  StyledLink,
+  TagsContainer
 } from './index';
 
 interface ServerCourseResponse {
@@ -98,8 +98,8 @@ function CoursePage() {
       <CoursePageContainer title={course?.title || ' '}>
         <InfoSection>
           <TagsContainer>
-            <CourseTag title="categoria">{course.category}</CourseTag>
-            <CourseTag title="categoria">{course.difficulty}</CourseTag>
+            <CourseTag title='categoria'>{course.category}</CourseTag>
+            <CourseTag title='categoria'>{course.difficulty}</CourseTag>
             <CreatedBy>
               Criado por <Creator>{course.creator}</Creator>
             </CreatedBy>
@@ -110,7 +110,7 @@ function CoursePage() {
               </Button>
             )}
 
-            {amICreator && (
+            {(amICreator || user.role.name === 'admin') && (
               <StyledLink to={`/edit/course/${courseId}`}>Editar</StyledLink>
             )}
           </TagsContainer>

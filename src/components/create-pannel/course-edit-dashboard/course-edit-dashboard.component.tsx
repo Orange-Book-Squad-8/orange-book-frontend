@@ -76,7 +76,7 @@ function CourseEditDashboard() {
     try {
       if (isNaN(course.id)) {
 
-        const courseCreator = user.role.name === 'admin' ? 'Orange Juice' : user.username;
+        const courseCreator = user.role.name === 'admin' ? 'Orange Originals' : user.username;
 
         const response = await api.post('/courses/create', {
           title,
