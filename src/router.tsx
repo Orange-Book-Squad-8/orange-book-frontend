@@ -30,28 +30,35 @@ const Router = createBrowserRouter([
       },
       {
         path: '/home',
-        element: <Home />
+        element: (
+          <ProtectedRoutes authRole={['admin', 'user']}>
+            <Home />
+          </ProtectedRoutes>
+        )
       },
       {
         path: '/dashboard',
-        element:
+        element: (
           <ProtectedRoutes authRole={['admin', 'user']}>
             <Dashboard />
           </ProtectedRoutes>
+        )
       },
       {
         path: '/course/:courseId',
-        element:
+        element: (
           <ProtectedRoutes authRole={['admin', 'user']}>
             <CoursePage />
           </ProtectedRoutes>
+        )
       },
       {
         path: '/course/:courseId/lesson/:lessonId',
-        element:
+        element: (
           <ProtectedRoutes authRole={['admin', 'user']}>
             <LessonPage />
           </ProtectedRoutes>
+        )
       },
       {
         path: '/edit/course/:courseId',
