@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '../../components/button';
 import { Section } from '../../components/section';
+import { Link } from 'react-router-dom';
 
 export const CoursePageContainer = styled(Section)`
   display: flex;
@@ -93,6 +94,36 @@ export const CourseDescription = styled.p`
 `;
 
 export const LessonLink = styled.a`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  margin: 2.5rem auto 0;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  color: ${({ theme }) => theme.secondaryDarker};
+  border-radius: 0.25rem;
+  background-color: ${({ theme }) => theme.primary};
+  box-shadow: 0 0 7px 0 ${({ theme }) => theme.secondary};
+  transition: 300ms transform ease-in-out, 300ms box-shadow ease-in-out;
+
+  &:hover {
+    transform: scale(1.025);
+    box-shadow: 0 0 10px 0 ${({ theme }) => theme.secondary};
+  }
+
+  @media screen and (min-width: 576px) {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    font-size: 1.35rem;
+  }
+`;
+
+export const CourseLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 0.5rem;

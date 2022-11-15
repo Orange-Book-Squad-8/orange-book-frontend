@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { selectCourseLesson, selectCourseList } from '../../redux/reducers';
 import { CourseTag } from '../../components/course-tag';
 import { CheckBox } from '../../components/checkbox';
-import { ArrowFatRight } from 'phosphor-react';
+import { ArrowFatLeft, ArrowFatRight } from 'phosphor-react';
 import { Field, Form, Formik } from 'formik';
 import { RootState } from '../../redux/config/store';
 import { InputField } from '../../components/input-field';
 import {
   CourseDescription,
+  CourseLink,
   CoursePageContainer,
   CreatedBy,
   Creator,
@@ -34,17 +34,12 @@ function LessonPage() {
     courseId: string;
     lessonId: string;
   };
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const lesson = useSelector((state: RootState) =>
     selectCourseLesson(state, Number(lessonId))
   );
-  const { watchedLesson, subscribedCourses } = useSelector(selectCourseList);
+  const { watchedLesson } = useSelector(selectCourseList);
   const isLessonWatched = watchedLesson?.[courseId]?.includes(Number(lessonId));
-  const isSubscribed = subscribedCourses?.some(
-    (course) => course.id === Number(courseId)
-  );
-  const [isWatched, setIsWatched] = useState(isLessonWatched);
+
 
   const validateForm = (values: IFormValues) => {
     const errors = {} as IFFormErrors;
@@ -60,12 +55,6 @@ function LessonPage() {
     return errors;
   };
 
-
-  useEffect(() => {
-    if (subscribedCourses && !isSubscribed) {
-      navigate('/home');
-    }
-  }, [subscribedCourses, watchedLesson, isLessonWatched]);
 
   return (
     <CoursePageContainer title={lesson?.title || ' '}>
@@ -92,13 +81,17 @@ function LessonPage() {
         Seguir para Lição <ArrowFatRight size={32} weight='bold' />
       </LessonLink>
 
+      <CourseLink to={`/course/${courseId}`}>
+        Voltar para o Curso <ArrowFatLeft size={32} weight='bold' />
+      </CourseLink>
+
       <NotesFormContainer>
         <FormTitle>Anotações</FormTitle>
 
         <Formik
           initialValues={{ noteTitle: '', note: '' }}
           validate={validateForm}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={() => {
           }}
         >
           {({ isSubmitting }) => (
