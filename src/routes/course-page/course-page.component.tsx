@@ -67,7 +67,6 @@ function CoursePage() {
         category,
         difficulty,
         visible,
-        totalLessons,
         creator
       } = response.data.courseDTO;
 
@@ -90,7 +89,7 @@ function CoursePage() {
 
   async function registerCourse() {
     try {
-      await api.post('/users/addMyCourses', { courseId, userId: user.id });
+      await api.post('/users/addSubscribedCourses', { courseId, userId: user.id });
       const response = await api.get<AppUserCourseDTO>(`/users/${user.id}/courses`);
       dispatch(setUserCourseList(response.data));
     } catch (err) {
