@@ -31,7 +31,7 @@ export const CoursesContainer = styled.div`
   gap: 2rem;
 `;
 
-export const NoCourseMessage = styled.p`
+export const NoCourseMessage = styled.div`
   font-size: 1.25rem;
   text-align: center;
   color: ${({ theme }) => theme.neutral};

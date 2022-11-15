@@ -15,7 +15,7 @@ export const CoursePresentationContainer = styled.article<ICoursePresentationCon
   border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.primary};
   background-image: ${({ image }) => `url(${image})`};
-  background-size: contain;
+  background-size: 35%;
   background-repeat: no-repeat;
   background-position: center;
   box-shadow: 0 0 10px 0 black;

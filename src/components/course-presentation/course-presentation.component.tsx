@@ -1,16 +1,18 @@
-import { CoursePresentationContainer, Title, Description } from './index';
+import { CoursePresentationContainer, Description, Title } from './index';
+import { StackCategories } from '../../interfaces/api';
 
-interface ICoursePresentationo {
+interface ICCoursePresentation {
   title: string;
   description: string;
-  image: string;
+  category: StackCategories;
 }
 
-function CoursePresentation(props: ICoursePresentationo) {
-  const { title, description, image } = props;
+function CoursePresentation(props: ICCoursePresentation) {
+  const { title, description, category } = props;
+  const courseCategory = category?.split('_').join('').toLowerCase();
 
   return (
-    <CoursePresentationContainer image={`/images/${image}`}>
+    <CoursePresentationContainer image={`/images/${courseCategory}.png`}>
       <Title>{title}</Title>
 
       <Description>{description}</Description>

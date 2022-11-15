@@ -28,7 +28,7 @@ function LoginPopup() {
 
       dispatch(login(user.data));
 
-      navigator(-1);
+      navigator('/home');
     } catch (e) {
       console.error(e);
     }
@@ -50,34 +50,34 @@ function LoginPopup() {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field name="username">
+              <Field name='username'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="username"
-                      title="usuário"
-                      type="text"
+                      name='username'
+                      title='usuário'
+                      type='text'
                     />
                   );
                 }}
               </Field>
 
-              <Field name="password">
+              <Field name='password'>
                 {({ field, meta }: any) => {
                   return (
                     <InputField
                       field={field}
                       meta={meta}
-                      name="password"
-                      title="senha"
-                      type="password"
+                      name='password'
+                      title='senha'
+                      type='password'
                     />
                   );
                 }}
               </Field>
-              <SaveButton standard disabled={isSubmitting} type="submit">
+              <SaveButton standard disabled={isSubmitting} type='submit'>
                 Entrar
               </SaveButton>
             </Form>

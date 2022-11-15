@@ -78,7 +78,7 @@ function LessonPage() {
           </CreatedBy>
           <CheckBox
             name='watched'
-            defaultChecked={isLessonWatched}
+            defaultChecked={isLessonWatched == undefined ? false : isLessonWatched}
             label='Concluída'
             altLabel='Concluir'
             lessonId={parseInt(lessonId)}

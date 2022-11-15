@@ -62,8 +62,7 @@ function CheckBox(props: ICheckBoxProps) {
         type='checkbox'
         name={name}
         id={name}
-        defaultChecked={defaultChecked}
-        checked={checked !== undefined ? checked : defaultChecked}
+        checked={checked !== undefined ? checked : false}
         onChange={checkboxChangeHandler}
       />
 

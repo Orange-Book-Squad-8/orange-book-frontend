@@ -44,7 +44,7 @@ const CARROSSEL_CONFIGS = {
 function Home() {
   const dispatch = useDispatch();
   const originals = useSelector(selectOriginals);
-  const prefferred = useSelector(selectByUserPrefference);
+  const preferred = useSelector(selectByUserPrefference);
   const byCategory = useSelector(selectFilteredByCategory);
 
   useEffect(() => {
@@ -62,9 +62,9 @@ function Home() {
   }
 
   return (
-    <HomeContainer title="">
+    <HomeContainer title=''>
       {originals.length ? (
-        <HomeSection title="Originals da Orange">
+        <HomeSection title='Originals da Orange'>
           <OriginalsContainer>
             {originals?.map((course) => (
               <CourseCard original {...course} key={course.title} />
@@ -75,13 +75,13 @@ function Home() {
         ''
       )}
 
-      {prefferred.length ? (
-        <HomeSection title="De acordo com suas preferências">
+      {preferred.length ? (
+        <HomeSection title='De acordo com suas preferências'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
-            {prefferred?.map((course: Course) => (
-              <SwiperSlide>
+            {preferred?.map((course: Course) => (
+              <SwiperSlide key={course.id}>
                 <CourseCard
-                  original={course.creator === 'Orange Originals'}
+                  original={course.creator === 'Orange Originals'} key={course.id}
                   {...course}
                 />
               </SwiperSlide>
@@ -93,13 +93,13 @@ function Home() {
       )}
 
       {byCategory?.frontEnd.length ? (
-        <HomeSection title="Front End">
+        <HomeSection title='Front End'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.frontEnd?.map((course: Course) => (
-              <SwiperSlide>
-                <CourseCard
-                  original={course.creator === 'Orange Originals'}
-                  {...course}
+              <SwiperSlide key={course.id}>
+                <CourseCard key={course.id}
+                            original={course.creator === 'Orange Originals'}
+                            {...course}
                 />
               </SwiperSlide>
             ))}
@@ -110,13 +110,13 @@ function Home() {
       )}
 
       {byCategory?.backEnd.length ? (
-        <HomeSection title="Back End">
+        <HomeSection title='Back End'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.backEnd?.map((course: Course) => (
-              <SwiperSlide>
-                <CourseCard
-                  original={course.creator === 'Orange Originals'}
-                  {...course}
+              <SwiperSlide key={course.id}>
+                <CourseCard key={course.id}
+                            original={course.creator === 'Orange Originals'}
+                            {...course}
                 />
               </SwiperSlide>
             ))}
@@ -127,13 +127,13 @@ function Home() {
       )}
 
       {byCategory?.fullstack.length ? (
-        <HomeSection title="Fullstack">
+        <HomeSection title='Fullstack'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.fullstack?.map((course: Course) => (
-              <SwiperSlide>
-                <CourseCard
-                  original={course.creator === 'Orange Originals'}
-                  {...course}
+              <SwiperSlide key={course.id}>
+                <CourseCard key={course.id}
+                            original={course.creator === 'Orange Originals'}
+                            {...course}
                 />
               </SwiperSlide>
             ))}
@@ -144,13 +144,13 @@ function Home() {
       )}
 
       {byCategory?.ux.length ? (
-        <HomeSection title="UX">
+        <HomeSection title='UX'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ux?.map((course: Course) => (
-              <SwiperSlide>
-                <CourseCard
-                  original={course.creator === 'Orange Originals'}
-                  {...course}
+              <SwiperSlide key={course.id}>
+                <CourseCard key={course.id}
+                            original={course.creator === 'Orange Originals'}
+                            {...course}
                 />
               </SwiperSlide>
             ))}
@@ -161,13 +161,13 @@ function Home() {
       )}
 
       {byCategory?.ui.length ? (
-        <HomeSection title="UI">
+        <HomeSection title='UI'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {byCategory?.ui?.map((course: Course) => (
-              <SwiperSlide>
-                <CourseCard
-                  original={course.creator === 'Orange Originals'}
-                  {...course}
+              <SwiperSlide key={course.id}>
+                <CourseCard key={course.id}
+                            original={course.creator === 'Orange Originals'}
+                            {...course}
                 />
               </SwiperSlide>
             ))}

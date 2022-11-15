@@ -110,7 +110,7 @@ function Dashboard() {
         <DashboardSection title='Trilhas inscritas'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {playlists?.map((course) => (
-              <SwiperSlide>
+              <SwiperSlide key={course.id}>
                 <UserCourse {...course} finishedLessons={watchedLesson[Number(course.id)].length} />
               </SwiperSlide>
             ))}
@@ -124,7 +124,7 @@ function Dashboard() {
         <DashboardSection title='Trilhas Criadas'>
           <Carrossel configs={CARROSSEL_CONFIGS}>
             {myCourses?.map((course) => (
-              <SwiperSlide>
+              <SwiperSlide key={course.id}>
                 <UserCourse {...course} finishedLessons={watchedLesson[Number(course.id)].length} />
               </SwiperSlide>
             ))}

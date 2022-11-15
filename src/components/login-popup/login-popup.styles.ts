@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Button } from '../button';
+import { Popover } from '@headlessui/react';
 
-export const LoginContainer = styled.div`
+export const LoginContainer = styled(Popover.Panel)`
   position: absolute;
   top: calc(100% + 2rem);
   right: 50%;

@@ -4,6 +4,7 @@ import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { wait } from '../../utils';
 import { logout, selectRole } from '../../redux/reducers';
+import { Popover } from '@headlessui/react';
 import { Role } from '../../interfaces/api';
 import { LoginPopup } from '../login-popup';
 import {
@@ -15,6 +16,7 @@ import {
   NavigationAlt,
   NavigationContainer,
   NavigationItem,
+  PopoverButton,
   SiteTitle,
   SiteTitleAlt
 } from './index';
@@ -71,7 +73,7 @@ function Header(props: IHeaderProps) {
         <SiteTitleAlt>
           <span>Orange Book</span>
 
-          <Link to="/">
+          <Link to='/'>
             <Logo />
           </Link>
         </SiteTitleAlt>
@@ -79,7 +81,7 @@ function Header(props: IHeaderProps) {
         <SiteTitle>
           <span>Orange Book</span>
 
-          <Link to="/">
+          <Link to='/'>
             <Logo />
           </Link>
         </SiteTitle>
@@ -89,53 +91,54 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to="/home">Home</Link>
+              <Link to='/home'>Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="/#about" onClick={linkClickHandler}>
+              <Link to='/#about' onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="/#courses" onClick={linkClickHandler}>
+              <Link to='/#courses' onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
 
             <NavigationItem invert>
-              <Link to="/register">Cadastro</Link>
+              <Link to='/register'>Cadastro</Link>
             </NavigationItem>
 
-            <NavigationItem onClick={loginPopupToggleHandler} invert>
-              Entrar
-            </NavigationItem>
+            <Popover>
+              <PopoverButton>Entrar</PopoverButton>
+              <LoginPopup />
+            </Popover>
           </NavigationContainer>
         </Navigation>
       ) : (
         <NavigationAlt show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to="/home">Home</Link>
+              <Link to='/home'>Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to='/dashboard'>Dashboard</Link>
             </NavigationItem>
 
-            {role?.name === 'admin' ? (
+            <NavigationItem>
+              <Link to='/edit/course/new'>Criar Trilha</Link>
+            </NavigationItem>
+
+            {role?.name === 'admin' && (
               <NavigationItem>
-                <Link to="/admin/edit/lessons">Editar lições</Link>
-              </NavigationItem>
-            ) : (
-              <NavigationItem>
-                <Link to="#">Criar Trilha</Link>
+                <Link to='/admin/edit/lessons'>Editar lições</Link>
               </NavigationItem>
             )}
 
             <NavigationItem invert>
-              <Link to="/" onClick={() => dispatch(logout())}>
+              <Link to='/' onClick={() => dispatch(logout())}>
                 Sair
               </Link>
             </NavigationItem>
@@ -143,17 +146,16 @@ function Header(props: IHeaderProps) {
         </NavigationAlt>
       )}
 
-      <MenuButton rotate={showMenu} onClick={menuToggleHandler}>
+      <MenuButton rotate={showMenu.toString()} onClick={menuToggleHandler}>
         <MenuIcon />
       </MenuButton>
 
       {!isNoAuthPath && (
-        <HeaderButton rotate={showHeader} onClick={headerToggleHandler}>
+        <HeaderButton rotate={showHeader.toString()} onClick={headerToggleHandler}>
           <MenuIcon />
         </HeaderButton>
       )}
 
-      {showLogin && <LoginPopup />}
     </HeaderContainer>
   );
 }
