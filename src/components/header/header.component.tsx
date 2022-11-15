@@ -29,7 +29,6 @@ function Header(props: IHeaderProps) {
   const { headerShrinkingHandler, ...otherProps } = props;
   const [showMenu, setShowMenu] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const role: Role = useSelector(selectRole);
@@ -59,9 +58,6 @@ function Header(props: IHeaderProps) {
     }
   };
 
-  const loginPopupToggleHandler = () => {
-    setShowLogin(!showLogin);
-  };
 
   return (
     <HeaderContainer
@@ -146,12 +142,12 @@ function Header(props: IHeaderProps) {
         </NavigationAlt>
       )}
 
-      <MenuButton rotate={showMenu.toString()} onClick={menuToggleHandler}>
+      <MenuButton rotate={showMenu} onClick={menuToggleHandler}>
         <MenuIcon />
       </MenuButton>
 
       {!isNoAuthPath && (
-        <HeaderButton rotate={showHeader.toString()} onClick={headerToggleHandler}>
+        <HeaderButton rotate={showHeader} onClick={headerToggleHandler}>
           <MenuIcon />
         </HeaderButton>
       )}

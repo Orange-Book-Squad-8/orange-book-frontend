@@ -83,7 +83,7 @@ export const Logo = styled(LogoImage)`
 `;
 
 interface IMenuButtonProps {
-  rotate: boolean | string;
+  rotate: boolean;
   onClick: React.MouseEventHandler;
 }
 
@@ -121,7 +121,7 @@ export const MenuButton = styled(Button)<IMenuButtonProps>`
 `;
 
 interface IHeaderButtonProps {
-  rotate: boolean | string;
+  rotate: boolean;
   onClick: React.MouseEventHandler;
 }
 
