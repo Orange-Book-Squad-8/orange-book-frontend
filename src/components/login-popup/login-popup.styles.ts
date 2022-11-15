@@ -14,6 +14,7 @@ export const LoginContainer = styled.div`
   box-shadow: 0 0 10px 5px #101010;
   border-radius: 0.5rem;
   background-color: ${({ theme }) => theme.primaryDarker};
+  z-index: 9999;
 
   @media screen and (min-width: 576px) {
     top: calc(100% + 1rem);
