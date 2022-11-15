@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CourseTag } from '../../components/course-tag';
+import { api } from '../../lib/axios';
+import { AppUserCourseDTO, CourseDTO, Lesson } from '../../interfaces/api';
+import { CourseCustomDisclosure } from '../../components/course-page-custom-disclosure';
 import {
   selectActiveCourse,
   selectCourseList,
@@ -17,11 +20,9 @@ import {
   CreatedBy,
   Creator,
   InfoSection,
-  TagsContainer
+  TagsContainer,
+  StyledLink
 } from './index';
-import { api } from '../../lib/axios';
-import { AppUserCourseDTO, CourseDTO, Lesson } from '../../interfaces/api';
-import { CourseCustomDisclosure } from '../../components/course-page-custom-disclosure';
 
 interface ServerCourseResponse {
   courseDTO: CourseDTO;
@@ -37,10 +38,14 @@ interface CompleteSectionDTO {
 function CoursePage() {
   const course = useSelector(selectActiveCourse);
   const user = useSelector(selectUser);
-  const { watchedLesson, subscribedCourses } = useSelector(selectCourseList);
+  const { watchedLesson, subscribedCourses, myCourses } =
+    useSelector(selectCourseList);
   const dispatch = useDispatch();
   const { courseId } = useParams();
   const isSubscribed = subscribedCourses?.some(
+    (course) => course.id === Number(courseId)
+  );
+  const amICreator = myCourses?.some(
     (course) => course.id === Number(courseId)
   );
 
@@ -53,15 +58,8 @@ function CoursePage() {
       const response = await api.get<ServerCourseResponse>(
         `/courses/${courseId}`
       );
-      const {
-        id,
-        title,
-        description,
-        category,
-        difficulty,
-        visible,
-        creator
-      } = response.data.courseDTO;
+      const { id, title, description, category, difficulty, visible, creator } =
+        response.data.courseDTO;
 
       dispatch(
         setActiveCourse({
@@ -82,8 +80,13 @@ function CoursePage() {
 
   async function registerCourse() {
     try {
-      await api.post('/users/addSubscribedCourses', { courseId, userId: user.id });
-      const response = await api.get<AppUserCourseDTO>(`/users/${user.id}/courses`);
+      await api.post('/users/addSubscribedCourses', {
+        courseId,
+        userId: user.id
+      });
+      const response = await api.get<AppUserCourseDTO>(
+        `/users/${user.id}/courses`
+      );
       dispatch(setUserCourseList(response.data));
     } catch (err) {
       console.error(err);
@@ -95,21 +98,34 @@ function CoursePage() {
       <CoursePageContainer title={course?.title || ' '}>
         <InfoSection>
           <TagsContainer>
-            <CourseTag title='categoria'>{course.category}</CourseTag>
-            <CourseTag title='categoria'>{course.difficulty}</CourseTag>
+            <CourseTag title="categoria">{course.category}</CourseTag>
+            <CourseTag title="categoria">{course.difficulty}</CourseTag>
             <CreatedBy>
               Criado por <Creator>{course.creator}</Creator>
             </CreatedBy>
 
-            {!isSubscribed && <Button standard onClick={registerCourse}>Matricular</Button>}
+            {!isSubscribed && (
+              <Button standard onClick={registerCourse}>
+                Matricular
+              </Button>
+            )}
+
+            {amICreator && (
+              <StyledLink to={`/edit/course/${courseId}`}>Editar</StyledLink>
+            )}
           </TagsContainer>
           <CourseDescription>{course.description}</CourseDescription>
         </InfoSection>
 
         <CourseSectionsContainer>
           {course.sections.map((section) => (
-            <CourseCustomDisclosure section={section} isSubscribed={isSubscribed} watchedLesson={watchedLesson}
-                                    courseId={courseId} key={section.id} />
+            <CourseCustomDisclosure
+              section={section}
+              isSubscribed={isSubscribed}
+              watchedLesson={watchedLesson}
+              courseId={courseId}
+              key={section.id}
+            />
           ))}
         </CourseSectionsContainer>
       </CoursePageContainer>

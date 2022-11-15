@@ -141,9 +141,28 @@ export const LessonTitle = styled.h4`
 
 export const StyledLink = styled(Link)`
   display: block;
-  width: 100%;
   text-decoration: none;
-  color: inherit;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.primaryDarker};
+  border-radius: 0.25rem;
+  background-color: ${({ theme }) => theme.secondary};
+  transition: 300ms opacity ease-in-out, 300ms background-color ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+    background-color: ${({ theme }) => theme.secondaryDarker};
+  }
+
+  @media screen and (min-width: 576px) {
+    font-size: 1.1rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    font-size: 1.25rem;
+  }
 `;
 
 export const LessonInfo = styled.div`
