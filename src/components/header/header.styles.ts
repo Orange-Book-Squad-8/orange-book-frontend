@@ -16,7 +16,7 @@ export const HeaderContainer = styled.header<HeaderContainerProps>`
   align-items: center;
   padding: 1.75rem 1rem;
   background-color: ${({ theme }) => theme.primary};
-  box-shadow: 0 0 10px 0 black;
+  box-shadow: 0 0 10px 0 #000;
   transition: 300ms width ease-in-out;
 
   ${({ horizontal }) =>
@@ -165,7 +165,7 @@ type NavigationProps = {
 
 export const Navigation = styled.nav<NavigationProps>`
   width: 100%;
-  height: ${({ show }) => (show ? '297px' : '0')};
+  height: ${({ show }) => (show ? '352px' : '0')};
   overflow: hidden;
   transition: 300ms height ease-in-out;
 
@@ -201,7 +201,7 @@ export const NavigationContainer = styled.ul`
 
 export const NavigationAlt = styled(Navigation)`
   width: 100%;
-  height: ${({ show }) => (show ? '237px' : '0')};
+  height: ${({ show }) => (show ? '310px' : '0')};
   overflow: hidden;
 
   & ${NavigationContainer} {

@@ -3,10 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { wait } from '../../utils';
-import { logout, selectRole } from '../../redux/reducers';
+import { logout, selectRole, toggleTheme } from '../../redux/reducers';
+import { DARK_THEME, LIGHT_THEME } from '../../styles';
 import { Popover } from '@headlessui/react';
 import { Role } from '../../interfaces/api';
 import { LoginPopup } from '../login-popup';
+import { Toggler } from '../toggler';
 import {
   HeaderButton,
   HeaderContainer,
@@ -43,6 +45,10 @@ function Header(props: IHeaderProps) {
   const headerToggleHandler = () => {
     headerShrinkingHandler(showHeader);
     setShowHeader(!showHeader);
+  };
+
+  const themeToggleHandler = () => {
+    dispatch(toggleTheme());
   };
 
   const linkClickHandler = async (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -102,6 +108,8 @@ function Header(props: IHeaderProps) {
               </Link>
             </NavigationItem>
 
+            <Toggler onChange={themeToggleHandler} />
+
             <NavigationItem $invert>
               <Link to="/register">Cadastro</Link>
             </NavigationItem>
@@ -132,6 +140,8 @@ function Header(props: IHeaderProps) {
                 <Link to="/admin/edit/lessons">Editar lições</Link>
               </NavigationItem>
             )}
+
+            <Toggler onChange={themeToggleHandler} />
 
             <NavigationItem $invert>
               <Link to="/" onClick={() => dispatch(logout())}>

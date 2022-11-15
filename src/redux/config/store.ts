@@ -4,7 +4,8 @@ import {
   activeCourse,
   courseList,
   courseManager,
-  availableCourses
+  availableCourses,
+  themeChange
 } from '../reducers';
 
 export const store = configureStore({
@@ -13,7 +14,8 @@ export const store = configureStore({
     activeCourse,
     courseList,
     courseManager,
-    availableCourses
+    availableCourses,
+    themeChange
   }
 });
 

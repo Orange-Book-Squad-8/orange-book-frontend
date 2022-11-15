@@ -23,3 +23,12 @@ export const DARK_THEME: DefaultTheme = {
   secondaryDarker: '#FF7823',
   neutral: '#ccc'
 };
+
+export const LIGHT_THEME: DefaultTheme = {
+  ...BASE_THEME,
+  primary: '#FDFDF6',
+  primaryDarker: '#eee',
+  secondary: '#FFA000',
+  secondaryDarker: '#FF7823',
+  neutral: '#101010'
+};
