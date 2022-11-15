@@ -33,7 +33,8 @@ function Header(props: IHeaderProps) {
   const navigate = useNavigate();
   const role: Role = useSelector(selectRole);
   const dispatch = useDispatch();
-  const isNoAuthPath = pathname === '/' || pathname === '/register';
+  const isNoAuthPath =
+    pathname === '/' || pathname === '/register' || pathname === '/login';
 
   const menuToggleHandler = () => {
     setShowMenu(!showMenu);
@@ -58,7 +59,6 @@ function Header(props: IHeaderProps) {
     }
   };
 
-
   return (
     <HeaderContainer
       horizontal={isNoAuthPath}
@@ -69,7 +69,7 @@ function Header(props: IHeaderProps) {
         <SiteTitleAlt>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitleAlt>
@@ -77,7 +77,7 @@ function Header(props: IHeaderProps) {
         <SiteTitle>
           <span>Orange Book</span>
 
-          <Link to='/'>
+          <Link to="/">
             <Logo />
           </Link>
         </SiteTitle>
@@ -87,23 +87,23 @@ function Header(props: IHeaderProps) {
         <Navigation show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/#about' onClick={linkClickHandler}>
+              <Link to="/#about" onClick={linkClickHandler}>
                 Sobre
               </Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/#courses' onClick={linkClickHandler}>
+              <Link to="/#courses" onClick={linkClickHandler}>
                 Trilhas
               </Link>
             </NavigationItem>
 
             <NavigationItem invert>
-              <Link to='/register'>Cadastro</Link>
+              <Link to="/register">Cadastro</Link>
             </NavigationItem>
 
             <Popover>
@@ -116,25 +116,25 @@ function Header(props: IHeaderProps) {
         <NavigationAlt show={showMenu}>
           <NavigationContainer>
             <NavigationItem>
-              <Link to='/home'>Home</Link>
+              <Link to="/home">Home</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/dashboard'>Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </NavigationItem>
 
             <NavigationItem>
-              <Link to='/edit/course/new'>Criar Trilha</Link>
+              <Link to="/edit/course/new">Criar Trilha</Link>
             </NavigationItem>
 
             {role?.name === 'admin' && (
               <NavigationItem>
-                <Link to='/admin/edit/lessons'>Editar lições</Link>
+                <Link to="/admin/edit/lessons">Editar lições</Link>
               </NavigationItem>
             )}
 
             <NavigationItem invert>
-              <Link to='/' onClick={() => dispatch(logout())}>
+              <Link to="/" onClick={() => dispatch(logout())}>
                 Sair
               </Link>
             </NavigationItem>
@@ -151,7 +151,6 @@ function Header(props: IHeaderProps) {
           <MenuIcon />
         </HeaderButton>
       )}
-
     </HeaderContainer>
   );
 }
